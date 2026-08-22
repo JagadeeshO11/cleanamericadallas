@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './customer-reference.css'
+import './customer-enhancements.css'
 
 const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png'
 
