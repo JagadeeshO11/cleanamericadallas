@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './customer-reference.css'
 
+const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png'
+
 const services = [
   { id: 'garden', name: 'Garden Cleaning', price: 45, icon: '🌿', image: 'https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=900&q=80', description: 'Complete garden cleaning and maintenance' },
   { id: 'labour', name: 'Labour Services', price: 50, icon: '🛠️', image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80', description: 'General labour and assistance tasks' },
@@ -22,7 +24,7 @@ function BottomNav({ active, setPage }) { return <nav className="bottom-nav">{na
 
 function Home({ setPage, setSelectedService }) {
   const [query, setQuery] = useState(''); const filtered = services.filter((s) => s.name.toLowerCase().includes(query.toLowerCase()))
-  return <><Header title="" /><main className="page"><section className="welcome"><div><p className="hello">Hello, Jennifer 👋</p><h2>What service do you need today?</h2></div><div className="avatar-mini">J</div></section><div className="search-box"><span>⌕</span><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search services..."/><button>⌕</button></div><section className="service-pair">{filtered.slice(0,2).map((s,i)=><button key={s.id} className={`service-tile ${i===0?'featured':''}`} onClick={()=>{setSelectedService(s);setPage('book')}}><span className="tile-icon">{s.icon}</span><strong>{s.name}</strong><small>Starting at</small><b>${s.price}</b></button>)}</section><section className="section-block"><div className="section-heading"><h3>Popular Services</h3><button onClick={()=>setPage('book')}>View all</button></div><div className="service-list">{filtered.slice(2).map((s)=><button className="service-row" key={s.id} onClick={()=>{setSelectedService(s);setPage('book')}}><img src={s.image} alt=""/><span><strong>{s.name}</strong><small>Starting at ${s.price}</small></span><i>›</i></button>)}</div></section></main></>
+  return <><Header title="" /><main className="page"><div className="brand-lockup"><img src={LOGO_URL} alt="Clean America Dallas logo"/><div><strong>Clean America</strong><span>Dallas</span></div></div><section className="welcome"><div><p className="hello">Hello, Jennifer 👋</p><h2>What service do you need today?</h2></div><div className="avatar-mini">J</div></section><div className="search-box"><span>⌕</span><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search services..."/><button>⌕</button></div><section className="service-pair">{filtered.slice(0,2).map((s,i)=><button key={s.id} className={`service-tile ${i===0?'featured':''}`} onClick={()=>{setSelectedService(s);setPage('book')}}><span className="tile-icon">{s.icon}</span><strong>{s.name}</strong><small>Starting at</small><b>${s.price}</b></button>)}</section><section className="section-block"><div className="section-heading"><h3>Popular Services</h3><button onClick={()=>setPage('book')}>View all</button></div><div className="service-list">{filtered.slice(2).map((s)=><button className="service-row" key={s.id} onClick={()=>{setSelectedService(s);setPage('book')}}><img src={s.image} alt=""/><span><strong>{s.name}</strong><small>Starting at ${s.price}</small></span><i>›</i></button>)}</div></section></main></>
 }
 
 function BookingFlow({ service, setPage, addBooking }) {
