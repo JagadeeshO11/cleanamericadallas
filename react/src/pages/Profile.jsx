@@ -1,31 +1,16 @@
 import { useState } from 'react'
 import './Profile.css'
 
-const options=[
- ['Personal Information','Update your name, email and phone','personal'],
- ['Saved Addresses','Manage service locations','addresses'],
- ['Payment Methods','Manage cards and payment preferences','payments'],
- ['Notifications','Choose booking and service alerts','notifications'],
- ['Help & Support','Get help with bookings and services','support']
+const items=[
+ {key:'personal',title:'Personal information',desc:'Name, email and phone number'},
+ {key:'addresses',title:'Saved addresses',desc:'Manage your service locations'},
+ {key:'payments',title:'Payment methods',desc:'Cards and preferred payment'},
+ {key:'notifications',title:'Notifications',desc:'Booking and service updates'},
+ {key:'support',title:'Help & support',desc:'FAQs and customer support'}
 ]
 export default function Profile({setPage,onLogout}){
- const [open,setOpen]=useState(null); const [saved,setSaved]=useState(false); const [name,setName]=useState('Jennifer Williams'); const [email,setEmail]=useState('jennifer@example.com'); const [phone,setPhone]=useState('+1 (214) 555-0188'); const [address,setAddress]=useState('1200 Main St, Dallas, TX'); const [notifications,setNotifications]=useState(true); const [card,setCard]=useState('Visa •••• 4242')
- const toggle=k=>setOpen(open===k?null:k)
+ const [open,setOpen]=useState(null),[saved,setSaved]=useState(false),[name,setName]=useState('Jennifer Williams'),[email,setEmail]=useState('jennifer@example.com'),[phone,setPhone]=useState('+1 (214) 555-0188'),[address,setAddress]=useState('1200 Main St, Dallas, TX'),[notifications,setNotifications]=useState(true),[card,setCard]=useState('Visa ending in 4242')
  const save=e=>{e.preventDefault();setSaved(true);setTimeout(()=>setSaved(false),1800)}
- return <main className="page-view profile-view">
-  <header className="list-header"><div><small>ACCOUNT</small><h1>Profile</h1></div><button onClick={()=>setPage('home')} aria-label="Close profile">×</button></header>
-  <section className="profile-hero"><div className="profile-avatar">J</div><span><strong>{name}</strong><small>{email}</small><small>{phone}</small></span><button onClick={()=>toggle('personal')}>Edit</button></section>
-  <section className="profile-links">
-   {options.map(([title,desc,key])=><div className={'profile-option '+(open===key?'expanded':'')} key={key}><button className="profile-row" onClick={()=>toggle(key)}><span><strong>{title}</strong><small>{desc}</small></span><b>{open===key?'⌃':'›'}</b></button>
-   {open===key&&<div className="profile-panel">
-    {key==='personal'&&<form onSubmit={save}><label>Name<input value={name} onChange={e=>setName(e.target.value)}/></label><label>Email<input type="email" value={email} onChange={e=>setEmail(e.target.value)}/></label><label>Phone<input value={phone} onChange={e=>setPhone(e.target.value)}/></label><button className="save-profile">Save changes</button></form>}
-    {key==='addresses'&&<form onSubmit={save}><label>Primary service address<input value={address} onChange={e=>setAddress(e.target.value)}/></label><button className="save-profile">Save address</button></form>}
-    {key==='payments'&&<div className="payment-panel"><div><strong>{card}</strong><small>Primary payment method</small></div><button onClick={()=>setCard(card.includes('4242')?'Visa •••• 1111':'Visa •••• 4242')}>Change</button></div>}
-    {key==='notifications'&&<div className="notification-panel"><div><strong>Booking notifications</strong><small>Updates about schedules and employees</small></div><button className={'switch '+(notifications?'on':'')} onClick={()=>setNotifications(!notifications)} aria-label="Toggle notifications"><i/></button></div>}
-    {key==='support'&&<div className="support-panel"><strong>We're here to help.</strong><p>For booking changes, service questions or account help, contact our support team.</p><div className="support-actions"><button onClick={()=>alert('Support request started. We will contact you shortly.')}>Contact Support</button><button onClick={()=>alert('FAQ opened. Common booking questions are available here.')}>View FAQs</button></div></div>}
-   </div>}</div>)}
-  </section>
-  <button className="logout-btn" onClick={()=>onLogout?.()}>Log Out</button>
-  {saved&&<div className="profile-toast">✓ Changes saved</div>}
- </main>
+ const panel=key=>{if(key==='personal')return <form onSubmit={save}><label>Full name<input value={name} onChange={e=>setName(e.target.value)}/></label><label>Email address<input type="email" value={email} onChange={e=>setEmail(e.target.value)}/></label><label>Phone number<input value={phone} onChange={e=>setPhone(e.target.value)}/></label><button className="settings-save">Save changes</button></form>;if(key==='addresses')return <form onSubmit={save}><label>Service address<textarea value={address} onChange={e=>setAddress(e.target.value)} rows="3"/></label><button className="settings-save">Save address</button></form>;if(key==='payments')return <div className="preference-row"><div><strong>{card}</strong><small>Primary payment method</small></div><button onClick={()=>setCard(card.endsWith('4242')?'Visa ending in 1111':'Visa ending in 4242')}>Change</button></div>;if(key==='notifications')return <div className="preference-row"><div><strong>Booking notifications</strong><small>{notifications?'You will receive booking updates and reminders.':'Notifications are currently paused.'}</small></div><button className="status-button" onClick={()=>setNotifications(!notifications)}>{notifications?'Enabled':'Disabled'}</button></div>;return <div className="support-content"><strong>How can we help?</strong><p>Find answers or contact our support team about bookings, payments and services.</p><div><button onClick={()=>alert('FAQ section opened.')}>Browse FAQs</button><button onClick={()=>alert('Support request started.')}>Contact support</button></div></div>}
+ return <main className="page-view profile-view"><header className="list-header"><div><small>ACCOUNT</small><h1>Profile</h1></div><button onClick={()=>setPage('home')} aria-label="Back to home">×</button></header><section className="profile-hero"><div className="profile-avatar">JW</div><div className="profile-identity"><strong>{name}</strong><span>{email}</span><span>{phone}</span></div><button className="edit-profile" onClick={()=>setOpen(open==='personal'?null:'personal')}>Edit profile</button></section><section className="settings-card">{items.map(item=><div className={'settings-item '+(open===item.key?'open':'')} key={item.key}><button className="settings-trigger" onClick={()=>setOpen(open===item.key?null:item.key)}><span><strong>{item.title}</strong><small>{item.desc}</small></span><b>›</b></button>{open===item.key&&<div className="settings-panel">{panel(item.key)}</div>}</div>)}</section><button className="logout-btn" onClick={()=>{if(window.confirm('Log out of your Clean America Dallas account?'))onLogout?.()}}>Log out</button>{saved&&<div className="profile-toast">Changes saved</div>}</main>
 }
