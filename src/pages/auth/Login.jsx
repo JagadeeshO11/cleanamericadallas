@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 import { HiMail, HiLockClosed, HiArrowRight } from 'react-icons/hi';
-import { MdConstruction } from 'react-icons/md';
 import './Auth.css';
+
+const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png';
 
 const DEMOS = [
   { label: 'Admin', email: 'admin@hiremee.in', password: 'admin123', color: '#d97706' },
@@ -36,7 +37,9 @@ export default function Login() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <Link to="/" className="auth-brand"><MdConstruction className="auth-brand-icon" /> Hire<b>Mee</b></Link>
+        <Link to="/" className="auth-brand" aria-label="Clean America home">
+          <img src={LOGO_URL} alt="Clean America" className="auth-brand-logo" />
+        </Link>
         <h1>Welcome back</h1>
         <p className="auth-sub">Login to your account</p>
 
