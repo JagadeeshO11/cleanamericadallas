@@ -5,8 +5,10 @@ import {
   HiMail, HiLockClosed, HiUser, HiPhone, HiArrowRight,
   HiIdentification, HiTruck, HiBriefcase,
 } from 'react-icons/hi';
-import { MdConstruction, MdEngineering } from 'react-icons/md';
+import { MdEngineering } from 'react-icons/md';
 import './Auth.css';
+
+const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png';
 
 const VEHICLE_TYPES = [
   'JCB / Backhoe', 'Excavator', 'Bulldozer', 'Crane', 'Dump Truck / Tipper',
@@ -17,8 +19,8 @@ const VEHICLE_TYPES = [
 const EXPERIENCE_OPTIONS = ['Less than 1 year', '1–3 years', '3–5 years', '5–10 years', '10+ years'];
 
 export default function Register() {
-  const [role, setRole] = useState(''); // 'customer' | 'worker'
-  const [step, setStep] = useState(0);  // 0: role, 1: form, 2: worker details, 3: otp
+  const [role, setRole] = useState('');
+  const [step, setStep] = useState(0);
   const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', confirm: '' });
   const [workerForm, setWorkerForm] = useState({ vehicleType: '', licenseNo: '', experience: '', aadhar: '', address: '' });
   const [otp, setOtp] = useState('');
@@ -83,9 +85,10 @@ export default function Register() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <Link to="/" className="auth-brand"><MdConstruction className="auth-brand-icon" /> Hire<b>Mee</b></Link>
+        <Link to="/" className="auth-brand" aria-label="Clean America home">
+          <img src={LOGO_URL} alt="Clean America" className="auth-brand-logo" />
+        </Link>
 
-        {/* Step indicator */}
         {step > 0 && (
           <div className="reg-steps">
             {STEPS.map((s, i) => (
@@ -97,11 +100,10 @@ export default function Register() {
           </div>
         )}
 
-        {/* Step 0: Role Selection */}
         {step === 0 && (
           <>
-            <h1>Join HireMee</h1>
-            <p className="auth-sub">How would you like to use HireMee?</p>
+            <h1>Join Clean America</h1>
+            <p className="auth-sub">How would you like to use Clean America?</p>
             <div className="role-cards">
               <button className="role-card" onClick={() => handleRoleSelect('customer')}>
                 <div className="rc-icon customer">🏗️</div>
@@ -118,7 +120,6 @@ export default function Register() {
           </>
         )}
 
-        {/* Step 1: Basic Details */}
         {step === 1 && (
           <>
             <h1>{role === 'worker' ? 'Worker Registration' : 'Create Account'}</h1>
@@ -149,7 +150,6 @@ export default function Register() {
           </>
         )}
 
-        {/* Step 2: Worker Details */}
         {step === 2 && (
           <>
             <h1>Worker Details</h1>
@@ -194,7 +194,6 @@ export default function Register() {
           </>
         )}
 
-        {/* Step 3: OTP */}
         {step === 3 && (
           <>
             <h1>Verify Mobile</h1>
@@ -233,8 +232,8 @@ export default function Register() {
           {role === 'worker' ? (
             <>
               <div className="av-icon">👷</div>
-              <h2>Earn with HireMee</h2>
-              <p>Join thousands of verified workers earning daily on HireMee.</p>
+              <h2>Earn with Clean America</h2>
+              <p>Join thousands of verified workers earning daily on Clean America.</p>
               <div className="av-features">
                 <div>✅ Get jobs near your location</div>
                 <div>✅ Instant payment on completion</div>
@@ -245,7 +244,7 @@ export default function Register() {
           ) : (
             <>
               <div className="av-icon">🚜</div>
-              <h2>Join 12M+ customers on HireMee</h2>
+              <h2>Join 12M+ customers on Clean America</h2>
               <p>Get verified operators, live tracking, and instant booking for all your construction needs.</p>
               <div className="av-features">
                 <div>✅ Verified & insured operators</div>
