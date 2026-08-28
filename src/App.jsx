@@ -33,6 +33,8 @@ import WorkerWallet from './pages/worker/WorkerWallet';
 import WorkerProfile from './pages/worker/WorkerProfile';
 
 import './App.css';
+// Keep the worker theme last so it wins over global/page CSS in the production bundle.
+import './pages/worker/WorkerTheme.css';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -49,40 +51,32 @@ function Layout() {
       {!isAdminOrWorker && <Navbar />}
       <main style={{ paddingBottom: isAdminOrWorker ? '0' : '72px', paddingTop: isAdminOrWorker ? '0' : '112px' }}>
         <Routes>
-          {/* Public */}
           <Route path="/" element={<Home />} />
           <Route path="/browse" element={<Browse />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* Customer */}
           <Route path="/book/:id" element={<BookingFlow />} />
           <Route path="/track/:id" element={<OrderTracking />} />
-          <Route path="/orders" element={
-            <ProtectedRoute roles={['customer', 'admin']}>
-              <Orders />
-            </ProtectedRoute>
-          } />
+          <Route path="/orders" element={<ProtectedRoute roles={['customer', 'admin']}><Orders /></ProtectedRoute>} />
 
-          {/* Admin */}
           <Route path="/admin" element={<ProtectedRoute roles={['admin']}><AdminLayout /></ProtectedRoute>}>
             <Route index element={<AdminDashboard />} />
-            <Route path="orders"    element={<AdminOrders />} />
+            <Route path="orders" element={<AdminOrders />} />
             <Route path="customers" element={<AdminCustomers />} />
-            <Route path="workers"   element={<AdminWorkers />} />
-            <Route path="more"      element={<AdminMore />} />
-            <Route path="products"  element={<AdminProducts />} />
-            <Route path="reports"   element={<AdminReports />} />
-            <Route path="payments"  element={<AdminPayments />} />
+            <Route path="workers" element={<AdminWorkers />} />
+            <Route path="more" element={<AdminMore />} />
+            <Route path="products" element={<AdminProducts />} />
+            <Route path="reports" element={<AdminReports />} />
+            <Route path="payments" element={<AdminPayments />} />
           </Route>
 
-          {/* Worker */}
           <Route path="/worker" element={<ProtectedRoute roles={['worker']}><WorkerLayout /></ProtectedRoute>}>
             <Route index element={<WorkerHome />} />
-            <Route path="orders"  element={<WorkerOrders />} />
+            <Route path="orders" element={<WorkerOrders />} />
             <Route path="history" element={<WorkerHistory />} />
-            <Route path="wallet"  element={<WorkerWallet />} />
+            <Route path="wallet" element={<WorkerWallet />} />
             <Route path="profile" element={<WorkerProfile />} />
           </Route>
         </Routes>
