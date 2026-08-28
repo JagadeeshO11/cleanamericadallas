@@ -34,7 +34,7 @@ export default function AdminLayout() {
     <div className="admin-layout">
       <header className="admin-top-header">
         <div className="ath-brand">
-          <img src={LOGO_URL} alt="Clean America" className="ath-logo-image" />
+          <img src={LOGO_URL} alt="Clean America" className="ath-logo-image" style={{ width: 118, height: 48, objectFit: 'contain', objectPosition: 'left center', display: 'block' }} />
           <span className="ath-badge">Admin</span>
         </div>
         <div className="ath-user" ref={dropRef}>
