@@ -2,15 +2,16 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 import { HiHome, HiClipboardList, HiClock, HiCurrencyRupee, HiUser } from 'react-icons/hi';
 import './Worker.css';
+import './WorkerTheme.css';
 
 const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png';
 
 const NAV = [
-  { to: '/worker',          icon: HiHome,           label: 'Home'    },
-  { to: '/worker/orders',   icon: HiClipboardList,  label: 'Orders'  },
-  { to: '/worker/history',  icon: HiClock,          label: 'History' },
-  { to: '/worker/wallet',   icon: HiCurrencyRupee,  label: 'Wallet'  },
-  { to: '/worker/profile',  icon: HiUser,           label: 'Profile' },
+  { to: '/worker', icon: HiHome, label: 'Home' },
+  { to: '/worker/orders', icon: HiClipboardList, label: 'Orders' },
+  { to: '/worker/history', icon: HiClock, label: 'History' },
+  { to: '/worker/wallet', icon: HiCurrencyRupee, label: 'Wallet' },
+  { to: '/worker/profile', icon: HiUser, label: 'Profile' },
 ];
 
 export default function WorkerLayout() {
@@ -34,17 +35,10 @@ export default function WorkerLayout() {
           </div>
         </div>
       </header>
-      <div className="worker-content">
-        <Outlet />
-      </div>
+      <div className="worker-content"><Outlet /></div>
       <nav className="worker-bottom-nav">
         {NAV.map(({ to, icon: Icon, label }) => (
-          <NavLink
-            key={to}
-            to={to}
-            end={to === '/worker'}
-            className={({ isActive }) => `wbn-item ${isActive ? 'active' : ''}`}
-          >
+          <NavLink key={to} to={to} end={to === '/worker'} className={({ isActive }) => `wbn-item ${isActive ? 'active' : ''}`}>
             <Icon className="wbn-icon" />
             <span>{label}</span>
           </NavLink>
