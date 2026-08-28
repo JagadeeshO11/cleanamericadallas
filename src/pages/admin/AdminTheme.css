@@ -1,0 +1,156 @@
+/* Clean America admin theme: keep admin controls on the same brand palette. */
+.admin-layout,
+.admin-content { background: var(--bg); color: var(--text-primary); }
+
+.admin-page { color: var(--text-primary); }
+.admin-header h1,
+.sc-val,
+.as-header h2,
+.wr-info strong,
+.worker-card h3,
+.wc-stats strong,
+.wo-info strong,
+.modal h3,
+.customer-card h3,
+.cc-stats strong,
+.mi-text strong,
+.pc-body h3,
+.pc-rate,
+.report-metric strong,
+.top-name,
+.ps-card strong,
+.ro-vehicle,
+.ro-amount,
+.ath-brand,
+.ath-info strong,
+.ath-drop-header strong { color: var(--text-primary) !important; }
+
+.admin-header p,
+.sc-label,
+.mono,
+.wr-info span,
+.wr-rating,
+.wc-vehicle,
+.wc-phone,
+.wc-stats span,
+.wo-info span,
+.modal p,
+.cc-row,
+.cc-icon,
+.cc-stats span,
+.mi-text span,
+.pc-body p,
+.pc-unit,
+.report-metric span,
+.top-rank,
+.top-count,
+.ps-card span,
+.ro-meta,
+.ath-info span,
+.ath-drop-header span { color: var(--text-muted) !important; }
+
+.admin-section,
+.stat-card,
+.worker-card,
+.customer-card,
+.more-item,
+.product-card,
+.report-metric,
+.ps-card,
+.orders-table-wrap,
+.modal,
+.worker-option { background: var(--surface) !important; border-color: var(--border) !important; }
+
+.stat-card.orange,
+.stat-card.green,
+.ps-card.green { border-left-color: var(--primary) !important; }
+.stat-card.yellow,
+.ps-card.yellow { border-left-color: var(--accent-gold) !important; }
+.stat-card.blue,
+.stat-card.teal,
+.ps-card.blue { border-left-color: var(--dark-green, #1B5E20) !important; }
+.stat-card.purple { border-left-color: var(--accent-gold) !important; }
+
+.sc-icon-wrap.orange,
+.sc-icon-wrap.green,
+.sc-icon-wrap.teal,
+.sc-icon-wrap.blue,
+.sc-icon-wrap.purple,
+.sc-icon-wrap.yellow,
+.qa-btn.orange,
+.qa-btn.blue,
+.qa-btn.green,
+.qa-btn.purple { background: rgba(76,175,22,.12) !important; color: var(--primary) !important; }
+
+.sc-icon-wrap.yellow,
+.qa-btn.yellow { background: rgba(255,193,7,.12) !important; color: var(--accent-gold) !important; }
+
+.admin-table th { color: var(--text-muted) !important; border-bottom-color: var(--border) !important; }
+.admin-table td { color: var(--text-secondary) !important; border-bottom-color: var(--border) !important; }
+.admin-table tr:hover td { background: var(--input) !important; }
+
+.filter-tabs button,
+.modal-close,
+.back-icon-btn,
+.ath-user-btn { background: var(--surface) !important; border-color: var(--border) !important; color: var(--text-secondary) !important; }
+.filter-tabs button:hover,
+.back-icon-btn:hover,
+.ath-user-btn:hover { border-color: var(--primary) !important; color: var(--primary) !important; }
+.filter-tabs button.active { background: var(--primary) !important; border-color: var(--primary) !important; color: #fff !important; }
+
+.status-chip.pending,
+.avail-badge.off,
+.toggle-avail.set-busy,
+.unassigned { background: rgba(255,193,7,.14) !important; color: var(--accent-gold) !important; }
+.status-chip.assigned,
+.act-btn.assign { background: rgba(76,175,22,.12) !important; color: var(--primary) !important; }
+.status-chip.active,
+.status-chip.completed,
+.act-btn.advance,
+.avail-badge.on,
+.toggle-avail.set-avail,
+.role-tag.customer { background: rgba(76,175,22,.14) !important; color: var(--primary) !important; }
+.status-chip.cancelled,
+.act-btn.cancel { background: rgba(211,47,47,.14) !important; color: var(--error) !important; }
+
+.wr-avatar,
+.wc-avatar,
+.wo-avatar,
+.ath-avatar,
+.ath-drop-avatar { background: var(--primary) !important; color: #fff !important; }
+.avail-dot.on,
+.top-bar { background: var(--primary) !important; }
+.avail-dot.off { background: var(--accent-gold) !important; }
+.active-job-badge { background: rgba(211,47,47,.12) !important; color: var(--error) !important; }
+
+.more-item:hover { border-color: var(--primary) !important; box-shadow: 0 4px 14px rgba(76,175,22,.12) !important; }
+.top-bar-wrap { background: var(--border) !important; }
+
+.admin-top-header,
+.admin-bottom-nav { background: var(--surface) !important; border-color: var(--border) !important; }
+.admin-top-header { box-shadow: 0 2px 12px rgba(0,0,0,.25) !important; }
+.abn-item { color: var(--text-muted) !important; }
+.abn-item.active { color: var(--primary) !important; }
+.ath-badge { background: var(--primary) !important; color: #fff !important; }
+.ath-dropdown { background: var(--surface) !important; border-color: var(--border) !important; box-shadow: 0 12px 36px rgba(0,0,0,.35) !important; }
+.ath-drop-divider { border-top-color: var(--border) !important; }
+.ath-drop-item { color: var(--text-secondary); }
+.ath-drop-item:hover { background: var(--input) !important; }
+
+.ath-logout { background: var(--surface) !important; border-color: rgba(211,47,47,.35) !important; color: var(--error) !important; }
+.ath-logout:hover { background: rgba(211,47,47,.1) !important; border-color: var(--error) !important; }
+
+.modal-overlay { background: rgba(0,0,0,.72) !important; }
+.worker-option:hover:not(:disabled) { border-color: var(--primary) !important; background: var(--input) !important; }
+.modal-close:hover { border-color: var(--primary) !important; color: var(--primary) !important; }
+.empty-msg { color: var(--text-muted) !important; }
+
+/* Gold is reserved for highlights, confirmed/attention states and key admin metrics. */
+.stat-card.yellow .sc-icon-wrap,
+.stat-card.purple .sc-icon-wrap,
+.ps-card.yellow .ps-icon { color: var(--accent-gold) !important; }
+
+@media (max-width: 768px) {
+  .admin-page { padding-bottom: 86px; }
+  .admin-bottom-nav { height: 68px; }
+}
