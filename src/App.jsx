@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import BottomNav from './components/BottomNav';
@@ -9,6 +9,7 @@ import BookingFlow from './pages/BookingFlow';
 import OrderTracking from './pages/OrderTracking';
 import Orders from './pages/Orders';
 import Cart from './pages/Cart';
+import CustomerProfile from './pages/CustomerProfile';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -45,12 +46,20 @@ function Layout() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/browse" element={<Browse />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/book/:id" element={<BookingFlow />} />
-          <Route path="/track/:id" element={<OrderTracking />} />
-          <Route path="/orders" element={<ProtectedRoute roles={['customer', 'admin']}><Orders /></ProtectedRoute>} />
+          <Route path="/signin" element={<Login />} />
+          <Route path="/signup" element={<Register />} />
+          <Route path="/login" element={<Navigate to="/signin" replace />} />
+          <Route path="/register" element={<Navigate to="/signup" replace />} />
+
+          <Route path="/customer" element={<ProtectedRoute roles={['customer']}><CustomerProfile /></ProtectedRoute>} />
+          <Route path="/customer/profile" element={<ProtectedRoute roles={['customer']}><CustomerProfile /></ProtectedRoute>} />
+          <Route path="/customer/orders" element={<ProtectedRoute roles={['customer']}><Orders /></ProtectedRoute>} />
+          <Route path="/customer/cart" element={<ProtectedRoute roles={['customer']}><Cart /></ProtectedRoute>} />
+          <Route path="/book/:id" element={<ProtectedRoute roles={['customer']}><BookingFlow /></ProtectedRoute>} />
+          <Route path="/track/:id" element={<ProtectedRoute roles={['customer']}><OrderTracking /></ProtectedRoute>} />
+          <Route path="/orders" element={<Navigate to="/customer/orders" replace />} />
+          <Route path="/cart" element={<Navigate to="/customer/cart" replace />} />
+
           <Route path="/admin" element={<ProtectedRoute roles={['admin']}><AdminLayout /></ProtectedRoute>}>
             <Route index element={<AdminDashboard />} /><Route path="orders" element={<AdminOrders />} /><Route path="customers" element={<AdminCustomers />} /><Route path="workers" element={<AdminWorkers />} /><Route path="more" element={<AdminMore />} /><Route path="products" element={<AdminProducts />} /><Route path="reports" element={<AdminReports />} /><Route path="payments" element={<AdminPayments />} />
           </Route>
