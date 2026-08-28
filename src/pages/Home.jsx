@@ -69,8 +69,6 @@ export default function Home() {
 
   return (
     <div className="home">
-
-      {/* ── Search Bar ── */}
       <div className="home-search-bar">
         <button className="home-search-btn" onClick={() => navigate('/browse')}>
           <HiSearch className="hs-icon" />
@@ -78,7 +76,6 @@ export default function Home() {
         </button>
       </div>
 
-      {/* ── Hero Banner ── */}
       <section className="hero-banner" style={{ background: banner.bg }}>
         <div className="hb-content">
           <span className="hb-tag">
@@ -107,7 +104,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Stats Bar ── */}
       <section className="stats-bar">
         <div className="stats-inner">
           {[
@@ -128,7 +124,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Popular Services & Workers ── */}
       <section className="section services-section">
         <div className="section-inner">
           <div className="section-header">
@@ -162,7 +157,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Category Scroll Sections ── */}
       {categories.map((cat, idx) => {
         const CatIcon = CAT_ICONS[cat.id] || MdConstruction;
         const color = CAT_COLORS[cat.id] || '#ff6b00';
@@ -209,10 +203,9 @@ export default function Home() {
         );
       })}
 
-      {/* ── How it works ── */}
       <section className="section section-dark">
         <div className="section-inner">
-          <h2 className="white-h2">How HireMee Works</h2>
+          <h2 className="white-h2">How Clean America Works</h2>
           <p className="white-sub">Book construction vehicles in 3 simple steps</p>
           <div className="steps-row">
             {[
@@ -234,10 +227,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Why HireMee ── */}
       <section className="section">
         <div className="section-inner">
-          <h2>Why Choose HireMee?</h2>
+          <h2>Why Choose Clean America?</h2>
           <div className="why-grid">
             {WHY.map(({ Icon, t, d, color }) => (
               <div key={t} className="why-card">
