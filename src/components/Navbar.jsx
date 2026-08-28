@@ -5,13 +5,15 @@ import { useStore } from '../store/useStore';
 import {
   HiChevronDown, HiChevronUp,
   HiClipboardList, HiCog, HiLogout,
-  HiShoppingCart, HiLocationMarker, HiUser,
+  HiShoppingCart, HiLocationMarker,
 } from 'react-icons/hi';
-import { MdConstruction, MdEngineering } from 'react-icons/md';
+import { MdEngineering } from 'react-icons/md';
 import { GiCrane, GiPickelhaube } from 'react-icons/gi';
 import { FaTractor, FaRoad, FaSpa, FaLeaf } from 'react-icons/fa';
 import { TbTruckDelivery } from 'react-icons/tb';
 import './Navbar.css';
+
+const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png';
 
 const CAT_NAV = [
   { id: 'excavation',  label: 'Excavation',  Icon: GiPickelhaube  },
@@ -32,8 +34,6 @@ export default function Navbar() {
   const [dropOpen, setDropOpen] = useState(false);
   const [loc, setLoc] = useState('');
   const dropRef = useRef();
-
-  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const handler = (e) => { if (!dropRef.current?.contains(e.target)) setDropOpen(false); };
@@ -59,12 +59,10 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      {/* ── Main Row ── */}
       <div className="nav-inner">
         <div className="nav-left">
-          <Link to="/" className="brand">
-            <MdConstruction className="brand-logo" />
-            <span>Hire<b>Mee</b></span>
+          <Link to="/" className="brand" aria-label="Clean America home">
+            <img src={LOGO_URL} alt="Clean America" className="brand-logo-image" />
           </Link>
           <div className="location-row">
             <HiLocationMarker className="loc-icon" />
@@ -79,7 +77,6 @@ export default function Navbar() {
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </button>
 
-          {/* Only show after login */}
           {user && (
             <div className="user-menu" ref={dropRef}>
               <button className="avatar-btn" onClick={() => setDropOpen(o => !o)}>
@@ -120,7 +117,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ── Category Nav Row ── */}
       <div className="cat-nav-row">
         {CAT_NAV.map(({ id, label, Icon }) => (
           <button
