@@ -33,7 +33,7 @@ import WorkerWallet from './pages/worker/WorkerWallet';
 import WorkerProfile from './pages/worker/WorkerProfile';
 
 import './App.css';
-// Keep the worker theme last so it wins over global/page CSS in the production bundle.
+// Worker theme intentionally imported last to override legacy worker/global styles.
 import './pages/worker/WorkerTheme.css';
 
 function ScrollToTop() {
