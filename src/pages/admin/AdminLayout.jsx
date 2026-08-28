@@ -2,8 +2,10 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useState, useRef, useEffect } from 'react';
 import { HiHome, HiClipboardList, HiUsers, HiDotsHorizontal, HiLogout, HiChevronDown } from 'react-icons/hi';
-import { MdEngineering, MdConstruction } from 'react-icons/md';
+import { MdEngineering } from 'react-icons/md';
 import './Admin.css';
+
+const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png';
 
 const NAV = [
   { to: '/admin',           icon: HiHome,           label: 'Dashboard', end: true },
@@ -30,11 +32,9 @@ export default function AdminLayout() {
 
   return (
     <div className="admin-layout">
-      {/* Top Header */}
       <header className="admin-top-header">
         <div className="ath-brand">
-          <MdConstruction className="ath-logo-icon" />
-          <span>Hire<b>Mee</b></span>
+          <img src={LOGO_URL} alt="Clean America" className="ath-logo-image" />
           <span className="ath-badge">Admin</span>
         </div>
         <div className="ath-user" ref={dropRef}>
