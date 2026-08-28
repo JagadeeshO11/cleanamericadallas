@@ -1,8 +1,9 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 import { HiHome, HiClipboardList, HiClock, HiCurrencyRupee, HiUser } from 'react-icons/hi';
-import { MdConstruction } from 'react-icons/md';
 import './Worker.css';
+
+const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png';
 
 const NAV = [
   { to: '/worker',          icon: HiHome,           label: 'Home'    },
@@ -20,8 +21,7 @@ export default function WorkerLayout() {
     <div className="worker-layout">
       <header className="worker-top-header">
         <div className="wth-brand">
-          <MdConstruction className="wth-logo-icon" />
-          <span>Hire<b>Mee</b></span>
+          <img src={LOGO_URL} alt="Clean America" className="wth-logo-image" style={{ width: 118, height: 48, objectFit: 'contain', objectPosition: 'left center', display: 'block' }} />
           <span className="wth-badge">Worker</span>
         </div>
         <div className="wth-user">
