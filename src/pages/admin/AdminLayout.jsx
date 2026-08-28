@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { HiHome, HiClipboardList, HiUsers, HiDotsHorizontal, HiLogout, HiChevronDown } from 'react-icons/hi';
 import { MdEngineering } from 'react-icons/md';
 import './Admin.css';
+import './AdminTheme.css';
 
 const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png';
 
