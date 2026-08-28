@@ -46,10 +46,19 @@ function Layout() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/browse" element={<Browse />} />
-          <Route path="/signin" element={<Login />} />
-          <Route path="/signup" element={<Register />} />
-          <Route path="/login" element={<Navigate to="/signin" replace />} />
-          <Route path="/register" element={<Navigate to="/signup" replace />} />
+
+          {/* Separate authentication entry points by role. */}
+          <Route path="/customer/signin" element={<Login role="customer" />} />
+          <Route path="/customer/signup" element={<Register role="customer" />} />
+          <Route path="/worker/signin" element={<Login role="worker" />} />
+          <Route path="/worker/signup" element={<Register role="worker" />} />
+          <Route path="/admin/signin" element={<Login role="admin" />} />
+
+          {/* Legacy auth URLs are compatibility redirects only, not shared auth pages. */}
+          <Route path="/signin" element={<Navigate to="/customer/signin" replace />} />
+          <Route path="/signup" element={<Navigate to="/customer/signup" replace />} />
+          <Route path="/login" element={<Navigate to="/customer/signin" replace />} />
+          <Route path="/register" element={<Navigate to="/customer/signup" replace />} />
 
           <Route path="/customer" element={<ProtectedRoute roles={['customer']}><CustomerProfile /></ProtectedRoute>} />
           <Route path="/customer/profile" element={<ProtectedRoute roles={['customer']}><CustomerProfile /></ProtectedRoute>} />
