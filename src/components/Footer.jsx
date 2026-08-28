@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
 import { FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
-import { MdConstruction } from 'react-icons/md';
 import './Footer.css';
+
+const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png';
 
 export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer-inner">
         <div className="footer-brand">
-          <Link to="/" className="footer-logo">
-            <MdConstruction className="footer-logo-icon" /> Hire<b>Mee</b>
+          <Link to="/" className="footer-logo" aria-label="Clean America home">
+            <img src={LOGO_URL} alt="Clean America" className="footer-logo-image" />
           </Link>
           <p>India's #1 on-demand construction vehicle booking platform. Book JCBs, Cranes, Tippers & more — instantly.</p>
           <div className="footer-social">
@@ -34,7 +35,7 @@ export default function Footer() {
           <h4>For Customers</h4>
           <Link to="/browse">Browse Vehicles</Link>
           <Link to="/orders">My Orders</Link>
-          <Link to="#">HireMee Reviews</Link>
+          <Link to="#">Clean America Reviews</Link>
           <Link to="#">Categories Near You</Link>
           <Link to="#">Contact Us</Link>
         </div>
@@ -50,7 +51,7 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <p>* As on December 31, 2024</p>
-        <p>© Copyright 2026 HireMee Technologies India Limited. All rights reserved.</p>
+        <p>© Copyright 2026 Clean America. All rights reserved.</p>
       </div>
     </footer>
   );
