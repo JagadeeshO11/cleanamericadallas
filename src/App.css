@@ -1,1 +1,6 @@
 /* App-level styles — page-specific styles live in their own CSS files */
+
+/* The customer experience is app-like on phones, so hide the desktop footer. */
+@media (max-width: 600px){
+  .footer{display:none!important}
+}
