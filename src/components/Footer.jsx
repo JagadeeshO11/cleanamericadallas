@@ -34,7 +34,7 @@ export default function Footer() {
         <div className="footer-col">
           <h4>For Customers</h4>
           <Link to="/browse">Browse Vehicles</Link>
-          <Link to="/orders">My Orders</Link>
+          <Link to="/customer/orders">My Orders</Link>
           <Link to="#">Clean America Reviews</Link>
           <Link to="#">Categories Near You</Link>
           <Link to="#">Contact Us</Link>
@@ -42,7 +42,8 @@ export default function Footer() {
 
         <div className="footer-col">
           <h4>For Professionals</h4>
-          <Link to="/login">Register as Operator</Link>
+          <Link to="/worker/signup">Register as Operator</Link>
+          <Link to="/worker/signin">Operator Sign In</Link>
           <Link to="#">Partner with Us</Link>
           <Link to="#">Operator App</Link>
           <Link to="#">Safety Guidelines</Link>
