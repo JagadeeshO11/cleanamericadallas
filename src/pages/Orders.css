@@ -1,1 +1,171 @@
-.orders-page{padding:32px 40px;max-width:800px;margin:0 auto;color:var(--text-primary)}.orders-page h1{font-size:28px;font-weight:700;color:var(--text-primary);margin:0 0 24px}.orders-list{display:flex;flex-direction:column;gap:12px}.order-item{display:flex;justify-content:space-between;align-items:center;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:18px 20px;cursor:pointer;transition:all .2s;gap:16px;box-shadow:0 5px 18px rgba(0,0,0,.12)}.order-item:hover{border-color:var(--primary);box-shadow:0 8px 24px rgba(76,175,22,.1)}.oi-left{display:flex;align-items:center;gap:14px}.oi-icon{font-size:36px}.oi-name{font-size:16px;font-weight:700;color:var(--text-primary);margin-bottom:3px}.oi-loc{font-size:13px;color:var(--text-secondary);margin-bottom:2px}.oi-meta{font-size:12px;color:var(--text-muted)}.oi-right{text-align:right;flex-shrink:0}.oi-amount{font-size:18px;font-weight:800;color:var(--accent-gold);margin-bottom:4px}.oi-status{font-size:12px;font-weight:600;padding:3px 10px;border-radius:10px;display:inline-block;margin-bottom:4px}.oi-status.active{background:rgba(255,193,7,.12);color:var(--warning)}.oi-status.complete{background:rgba(76,175,22,.12);color:#8ce35f}.oi-id{font-size:11px;color:#667069}.orders-empty{padding:80px 40px;text-align:center}.empty-icon{font-size:64px;margin-bottom:16px}.orders-empty h2{font-size:24px;font-weight:700;color:var(--text-primary);margin:0 0 8px}.orders-empty p{color:var(--text-muted);margin-bottom:24px}.orders-empty button{background:var(--primary);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer}@media(max-width:768px){.orders-page{padding:20px}.order-item{flex-direction:column;align-items:flex-start}.oi-right{text-align:left}}
+/* Clean America Dallas - Customer Bookings Aesthetics */
+
+.orders-page {
+  padding: 32px 24px 80px;
+  max-width: 900px;
+  margin: 0 auto;
+  color: var(--text-primary);
+  min-height: calc(100vh - 76px);
+}
+
+.orders-page h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 24px;
+  letter-spacing: -0.5px;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.order-item:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(76, 175, 22, 0.15);
+}
+
+.oi-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.oi-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(76, 175, 22, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.oi-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.oi-loc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.oi-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.oi-right {
+  text-align: right;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.oi-amount {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--accent-gold);
+}
+
+.oi-status {
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.oi-status.active {
+  background: rgba(255, 193, 7, 0.16);
+  color: var(--accent-gold);
+}
+
+.oi-status.complete {
+  background: rgba(76, 175, 22, 0.16);
+  color: var(--primary);
+}
+
+.oi-id {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.orders-empty {
+  padding: 80px 24px;
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.orders-empty h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+}
+
+.orders-empty p {
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.orders-empty button {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  box-shadow: 0 4px 16px rgba(76, 175, 22, 0.25);
+}
+
+.orders-empty button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .orders-page { padding: 16px 14px 80px; }
+  .order-item { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .oi-right { text-align: left; align-items: flex-start; width: 100%; justify-content: space-between; flex-direction: row; border-top: 1px solid var(--border); padding-top: 10px; }
+}
