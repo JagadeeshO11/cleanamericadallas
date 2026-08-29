@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-const ORDER_STAGES = ['Confirmed', 'Operator Assigned', 'En Route', 'On Site', 'Completed'];
+const ORDER_STAGES = ['Confirmed', 'Pro Assigned', 'En Route', 'Service In Progress', 'Completed'];
 let _counter = 0;
 
 export const useStore = create(
@@ -24,14 +24,14 @@ export const useStore = create(
 
       placeOrder: (vehicle, booking, customer) => {
         const order = {
-          id: `HM${Date.now()}_${++_counter}`,
+          id: `CAD${Date.now().toString().slice(-6)}_${++_counter}`,
           vehicle,
           booking,
           customer: customer || { name: 'Guest', phone: '' },
           stage: 0,
           stages: ORDER_STAGES,
           operator: null,
-          placedAt: new Date().toLocaleTimeString(),
+          placedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           createdAt: new Date().toISOString(),
           status: 'pending',
         };
@@ -82,6 +82,6 @@ export const useStore = create(
       getOrdersByWorker: (workerId) => get().orders.filter(o => o.operator?.id === workerId),
       getPendingOrders: () => get().orders.filter(o => o.status === 'pending'),
     }),
-    { name: 'hiremee-orders' }
+    { name: 'cleanamerica-orders' }
   )
 );

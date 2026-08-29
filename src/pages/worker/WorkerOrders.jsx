@@ -8,18 +8,18 @@ export default function WorkerOrders() {
   const advanceStage = useStore(s => s.advanceStage);
 
   const activeOrders = orders.filter(o =>
-    o.operator?.id === user.id && ['assigned', 'active', 'pending'].includes(o.status)
+    (o.operator?.id === user?.id || user?.role === 'worker') && ['assigned', 'active', 'pending'].includes(o.status)
   );
 
   return (
     <div className="worker-page">
       <div className="wp-title">
         <HiClipboardList className="wp-title-icon" />
-        <h1>Active Orders</h1>
+        <h1>Active Appointments</h1>
       </div>
 
       {activeOrders.length === 0 ? (
-        <div className="empty-msg">No active orders right now.</div>
+        <div className="empty-msg">No active service appointments right now.</div>
       ) : (
         <div className="order-cards">
           {activeOrders.map(o => (
@@ -37,7 +37,7 @@ export default function WorkerOrders() {
                 <div className="oc-row"><HiUser className="oc-icon" />{o.customer?.name} {o.customer?.phone && <span className="oc-phone">{o.customer.phone}</span>}</div>
               </div>
               <div className="oc-footer">
-                <div className="oc-amount">₹{o.booking?.total?.toLocaleString()}</div>
+                <div className="oc-amount">${o.booking?.total?.toLocaleString()}</div>
                 {o.stage < o.stages.length - 1 && (
                   <button className="aj-advance" onClick={() => advanceStage(o.id)}>
                     {o.stages[o.stage + 1]} <HiArrowRight style={{ width: 14, height: 14 }} />

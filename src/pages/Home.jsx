@@ -4,43 +4,48 @@ import { categories } from '../data/vehicles';
 import { highlightedServices } from '../data/services';
 import Footer from '../components/Footer';
 import {
-  HiStar, HiUsers, HiTruck, HiLocationMarker,
-  HiShieldCheck, HiLightningBolt, HiPhone,
-  HiArrowRight, HiChevronRight, HiSearch, HiCheckCircle, HiBadgeCheck,
+  HiStar, HiUsers, HiShieldCheck, HiLightningBolt, HiPhone,
+  HiArrowRight, HiChevronRight, HiSearch, HiCheckCircle,
+  HiSparkles, HiClock, HiBadgeCheck,
 } from 'react-icons/hi';
 import {
-  MdConstruction, MdEngineering,
-  MdSecurity, MdOutlineVerified,
+  MdOutlineCleaningServices, MdPlumbing, MdElectricalServices,
+  MdHvac, MdHandyman, MdBugReport, MdFormatPaint, MdRoofing,
+  MdOutlineVerified, MdSecurity,
 } from 'react-icons/md';
-import { FaTractor, FaRoad, FaSpa, FaLeaf } from 'react-icons/fa';
-import { GiCrane, GiPickelhaube } from 'react-icons/gi';
-import { TbTruckDelivery } from 'react-icons/tb';
+import { FaGraduationCap } from 'react-icons/fa';
 import './Home.css';
 
 const BANNERS = [
-  { id: 1, tag: 'Most Booked', title: 'JCB on Demand', sub: 'Backhoe Loader at your site in 60 mins', cta: 'Book JCB', vehicleId: 'jcb', bg: 'linear-gradient(120deg,#1a1a2e,#16213e)', accent: '#ff6b00', img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=700&q=80' },
-  { id: 2, tag: 'Instant Booking', title: 'Crane Hire Made Easy', sub: 'Tower & Mobile cranes for any project', cta: 'Book Crane', vehicleId: 'crane', bg: 'linear-gradient(120deg,#0f3460,#533483)', accent: '#fbbf24', img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=700&q=80' },
-  { id: 3, tag: 'Fast Delivery', title: 'Tipper Trucks Ready', sub: 'Sand, gravel & debris transport — same day', cta: 'Book Tipper', vehicleId: 'dump-truck', bg: 'linear-gradient(120deg,#134e4a,#065f46)', accent: '#34d399', img: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=700&q=80' },
-  { id: 4, tag: 'Heavy Lifting', title: 'Bulldozer & Grader', sub: 'Land leveling & road construction experts', cta: 'Book Now', vehicleId: 'bulldozer', bg: 'linear-gradient(120deg,#7c2d12,#9a3412)', accent: '#fb923c', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80' },
+  { id: 1, tag: 'Dallas Special', title: 'Deep House Cleaning', sub: 'Background-checked pros at your door in 60 mins', cta: 'Book Maid Service', vehicleId: 'house-clean', bg: 'linear-gradient(120deg,#121a15,#1b3d22)', accent: '#4CAF16', img: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=700&q=80' },
+  { id: 2, tag: 'Seasonal Tune-Up', title: 'HVAC & AC Service', sub: 'Keep your Dallas home cool this summer for $89', cta: 'Book HVAC Pro', vehicleId: 'ac-tuneup', bg: 'linear-gradient(120deg,#0f2c3d,#1a5370)', accent: '#FFC107', img: 'https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=700&q=80' },
+  { id: 3, tag: 'Same-Day Drain Fix', title: 'Emergency Plumbing', sub: 'Clog removal, leak repair & water heater flush', cta: 'Book Plumber', vehicleId: 'plumb-repair', bg: 'linear-gradient(120deg,#2b170c,#54290e)', accent: '#fb923c', img: 'https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=700&q=80' },
+  { id: 4, tag: 'Dallas Outdoor', title: 'Lawn Mowing & Edging', sub: 'Weekly & bi-weekly yard maintenance packages', cta: 'Book Lawn Care', vehicleId: 'lawn-mow', bg: 'linear-gradient(120deg,#112d1b,#1c522f)', accent: '#4CAF16', img: 'https://images.pexels.com/photos/1483880/pexels-photo-1483880.jpeg?auto=compress&cs=tinysrgb&w=700' },
+];
+
+const CIRCLE_CATEGORIES = [
+  { id: 'cleaning',  label: 'House Cleaning', img: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=200&q=80' },
+  { id: 'plumbing',  label: 'Plumbing',       img: 'https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=200&q=80' },
+  { id: 'hvac',      label: 'HVAC & AC',      img: 'https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=200&q=80' },
+  { id: 'electrical',label: 'Electrical',     img: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=200&q=80' },
+  { id: 'lawn',      label: 'Lawn Care',      img: 'https://images.pexels.com/photos/1483880/pexels-photo-1483880.jpeg?auto=compress&cs=tinysrgb&w=400' },
+  { id: 'handyman',  label: 'Handyman',       img: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=200&q=80' },
+  { id: 'pest',      label: 'Pest Control',   img: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=200&q=80' },
+  { id: 'roofing',   label: 'Roof & Gutters', img: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=200&q=80' },
 ];
 
 const WHY = [
-  { Icon: MdOutlineVerified, t: 'Verified Operators',  d: 'All operators are background-checked and certified', color: '#3b82f6' },
-  { Icon: HiLocationMarker,  t: 'Live GPS Tracking',   d: 'Track your vehicle from dispatch to site in real-time', color: '#ef4444' },
-  { Icon: MdSecurity,        t: 'Transparent Pricing', d: 'No hidden charges. Pay only what you see', color: '#10b981' },
-  { Icon: HiLightningBolt,   t: 'Instant Booking',     d: 'Confirm your booking in under 60 seconds', color: '#f59e0b' },
-  { Icon: HiShieldCheck,     t: 'Insured Vehicles',    d: 'All machinery is fully insured for your safety', color: '#8b5cf6' },
-  { Icon: HiPhone,           t: '24/7 Support',        d: 'Our team is always available to assist you', color: '#06b6d4' },
+  { Icon: MdOutlineVerified, t: 'Vetted & Insured Pros', d: 'Background-checked professionals with $1M liability coverage', color: '#4CAF16' },
+  { Icon: HiClock,           t: 'On-Time Arrival',        d: 'Live GPS tracking from dispatch to your Dallas residence', color: '#FFC107' },
+  { Icon: MdSecurity,        t: 'Upfront USD Pricing',   d: 'Transparent flat rates. No hidden fees or surprise costs', color: '#10b981' },
+  { Icon: HiLightningBolt,   t: 'Instant Online Booking', d: 'Confirm your service in under 60 seconds', color: '#f59e0b' },
+  { Icon: HiShieldCheck,     t: '100% Happiness Guarantee',d: 'If you are not satisfied, we will make it right free of charge', color: '#8b5cf6' },
+  { Icon: HiPhone,           t: '24/7 Local Customer Support', d: 'Dedicated Dallas support team available around the clock', color: '#06b6d4' },
 ];
 
 const CAT_ICONS = {
-  excavation: GiPickelhaube, transport: TbTruckDelivery, road: FaRoad, lifting: GiCrane,
-  agricultural: FaTractor, native: FaLeaf, beauty: FaSpa, other: MdEngineering,
-};
-
-const CAT_COLORS = {
-  excavation: '#f59e0b', transport: '#3b82f6', road: '#6b7280', lifting: '#8b5cf6',
-  agricultural: '#84cc16', native: '#10b981', beauty: '#ec4899', other: '#06b6d4',
+  cleaning: MdOutlineCleaningServices, plumbing: MdPlumbing, hvac: MdHvac, electrical: MdElectricalServices,
+  lawn: FaGraduationCap, handyman: MdHandyman, pest: MdBugReport, roofing: MdRoofing,
 };
 
 export default function Home() {
@@ -53,61 +58,227 @@ export default function Home() {
   }, []);
 
   const banner = BANNERS[bannerIdx];
-  const isDark = banner.accent === '#fbbf24' || banner.accent === '#34d399';
   const book = id => navigate(`/customer/book/${id}`);
 
   return (
     <div className="home">
-      <div className="home-search-bar">
-        <button className="home-search-btn" onClick={() => navigate('/browse')}>
-          <HiSearch className="hs-icon" /><span>Search for JCB, Crane, Tipper...</span>
-        </button>
+      {/* Main Container */}
+      <div className="home-main-container">
+        {/* Category Grid Card Container (matching screenshot style) */}
+        <section className="category-card-container">
+          <div className="ccc-header">
+            <h3>Clean America Services</h3>
+            <span>Dallas, TX</span>
+          </div>
+          <div className="circle-categories-grid">
+            {CIRCLE_CATEGORIES.map(({ id, label, img }) => (
+              <button key={id} className="circle-cat-item" onClick={() => navigate(`/browse?cat=${id}`)}>
+                <div className="circle-img-wrap">
+                  <img
+                    src={img}
+                    alt={label}
+                    className="circle-img"
+                    onError={e => { e.target.src = 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=200&q=80'; }}
+                  />
+                </div>
+                <span className="circle-label">{label}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* Hero Banner Slider */}
+        <section className="hero-banner" style={{ background: banner.bg }}>
+          <div className="hb-content">
+            <span className="hb-tag"><HiSparkles style={{ width: 12, height: 12 }} /> {banner.tag}</span>
+            <h1>{banner.title}</h1>
+            <p>{banner.sub}</p>
+            <div className="hb-actions">
+              <button
+                className="hb-cta"
+                style={{ background: banner.accent, color: banner.accent === '#FFC107' ? '#111' : '#fff' }}
+                onClick={() => book(banner.vehicleId)}
+              >
+                {banner.cta} <HiArrowRight style={{ width: 16, height: 16 }} />
+              </button>
+              <button className="hb-browse" onClick={() => navigate('/browse')}>View All Services</button>
+            </div>
+          </div>
+          <div className="hb-visual">
+            <img src={banner.img} alt={banner.title} className="hb-img" />
+          </div>
+          <div className="hb-dots">
+            {BANNERS.map((_, i) => (
+              <button key={i} className={`dot ${i === bannerIdx ? 'active' : ''}`} onClick={() => setBannerIdx(i)} />
+            ))}
+          </div>
+        </section>
+
+        {/* Stats Bar */}
+        <section className="stats-bar">
+          <div className="stats-inner">
+            {[
+              { Icon: HiStar, val: '4.9★', label: 'Customer Rating' },
+              { Icon: HiUsers, val: '50K+', label: 'Dallas Homes Served' },
+              { Icon: HiBadgeCheck, val: '100%', label: 'Background Checked' },
+              { Icon: HiShieldCheck, val: '$1M', label: 'Insured Coverage' },
+            ].map(({ Icon, val, label }, i) => (
+              <Fragment key={label}>
+                {i > 0 && <div className="stat-divider" />}
+                <div className="stat-item">
+                  <Icon className="stat-icon" />
+                  <strong>{val}</strong>
+                  <span>{label}</span>
+                </div>
+              </Fragment>
+            ))}
+          </div>
+        </section>
+
+        {/* Popular Services Section */}
+        <section className="section services-section">
+          <div className="section-inner">
+            <div className="section-header">
+              <div>
+                <h2>Most Requested Services</h2>
+                <p className="section-sub">Certified Dallas pros available today</p>
+              </div>
+              <button className="see-all-btn" onClick={() => navigate('/browse')}>
+                See all <HiChevronRight style={{ width: 14, height: 14, verticalAlign: 'middle' }} />
+              </button>
+            </div>
+            <div className="h-scroll">
+              {highlightedServices.map(s => (
+                <div key={s.id} className="service-card" onClick={() => book(s.id)}>
+                  <div className="sc-img-wrap">
+                    <img
+                      src={s.image}
+                      alt={s.name}
+                      className="sc-img"
+                      onError={e => { e.target.src = 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80'; }}
+                    />
+                    <div className="sc-rating">
+                      <HiStar style={{ width: 11, height: 11, color: '#f59e0b' }} /> {s.rating}
+                    </div>
+                  </div>
+                  <div className="sc-body">
+                    <div className="sc-name">{s.name}</div>
+                    <div className="sc-desc">{s.desc}</div>
+                    <div className="sc-footer">
+                      <div>
+                        <span className="sc-rate">${s.rate}</span>
+                        <span className="sc-unit">/{s.unit}</span>
+                      </div>
+                      <button className="sc-book" onClick={e => { e.stopPropagation(); book(s.id); }}>
+                        Book
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Category Sections */}
+        {categories.map((cat, idx) => {
+          const CatIcon = CAT_ICONS[cat.id] || MdOutlineCleaningServices;
+          return (
+            <section key={cat.id} className={`section ${idx % 2 === 1 ? 'section-gray' : ''}`}>
+              <div className="section-inner">
+                <div className="section-header">
+                  <div className="cat-section-title">
+                    <div className="cat-section-icon-wrap">
+                      <CatIcon className="cat-section-icon" />
+                    </div>
+                    <div>
+                      <h2>{cat.label}</h2>
+                      <span className="cat-section-count">{cat.vehicles.length} service options</span>
+                    </div>
+                  </div>
+                  <button className="see-all-btn" onClick={() => navigate(`/browse?cat=${cat.id}`)}>
+                    See all <HiChevronRight style={{ width: 14, height: 14, verticalAlign: 'middle' }} />
+                  </button>
+                </div>
+                <div className="h-scroll">
+                  {cat.vehicles.map(v => (
+                    <div key={v.id} className="hs-card" onClick={() => book(v.id)}>
+                      <div className="hs-img-wrap">
+                        <img
+                          src={v.image}
+                          alt={v.name}
+                          className="hs-img"
+                          onError={e => { e.target.src = 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80'; }}
+                        />
+                        <div className="hs-overlay">
+                          <span className="hs-avail">✓ Available in Dallas</span>
+                        </div>
+                      </div>
+                      <div className="hs-body">
+                        <div className="hs-name">{v.name}</div>
+                        <div className="hs-desc">{v.desc}</div>
+                        <div className="hs-footer">
+                          <div>
+                            <span className="hs-rate">${v.rate}</span>
+                            <span className="hs-unit">/{v.unit}</span>
+                          </div>
+                          <button className="hs-book" onClick={e => { e.stopPropagation(); book(v.id); }}>
+                            Book
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        })}
+
+        {/* How Clean America Dallas Works */}
+        <section className="section section-dark">
+          <div className="section-inner">
+            <h2 className="white-h2">How Clean America Dallas Works</h2>
+            <p className="white-sub">Book top-rated home pros in 3 easy steps</p>
+            <div className="steps-row">
+              {[
+                { n: '01', Icon: HiSearch, t: 'Select Service', d: 'Choose from 20+ home cleaning, plumbing & HVAC services' },
+                { n: '02', Icon: HiClock, t: 'Choose Schedule', d: 'Pick a date and arrival window that works for you' },
+                { n: '03', Icon: HiCheckCircle, t: 'Track Pro & Pay', d: 'Track your assigned Dallas pro live and pay securely online' },
+              ].map(({ n, Icon, t, d }) => (
+                <div key={n} className="step-card">
+                  <div className="step-num">{n}</div>
+                  <Icon className="step-icon" />
+                  <strong>{t}</strong>
+                  <p>{d}</p>
+                </div>
+              ))}
+            </div>
+            <button className="cta-big" onClick={() => navigate('/browse')}>
+              Book Your First Service <HiArrowRight style={{ width: 18, height: 18, verticalAlign: 'middle' }} />
+            </button>
+          </div>
+        </section>
+
+        {/* Why Choose Us */}
+        <section className="section">
+          <div className="section-inner">
+            <h2>Why Dallas Trusts Clean America</h2>
+            <div className="why-grid">
+              {WHY.map(({ Icon, t, d, color }) => (
+                <div key={t} className="why-card">
+                  <div className="why-icon-wrap" style={{ background: color + '18', color }}>
+                    <Icon className="why-icon" />
+                  </div>
+                  <strong>{t}</strong>
+                  <p>{d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
       </div>
 
-      <section className="hero-banner" style={{ background: banner.bg }}>
-        <div className="hb-content">
-          <span className="hb-tag"><HiLightningBolt style={{ width: 12, height: 12 }} /> {banner.tag}</span>
-          <h1>{banner.title}</h1><p>{banner.sub}</p>
-          <div className="hb-actions">
-            <button className="hb-cta" style={{ background: banner.accent, color: isDark ? '#1a1a1a' : '#fff' }} onClick={() => book(banner.vehicleId)}>{banner.cta} <HiArrowRight style={{ width: 16, height: 16 }} /></button>
-            <button className="hb-browse" onClick={() => navigate('/browse')}>Browse All</button>
-          </div>
-        </div>
-        <div className="hb-visual"><img src={banner.img} alt={banner.title} className="hb-img" /></div>
-        <div className="hb-dots">{BANNERS.map((_, i) => <button key={i} className={`dot ${i === bannerIdx ? 'active' : ''}`} onClick={() => setBannerIdx(i)} />)}</div>
-      </section>
-
-      <section className="stats-bar"><div className="stats-inner">
-        {[
-          { Icon: HiStar, val: '4.8★', label: 'Service Rating' }, { Icon: HiUsers, val: '12M+', label: 'Customers Globally' },
-          { Icon: HiTruck, val: '500+', label: 'Verified Vehicles' }, { Icon: HiLocationMarker, val: '50+', label: 'Cities Covered' },
-        ].map(({ Icon, val, label }, i) => <Fragment key={label}>{i > 0 && <div className="stat-divider" />}<div className="stat-item"><Icon className="stat-icon" /><strong>{val}</strong><span>{label}</span></div></Fragment>)}
-      </div></section>
-
-      <section className="section services-section"><div className="section-inner">
-        <div className="section-header"><div><h2>Popular Services</h2><p className="section-sub">Skilled workers at your doorstep</p></div><button className="see-all-btn" onClick={() => navigate('/browse')}>See all <HiChevronRight style={{ width: 14, height: 14, verticalAlign: 'middle' }} /></button></div>
-        <div className="h-scroll">{highlightedServices.map(s => <div key={s.id} className="service-card" onClick={() => book(s.id)}>
-          <div className="sc-img-wrap"><img src={s.image} alt={s.name} className="sc-img" /><div className="sc-rating"><HiStar style={{ width: 11, height: 11, color: '#f59e0b' }} /> {s.rating}</div></div>
-          <div className="sc-body"><div className="sc-name">{s.name}</div><div className="sc-desc">{s.desc}</div><div className="sc-footer"><div><span className="sc-rate">₹{s.rate}</span><span className="sc-unit">/{s.unit}</span></div><button className="sc-book" onClick={e => { e.stopPropagation(); book(s.id); }}>Book</button></div></div>
-        </div>)}</div>
-      </div></section>
-
-      {categories.map((cat, idx) => {
-        const CatIcon = CAT_ICONS[cat.id] || MdConstruction; const color = CAT_COLORS[cat.id] || '#ff6b00';
-        return <section key={cat.id} className={`section ${idx % 2 === 1 ? 'section-gray' : ''}`}><div className="section-inner">
-          <div className="section-header"><div className="cat-section-title"><div className="cat-section-icon-wrap" style={{ background: color + '18', color }}><CatIcon className="cat-section-icon" /></div><div><h2>{cat.label}</h2><span className="cat-section-count">{cat.vehicles.length} vehicles</span></div></div><button className="see-all-btn" onClick={() => navigate(`/browse?cat=${cat.id}`)}>See all <HiChevronRight style={{ width: 14, height: 14, verticalAlign: 'middle' }} /></button></div>
-          <div className="h-scroll">{cat.vehicles.map(v => <div key={v.id} className="hs-card" onClick={() => book(v.id)}>
-            <div className="hs-img-wrap"><img src={v.image} alt={v.name} className="hs-img" /><div className="hs-overlay"><span className="hs-avail">✓ Available</span></div></div>
-            <div className="hs-body"><div className="hs-name">{v.name}</div><div className="hs-desc">{v.desc}</div><div className="hs-footer"><div><span className="hs-rate">₹{v.rate.toLocaleString()}</span><span className="hs-unit">/{v.unit}</span></div><button className="hs-book" style={{ background: color }} onClick={e => { e.stopPropagation(); book(v.id); }}>Book</button></div></div>
-          </div>)}</div>
-        </div></section>;
-      })}
-
-      <section className="section section-dark"><div className="section-inner"><h2 className="white-h2">How Clean America Works</h2><p className="white-sub">Book construction vehicles in 3 simple steps</p><div className="steps-row">
-        {[{ n: '01', Icon: HiLocationMarker, t: 'Set Your Location', d: 'Enter your construction site address' }, { n: '02', Icon: GiCrane, t: 'Choose Vehicle', d: 'Pick from 20+ machines with live availability' }, { n: '03', Icon: HiCheckCircle, t: 'Confirm & Track', d: 'Book instantly and track your operator live' }].map(({ n, Icon, t, d }) => <div key={n} className="step-card"><div className="step-num">{n}</div><Icon className="step-icon" /><strong>{t}</strong><p>{d}</p></div>)}
-      </div><button className="cta-big" onClick={() => navigate('/browse')}>Book Your First Vehicle <HiArrowRight style={{ width: 18, height: 18, verticalAlign: 'middle' }} /></button></div></section>
-
-      <section className="section"><div className="section-inner"><h2>Why Choose Clean America?</h2><div className="why-grid">{WHY.map(({ Icon, t, d, color }) => <div key={t} className="why-card"><div className="why-icon-wrap" style={{ background: color + '18', color }}><Icon className="why-icon" /></div><strong>{t}</strong><p>{d}</p></div>)}</div></div></section>
       <Footer />
     </div>
   );

@@ -17,7 +17,7 @@ import BookingFlow from './pages/BookingFlow';
 import OrderTracking from './pages/OrderTracking';
 
 // Import Worker Pages
-import WorkerHome from './pages/worker/WorkerHome';
+import WorkerDashboard from './pages/worker/WorkerDashboard';
 import WorkerOrders from './pages/worker/WorkerOrders';
 import WorkerHistory from './pages/worker/WorkerHistory';
 import WorkerWallet from './pages/worker/WorkerWallet';
@@ -52,7 +52,7 @@ function PublicLayout() {
   return (
     <>
       <Navbar />
-      <main style={{ paddingBottom: '72px', paddingTop: '112px' }}>
+      <main style={{ paddingBottom: '72px', paddingTop: '76px' }}>
         <Outlet />
       </main>
       <BottomNav />
@@ -98,7 +98,7 @@ function AppRoutes() {
 
       {/* 4. Category 1: Customer Portal Routes */}
       <Route path="/customer" element={<CustomerRoutes />}>
-        <Route index element={<CustomerProfile />} />
+        <Route index element={<Navigate to="/customer/profile" replace />} />
         <Route path="profile" element={<CustomerProfile />} />
         <Route path="orders" element={<Orders />} />
         <Route path="cart" element={<Cart />} />
@@ -109,7 +109,7 @@ function AppRoutes() {
 
       {/* 5. Category 2: Worker / Partner Portal Routes */}
       <Route path="/worker" element={<WorkerRoutes />}>
-        <Route index element={<WorkerHome />} />
+        <Route index element={<WorkerDashboard />} />
         <Route path="orders" element={<WorkerOrders />} />
         <Route path="history" element={<WorkerHistory />} />
         <Route path="wallet" element={<WorkerWallet />} />

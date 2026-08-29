@@ -1,28 +1,28 @@
 import { useAuthStore } from '../../store/useAuthStore';
 import { useStore } from '../../store/useStore';
 import {
-  HiStar, HiBriefcase, HiCheckCircle, HiCurrencyRupee,
+  HiStar, HiBriefcase, HiCheckCircle, HiCurrencyDollar,
   HiLocationMarker, HiCalendar, HiUser, HiArrowRight,
 } from 'react-icons/hi';
-import { MdDirectionsCar } from 'react-icons/md';
+import { MdHomeRepairService } from 'react-icons/md';
 import './Worker.css';
 
 export default function WorkerDashboard() {
   const user = useAuthStore(s => s.user);
   const updateWorkerAvailability = useAuthStore(s => s.updateWorkerAvailability);
-  const orders     = useStore(s => s.orders);
+  const orders = useStore(s => s.orders);
   const advanceStage = useStore(s => s.advanceStage);
 
-  const myOrders     = orders.filter(o => o.operator?.id === user?.id);
-  const activeJob    = myOrders.find(o => ['assigned','active'].includes(o.status));
+  const myOrders = orders.filter(o => o.operator?.id === user?.id || user?.role === 'worker');
+  const activeJob = myOrders.find(o => ['assigned', 'active'].includes(o.status));
   const completedJobs = myOrders.filter(o => o.status === 'completed');
-  const earnings     = completedJobs.reduce((s, o) => s + (o.booking?.total || 0), 0);
+  const earnings = completedJobs.reduce((s, o) => s + (o.booking?.total || 0), 0);
 
   const STATS = [
-    { Icon: HiStar,           val: `${user?.rating || 4.5}★`, label: 'Rating',      color: '#f59e0b' },
-    { Icon: HiBriefcase,      val: (user?.jobsDone || 0) + completedJobs.length, label: 'Total Jobs', color: '#3b82f6' },
-    { Icon: HiCheckCircle,    val: completedJobs.length, label: 'On Platform', color: '#10b981' },
-    { Icon: HiCurrencyRupee,  val: `₹${earnings.toLocaleString()}`, label: 'Earnings', color: '#8b5cf6' },
+    { Icon: HiStar, val: `${user?.rating || 4.9}★`, label: 'Pro Rating', color: '#f59e0b' },
+    { Icon: HiBriefcase, val: (user?.jobsDone || 0) + completedJobs.length, label: 'Jobs Completed', color: '#3b82f6' },
+    { Icon: HiCheckCircle, val: completedJobs.length, label: 'On Platform', color: '#10b981' },
+    { Icon: HiCurrencyDollar, val: `$${earnings.toLocaleString()}`, label: 'Earnings', color: '#8b5cf6' },
   ];
 
   return (
@@ -32,15 +32,15 @@ export default function WorkerDashboard() {
         <div className="wh-left">
           <div className="wh-avatar">{user?.name?.charAt(0)?.toUpperCase() || 'W'}</div>
           <div>
-            <h1>Hey, {user?.name?.split(' ')[0] || 'Worker'}! 👋</h1>
+            <h1>Hey, {user?.name?.split(' ')[0] || 'Pro'}! 👋</h1>
             <p className="wh-vehicle">
-              <MdDirectionsCar style={{ width: 14, height: 14, verticalAlign: 'middle', marginRight: 4 }} />
-              {user?.vehicle || 'Equipment Operator'}
+              <MdHomeRepairService style={{ width: 15, height: 15, verticalAlign: 'middle', marginRight: 4 }} />
+              {user?.vehicle || 'Dallas Certified Home Pro'}
             </p>
           </div>
         </div>
         <div className="avail-toggle">
-          <span>Availability:</span>
+          <span>Dallas Online Status:</span>
           <button
             className={`toggle-btn ${user?.available ? 'on' : 'off'}`}
             onClick={() => user?.id && updateWorkerAvailability(user.id, !user.available)}
@@ -66,16 +66,16 @@ export default function WorkerDashboard() {
       {/* Active Job */}
       {activeJob && (
         <div className="active-job-card">
-          <div className="aj-badge">🔴 Active Job</div>
-          <h2>{activeJob.vehicle.name}</h2>
+          <div className="aj-badge">🔴 Active Dallas Appointment</div>
+          <h2>{activeJob.vehicle?.name}</h2>
           <div className="aj-details">
             <div className="aj-row">
               <HiLocationMarker className="aj-icon" />
-              <strong>{activeJob.booking.location}</strong>
+              <strong>{activeJob.booking?.location}</strong>
             </div>
             <div className="aj-row">
               <HiCalendar className="aj-icon" />
-              <strong>{activeJob.booking.date}</strong>
+              <strong>{activeJob.booking?.date}</strong>
             </div>
             <div className="aj-row">
               <HiUser className="aj-icon" />
@@ -99,7 +99,7 @@ export default function WorkerDashboard() {
       <div className="worker-section">
         <h2>Job History</h2>
         {myOrders.length === 0 ? (
-          <div className="empty-msg">No jobs assigned yet. Stay online to receive bookings.</div>
+          <div className="empty-msg">No jobs assigned yet. Turn status Online to accept Dallas service requests.</div>
         ) : (
           <div className="job-list">
             {myOrders.map(o => (
@@ -107,20 +107,20 @@ export default function WorkerDashboard() {
                 <div className="ji-left">
                   <div className="ji-thumb">
                     <img
-                      src={o.vehicle.image || 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=120&q=70'}
-                      alt={o.vehicle.name}
-                      onError={e => { e.target.src = 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=120&q=70'; }}
+                      src={o.vehicle?.image || 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=120&q=70'}
+                      alt={o.vehicle?.name}
+                      onError={e => { e.target.src = 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=120&q=70'; }}
                     />
                   </div>
                   <div>
-                    <strong>{o.vehicle.name}</strong>
+                    <strong>{o.vehicle?.name}</strong>
                     <p>
-                      <HiLocationMarker style={{ width: 11, height: 11, verticalAlign: 'middle' }} /> {o.booking.location} · {o.booking.date}
+                      <HiLocationMarker style={{ width: 11, height: 11, verticalAlign: 'middle' }} /> {o.booking?.location} · {o.booking?.date}
                     </p>
                   </div>
                 </div>
                 <div className="ji-right">
-                  <div className="ji-amount">₹{o.booking?.total?.toLocaleString()}</div>
+                  <div className="ji-amount">${o.booking?.total?.toLocaleString()}</div>
                   <span className={`status-chip ${o.status}`}>{o.status}</span>
                 </div>
               </div>

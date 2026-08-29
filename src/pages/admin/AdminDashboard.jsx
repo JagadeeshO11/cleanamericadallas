@@ -3,7 +3,7 @@ import { useStore } from '../../store/useStore';
 import { useAuthStore } from '../../store/useAuthStore';
 import {
   HiClipboardList, HiLightningBolt, HiCheckCircle,
-  HiCurrencyRupee, HiUsers, HiArrowRight, HiStar,
+  HiCurrencyDollar, HiUsers, HiArrowRight, HiStar,
 } from 'react-icons/hi';
 import { MdPendingActions } from 'react-icons/md';
 import './Admin.css';
@@ -15,29 +15,29 @@ export default function AdminDashboard() {
   const workers = getWorkers();
 
   const stats = {
-    total:            orders.length,
-    pending:          orders.filter(o => o.status === 'pending').length,
-    active:           orders.filter(o => ['assigned', 'active'].includes(o.status)).length,
-    completed:        orders.filter(o => o.status === 'completed').length,
-    revenue:          orders.filter(o => o.status === 'completed').reduce((s, o) => s + (o.booking?.total || 0), 0),
+    total: orders.length,
+    pending: orders.filter(o => o.status === 'pending').length,
+    active: orders.filter(o => ['assigned', 'active'].includes(o.status)).length,
+    completed: orders.filter(o => o.status === 'completed').length,
+    revenue: orders.filter(o => o.status === 'completed').reduce((s, o) => s + (o.booking?.total || 0), 0),
     availableWorkers: workers.filter(w => w.available).length,
   };
 
   const recent = orders.slice(0, 5);
 
   const STAT_CARDS = [
-    { label: 'Total Orders',       val: stats.total,                           Icon: HiClipboardList,  cls: 'orange' },
-    { label: 'Pending',            val: stats.pending,                         Icon: MdPendingActions, cls: 'yellow' },
-    { label: 'Active Jobs',        val: stats.active,                          Icon: HiLightningBolt,  cls: 'blue'   },
-    { label: 'Completed',          val: stats.completed,                       Icon: HiCheckCircle,    cls: 'green'  },
-    { label: 'Revenue',            val: `₹${stats.revenue.toLocaleString()}`,  Icon: HiCurrencyRupee,  cls: 'purple' },
-    { label: 'Workers Online',     val: `${stats.availableWorkers}/${workers.length}`, Icon: HiUsers,  cls: 'teal'   },
+    { label: 'Total Bookings', val: stats.total, Icon: HiClipboardList, cls: 'orange' },
+    { label: 'Pending Dispatch', val: stats.pending, Icon: MdPendingActions, cls: 'yellow' },
+    { label: 'Active Jobs', val: stats.active, Icon: HiLightningBolt, cls: 'blue' },
+    { label: 'Completed', val: stats.completed, Icon: HiCheckCircle, cls: 'green' },
+    { label: 'Dallas Revenue', val: `$${stats.revenue.toLocaleString()}`, Icon: HiCurrencyDollar, cls: 'purple' },
+    { label: 'Pros Online', val: `${stats.availableWorkers}/${workers.length}`, Icon: HiUsers, cls: 'teal' },
   ];
 
   return (
     <div className="admin-page">
       <div className="dash-welcome">
-        <p>Here's what's happening today 👋</p>
+        <p>Dallas Operations Overview 👋</p>
       </div>
 
       {/* Stats */}
@@ -56,10 +56,10 @@ export default function AdminDashboard() {
       {/* Quick Actions */}
       <div className="quick-actions">
         {[
-          { label: 'Manage Orders',    path: '/admin/orders',    cls: 'orange' },
-          { label: 'View Customers',   path: '/admin/customers', cls: 'blue'   },
-          { label: 'Manage Workers',   path: '/admin/workers',   cls: 'green'  },
-          { label: 'Payments',         path: '/admin/payments',  cls: 'purple' },
+          { label: 'Manage Bookings', path: '/admin/orders', cls: 'orange' },
+          { label: 'View Customers', path: '/admin/customers', cls: 'blue' },
+          { label: 'Manage Service Pros', path: '/admin/workers', cls: 'green' },
+          { label: 'Dallas Payments', path: '/admin/payments', cls: 'purple' },
         ].map(({ label, path, cls }) => (
           <button key={path} className={`qa-btn ${cls}`} onClick={() => navigate(path)}>
             {label} <HiArrowRight style={{ width: 14, height: 14 }} />
@@ -67,14 +67,16 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      {/* Recent Orders as Cards */}
+      {/* Recent Orders */}
       <div className="admin-section">
         <div className="as-header">
-          <h2>Recent Orders</h2>
-          <button onClick={() => navigate('/admin/orders')}>View all <HiArrowRight style={{ width: 13, height: 13 }} /></button>
+          <h2>Recent Dallas Bookings</h2>
+          <button onClick={() => navigate('/admin/orders')}>
+            View all <HiArrowRight style={{ width: 13, height: 13 }} />
+          </button>
         </div>
         {recent.length === 0 ? (
-          <div className="empty-msg">No orders yet.</div>
+          <div className="empty-msg">No service bookings yet.</div>
         ) : (
           <div className="recent-orders-list">
             {recent.map(o => (
@@ -88,7 +90,7 @@ export default function AdminDashboard() {
                   </div>
                 </div>
                 <div className="ro-right">
-                  <div className="ro-amount">₹{o.booking?.total?.toLocaleString() || '—'}</div>
+                  <div className="ro-amount">${o.booking?.total?.toLocaleString() || '—'}</div>
                   <span className={`status-chip ${o.status}`}>{o.status}</span>
                 </div>
               </div>
@@ -97,18 +99,20 @@ export default function AdminDashboard() {
         )}
       </div>
 
-      {/* Workers */}
+      {/* Service Pros */}
       <div className="admin-section" style={{ marginTop: 16 }}>
         <div className="as-header">
-          <h2>Workers</h2>
-          <button onClick={() => navigate('/admin/workers')}>Manage <HiArrowRight style={{ width: 13, height: 13 }} /></button>
+          <h2>Certified Dallas Pros</h2>
+          <button onClick={() => navigate('/admin/workers')}>
+            Manage Pros <HiArrowRight style={{ width: 13, height: 13 }} />
+          </button>
         </div>
         <div className="worker-list">
           {workers.map(w => (
             <div key={w.id} className="worker-row">
               <div className="wr-avatar">{w.name?.charAt(0)?.toUpperCase() || 'W'}</div>
               <div className="wr-info">
-                <strong>{w.name || 'Worker'}</strong>
+                <strong>{w.name || 'Pro'}</strong>
                 <span>{w.vehicle}</span>
               </div>
               <div className={`avail-dot ${w.available ? 'on' : 'off'}`} />

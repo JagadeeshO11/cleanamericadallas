@@ -7,7 +7,7 @@ export default function CustomerRoutes() {
   return (
     <ProtectedRoute roles={['customer']}>
       <Navbar />
-      <main style={{ paddingBottom: '72px', paddingTop: '112px' }}>
+      <main style={{ paddingBottom: '72px', paddingTop: '76px' }}>
         <Outlet />
       </main>
       <BottomNav />

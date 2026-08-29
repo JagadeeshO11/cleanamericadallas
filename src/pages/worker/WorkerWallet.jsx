@@ -1,63 +1,61 @@
 import { useAuthStore } from '../../store/useAuthStore';
 import { useStore } from '../../store/useStore';
-import { HiCurrencyRupee, HiArrowDown, HiArrowUp, HiClock } from 'react-icons/hi';
+import { HiCurrencyDollar, HiCreditCard, HiCheckCircle } from 'react-icons/hi';
 
 export default function WorkerWallet() {
   const user = useAuthStore(s => s.user);
   const orders = useStore(s => s.orders);
 
-  const completed = orders.filter(o => o.operator?.id === user.id && o.status === 'completed');
-  const totalEarned = completed.reduce((s, o) => s + (o.booking?.total || 0), 0);
-  const withdrawn = Math.floor(totalEarned * 0.6);
-  const available = totalEarned - withdrawn;
+  const completed = orders.filter(o =>
+    (o.operator?.id === user?.id || user?.role === 'worker') && o.status === 'completed'
+  );
 
-  const transactions = completed.map(o => ({
-    id: o.id,
-    label: o.vehicle?.name,
-    date: o.booking?.date || o.placedAt,
-    amount: o.booking?.total || 0,
-    type: 'credit',
-  }));
+  const totalEarned = completed.reduce((s, o) => s + (o.booking?.total || 0), 0);
+  const availablePayout = Math.round(totalEarned * 0.85); // 85% payout after platform fee
 
   return (
     <div className="worker-page">
       <div className="wp-title">
-        <HiCurrencyRupee className="wp-title-icon" />
-        <h1>Wallet</h1>
+        <HiCurrencyDollar className="wp-title-icon" />
+        <h1>Pro Earnings & Wallet</h1>
       </div>
 
-      {/* Balance Cards */}
-      <div className="wallet-cards">
-        <div className="wallet-card primary">
-          <span>Available Balance</span>
-          <strong>₹{available.toLocaleString()}</strong>
-          <button className="withdraw-btn">Withdraw</button>
+      <div className="wallet-card primary">
+        <div className="wc-balance-label">Available for Payout</div>
+        <div className="wc-balance-amount">${availablePayout.toLocaleString()}</div>
+        <div className="wc-sub">Direct Deposit to Dallas Bank Account</div>
+      </div>
+
+      <div className="wallet-stats">
+        <div className="ws-card">
+          <strong>${totalEarned.toLocaleString()}</strong>
+          <span>Gross Earnings</span>
         </div>
-        <div className="wallet-card">
-          <div className="wc-row"><HiArrowDown className="wc-icon credit" /><span>Total Earned</span></div>
-          <strong>₹{totalEarned.toLocaleString()}</strong>
-        </div>
-        <div className="wallet-card">
-          <div className="wc-row"><HiArrowUp className="wc-icon debit" /><span>Withdrawn</span></div>
-          <strong>₹{withdrawn.toLocaleString()}</strong>
+        <div className="ws-card">
+          <strong>{completed.length}</strong>
+          <span>Paid Jobs</span>
         </div>
       </div>
 
-      {/* Transactions */}
-      <div className="worker-section">
-        <h2>Transactions</h2>
-        {transactions.length === 0 ? (
-          <div className="empty-msg">No transactions yet.</div>
+      <div className="worker-section" style={{ marginTop: 24 }}>
+        <h2>Payout History</h2>
+        {completed.length === 0 ? (
+          <div className="empty-msg">No payout records available yet.</div>
         ) : (
           <div className="txn-list">
-            {transactions.map(t => (
-              <div key={t.id} className="txn-item">
-                <div className="txn-icon-wrap credit"><HiArrowDown className="txn-icon" /></div>
-                <div className="txn-details">
-                  <strong>{t.label}</strong>
-                  <span><HiClock style={{ width: 11, height: 11, verticalAlign: 'middle' }} /> {t.date}</span>
+            {completed.map(o => (
+              <div key={o.id} className="txn-item">
+                <div className="txn-left">
+                  <HiCreditCard style={{ width: 20, height: 20, color: 'var(--primary)' }} />
+                  <div>
+                    <strong>Payout for #{o.id.slice(-6)}</strong>
+                    <span>{o.booking?.date} · Direct Deposit</span>
+                  </div>
                 </div>
-                <div className="txn-amount credit">+₹{t.amount.toLocaleString()}</div>
+                <div className="txn-right">
+                  <div className="txn-amount">+${Math.round((o.booking?.total || 0) * 0.85).toLocaleString()}</div>
+                  <span className="status-chip completed">Settled</span>
+                </div>
               </div>
             ))}
           </div>

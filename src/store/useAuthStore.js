@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-// Seeded demo accounts
+// Seeded demo accounts for Clean America Dallas
 const DEMO_USERS = [
-  { id: 'a1', email: 'admin@hiremee.in', password: 'admin123', role: 'admin', name: 'Admin User', phone: '+91 98000 00001' },
-  { id: 'w1', email: 'ravi@hiremee.in', password: 'worker123', role: 'worker', name: 'Ravi Kumar', phone: '+91 98765 43210', vehicle: 'JCB • KA 05 AB 1234', rating: 4.8, jobsDone: 142, available: true },
-  { id: 'w2', email: 'suresh@hiremee.in', password: 'worker123', role: 'worker', name: 'Suresh Reddy', phone: '+91 97654 32109', vehicle: 'Crane • AP 09 CD 5678', rating: 4.6, jobsDone: 98, available: true },
-  { id: 'w3', email: 'mohan@hiremee.in', password: 'worker123', role: 'worker', name: 'Mohan Das', phone: '+91 96543 21098', vehicle: 'Tipper • TN 07 EF 9012', rating: 4.9, jobsDone: 210, available: false },
-  { id: 'c1', email: 'customer@hiremee.in', password: 'cust123', role: 'customer', name: 'Arjun Sharma', phone: '+91 95432 10987' },
+  { id: 'a1', email: 'admin@cleanamericadallas.com', password: 'admin123', role: 'admin', name: 'Admin Operations', phone: '+1 214-555-0100' },
+  { id: 'w1', email: 'john@cleanamericadallas.com', password: 'worker123', role: 'worker', name: 'John Miller', phone: '+1 214-555-0192', vehicle: 'Master Plumber • TX Lic #4920', rating: 4.9, jobsDone: 142, available: true },
+  { id: 'w2', email: 'david@cleanamericadallas.com', password: 'worker123', role: 'worker', name: 'David Smith', phone: '+1 214-555-0238', vehicle: 'Licensed HVAC Tech • TX Lic #8831', rating: 4.8, jobsDone: 98, available: true },
+  { id: 'w3', email: 'michael@cleanamericadallas.com', password: 'worker123', role: 'worker', name: 'Michael Davis', phone: '+1 214-555-0371', vehicle: 'Master Electrician • TX Lic #1029', rating: 4.9, jobsDone: 210, available: false },
+  { id: 'c1', email: 'customer@cleanamericadallas.com', password: 'cust123', role: 'customer', name: 'Sarah Connor', phone: '+1 214-555-8832' },
 ];
 
 export const useAuthStore = create(
@@ -43,6 +43,6 @@ export const useAuthStore = create(
       getWorkers: () => get().users.filter(u => u.role === 'worker'),
       getCustomers: () => get().users.filter(u => u.role === 'customer'),
     }),
-    { name: 'hiremee-auth' }
+    { name: 'cleanamerica-auth' }
   )
 );
