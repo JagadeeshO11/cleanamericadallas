@@ -83,15 +83,11 @@ export default function Login({ role = 'customer' }) {
         <h1>{config.title}</h1>
         <p className="auth-sub">{config.sub}</p>
 
-        {/* Demo Credentials Box */}
+        {/* Sleek Auto-Fill Demo Button */}
         <div className="demo-box" onClick={fillDemo}>
           <div className="db-top">
-            <span><HiSparkles style={{ color: '#FFC107', verticalAlign: 'middle', marginRight: 4 }} /> Demo {role.toUpperCase()} Credentials:</span>
-            <span className="db-click">Click to Auto-Fill ⚡</span>
-          </div>
-          <div className="db-info">
-            <span>Email: <strong>{demoCreds.email}</strong></span>
-            <span>Password: <strong>{demoCreds.password}</strong></span>
+            <span><HiSparkles style={{ color: '#FFC107', verticalAlign: 'middle', marginRight: 4 }} /> Demo {role.toUpperCase()} Login:</span>
+            <span className="db-click">⚡ Auto-Fill Demo Account</span>
           </div>
         </div>
 
