@@ -12,16 +12,16 @@ export default function WorkerHome() {
   const orders = useStore(s => s.orders);
   const advanceStage = useStore(s => s.advanceStage);
 
-  const myOrders = orders.filter(o => o.operator?.id === user.id);
+  const myOrders = orders.filter(o => o.operator?.id === user?.id);
   const activeJob = myOrders.find(o => ['assigned', 'active'].includes(o.status));
   const completedJobs = myOrders.filter(o => o.status === 'completed');
   const earnings = completedJobs.reduce((s, o) => s + (o.booking?.total || 0), 0);
 
   const STATS = [
-    { Icon: HiStar,          val: `${user.rating}★`,                        label: 'Rating',      color: '#f59e0b' },
-    { Icon: HiBriefcase,     val: user.jobsDone + completedJobs.length,      label: 'Total Jobs',  color: '#3b82f6' },
-    { Icon: HiCheckCircle,   val: completedJobs.length,                      label: 'Completed',   color: '#10b981' },
-    { Icon: HiCurrencyRupee, val: `₹${earnings.toLocaleString()}`,           label: 'Earnings',    color: '#8b5cf6' },
+    { Icon: HiStar,          val: `${user?.rating || 4.5}★`,                        label: 'Rating',      color: '#f59e0b' },
+    { Icon: HiBriefcase,     val: (user?.jobsDone || 0) + completedJobs.length,      label: 'Total Jobs',  color: '#3b82f6' },
+    { Icon: HiCheckCircle,   val: completedJobs.length,                              label: 'Completed',   color: '#10b981' },
+    { Icon: HiCurrencyRupee, val: `₹${earnings.toLocaleString()}`,                   label: 'Earnings',    color: '#8b5cf6' },
   ];
 
   return (
@@ -29,22 +29,22 @@ export default function WorkerHome() {
       {/* Header */}
       <div className="worker-header">
         <div className="wh-left">
-          <div className="wh-avatar">{user.name.charAt(0)}</div>
+          <div className="wh-avatar">{user?.name?.charAt(0)?.toUpperCase() || 'W'}</div>
           <div>
-            <h1>Hey, {user.name.split(' ')[0]}! 👋</h1>
+            <h1>Hey, {user?.name?.split(' ')[0] || 'Worker'}! 👋</h1>
             <p className="wh-vehicle">
               <MdDirectionsCar style={{ width: 14, height: 14, verticalAlign: 'middle', marginRight: 4 }} />
-              {user.vehicle}
+              {user?.vehicle || 'Equipment Operator'}
             </p>
           </div>
         </div>
         <div className="avail-toggle">
           <span>Availability:</span>
           <button
-            className={`toggle-btn ${user.available ? 'on' : 'off'}`}
-            onClick={() => updateWorkerAvailability(user.id, !user.available)}
+            className={`toggle-btn ${user?.available ? 'on' : 'off'}`}
+            onClick={() => user?.id && updateWorkerAvailability(user.id, !user.available)}
           >
-            {user.available ? '● Online' : '○ Offline'}
+            {user?.available ? '● Online' : '○ Offline'}
           </button>
         </div>
       </div>

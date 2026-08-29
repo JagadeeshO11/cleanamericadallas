@@ -27,10 +27,10 @@ export default function AdminCustomers() {
             return (
               <div key={c.id} className="customer-card">
                 <div className="cc-top">
-                  <div className="cc-avatar">{c.name.charAt(0)}</div>
+                  <div className="cc-avatar">{c.name?.charAt(0)?.toUpperCase() || 'C'}</div>
                   <span className="role-tag customer">Customer</span>
                 </div>
-                <h3>{c.name}</h3>
+                <h3>{c.name || 'Customer'}</h3>
                 <div className="cc-info">
                   <div className="cc-row"><HiMail className="cc-icon" />{c.email}</div>
                   <div className="cc-row"><HiPhone className="cc-icon" />{c.phone || '—'}</div>

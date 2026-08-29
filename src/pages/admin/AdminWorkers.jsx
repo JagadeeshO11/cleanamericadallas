@@ -23,12 +23,12 @@ export default function AdminWorkers() {
           return (
             <div key={w.id} className="worker-card">
               <div className="wc-top">
-                <div className="wc-avatar">{w.name.charAt(0)}</div>
+                <div className="wc-avatar">{w.name?.charAt(0)?.toUpperCase() || 'W'}</div>
                 <div className={`wc-status ${w.available ? 'on' : 'off'}`}>
                   {w.available ? '● Available' : '● Busy'}
                 </div>
               </div>
-              <h3>{w.name}</h3>
+              <h3>{w.name || 'Worker'}</h3>
               <p className="wc-vehicle">
                 <MdDirectionsCar style={{ width: 14, height: 14, verticalAlign: 'middle', marginRight: 4 }} />
                 {w.vehicle}

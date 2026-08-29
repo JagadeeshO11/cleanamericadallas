@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { allVehicles } from '../data/vehicles';
+import { services } from '../data/services';
 import { useStore } from '../store/useStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { HiArrowLeft, HiArrowRight, HiLocationMarker, HiCalendar, HiClock, HiDocumentText, HiCheckCircle, HiShieldCheck, HiLocationMarker as HiLoc, HiCurrencyRupee } from 'react-icons/hi';
@@ -8,9 +9,10 @@ import { MdOutlineVerified, MdGpsFixed } from 'react-icons/md';
 import { GiAutoRepair } from 'react-icons/gi';
 import './BookingFlow.css';
 const FALLBACK = 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80';
+const catalog = [...allVehicles, ...services];
 export default function BookingFlow() {
   const { id } = useParams(); const navigate = useNavigate(); const placeOrder = useStore(s => s.placeOrder); const addToCart = useStore(s => s.addToCart); const user = useAuthStore(s => s.user); const [form, setForm] = useState({ location: '', date: '', duration: 1, notes: '' }); const [step, setStep] = useState(1);
-  const vehicle = allVehicles.find(v => v.id === id); if (!vehicle) return <div className="not-found">Vehicle not found.</div>; const total = vehicle.rate * form.duration;
+  const vehicle = catalog.find(v => v.id === id); if (!vehicle) return <div className="not-found">Service / Vehicle not found.</div>; const total = vehicle.rate * form.duration;
   const handleBook = () => { if (!user || user.role !== 'customer') { navigate('/customer/signin', { replace: true }); return; } const customer = { id: user.id, name: user.name, phone: user.phone }; const order = placeOrder(vehicle, { ...form, total }, customer); navigate(`/customer/track/${order.id}`); };
   const handleAddToCart = () => { if (!user || user.role !== 'customer') { navigate('/customer/signin', { replace: true }); return; } addToCart(vehicle, { ...form, total }); navigate('/customer/cart'); };
   const FEATURES = [{ Icon: MdOutlineVerified, text: 'Verified Operator' }, { Icon: HiShieldCheck, text: 'Insured Vehicle' }, { Icon: MdGpsFixed, text: 'Live Tracking' }, { Icon: GiAutoRepair, text: 'On-site Support' }];

@@ -106,9 +106,9 @@ export default function AdminDashboard() {
         <div className="worker-list">
           {workers.map(w => (
             <div key={w.id} className="worker-row">
-              <div className="wr-avatar">{w.name.charAt(0)}</div>
+              <div className="wr-avatar">{w.name?.charAt(0)?.toUpperCase() || 'W'}</div>
               <div className="wr-info">
-                <strong>{w.name}</strong>
+                <strong>{w.name || 'Worker'}</strong>
                 <span>{w.vehicle}</span>
               </div>
               <div className={`avail-dot ${w.available ? 'on' : 'off'}`} />

@@ -26,11 +26,11 @@ export default function WorkerLayout() {
           <span className="wth-badge">Worker</span>
         </div>
         <div className="wth-user">
-          <div className="wth-avatar">{user.name.charAt(0)}</div>
+          <div className="wth-avatar">{user?.name?.charAt(0)?.toUpperCase() || 'W'}</div>
           <div className="wth-info">
-            <strong>{user.name.split(' ')[0]}</strong>
-            <span className={`wth-status ${user.available ? 'online' : 'offline'}`}>
-              {user.available ? '● Online' : '○ Offline'}
+            <strong>{user?.name?.split(' ')[0] || 'Worker'}</strong>
+            <span className={`wth-status ${user?.available ? 'online' : 'offline'}`}>
+              {user?.available ? '● Online' : '○ Offline'}
             </span>
           </div>
         </div>
