@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 // Seeded demo accounts for Clean America Dallas
-const DEMO_USERS = [
+export const DEMO_USERS = [
   { id: 'a1', email: 'admin@cleanamericadallas.com', password: 'admin123', role: 'admin', name: 'Admin Operations', phone: '+1 214-555-0100' },
   { id: 'w1', email: 'john@cleanamericadallas.com', password: 'worker123', role: 'worker', name: 'John Miller', phone: '+1 214-555-0192', vehicle: 'Master Plumber • TX Lic #4920', rating: 4.9, jobsDone: 142, available: true },
   { id: 'w2', email: 'david@cleanamericadallas.com', password: 'worker123', role: 'worker', name: 'David Smith', phone: '+1 214-555-0238', vehicle: 'Licensed HVAC Tech • TX Lic #8831', rating: 4.8, jobsDone: 98, available: true },
@@ -17,18 +17,40 @@ export const useAuthStore = create(
       users: DEMO_USERS,
 
       login: (email, password) => {
-        const found = get().users.find(u => u.email === email && u.password === password);
-        if (!found) return { error: 'Invalid email or password' };
+        const inputEmail = (email || '').trim().toLowerCase();
+        const inputPass = (password || '').trim();
+
+        // Check against store users or fallback to DEMO_USERS
+        let found = get().users.find(u => u.email.toLowerCase() === inputEmail && u.password === inputPass);
+
+        if (!found) {
+          found = DEMO_USERS.find(u => u.email.toLowerCase() === inputEmail && u.password === inputPass);
+        }
+
+        if (!found) {
+          return { error: 'Invalid email or password. Please try demo credentials.' };
+        }
+
         set({ user: found });
         return { success: true, role: found.role };
       },
 
       register: (data) => {
-        const exists = get().users.find(u => u.email === data.email);
+        const inputEmail = (data.email || '').trim().toLowerCase();
+        const exists = get().users.find(u => u.email.toLowerCase() === inputEmail);
         if (exists) return { error: 'Email already registered' };
-        const newUser = { id: `c${Date.now()}`, ...data };
-        set(s => ({ users: [...s.users, newUser] }));
-        return { success: true };
+
+        const newUser = {
+          id: `c${Date.now()}`,
+          email: inputEmail,
+          password: data.password.trim(),
+          role: data.role || 'customer',
+          name: data.name || 'Customer',
+          phone: data.phone || '+1 214-555-0000',
+        };
+
+        set(s => ({ users: [...s.users, newUser], user: newUser }));
+        return { success: true, role: newUser.role };
       },
 
       logout: () => set({ user: null }),
@@ -43,6 +65,9 @@ export const useAuthStore = create(
       getWorkers: () => get().users.filter(u => u.role === 'worker'),
       getCustomers: () => get().users.filter(u => u.role === 'customer'),
     }),
-    { name: 'cleanamerica-auth' }
+    {
+      name: 'cleanamerica-auth-v4',
+      version: 4,
+    }
   )
 );
