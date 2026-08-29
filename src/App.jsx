@@ -45,69 +45,107 @@ function LegacyCustomerTrackRedirect() {
   return <Navigate to={`/customer/track/${id}`} replace />;
 }
 
-function Layout() {
-  const { pathname } = useLocation();
-  const isAdminOrWorker = pathname.startsWith('/admin') || pathname.startsWith('/worker');
-  const isWorker = pathname.startsWith('/worker');
-
+function PublicLayout() {
   return (
-    <div className={isWorker ? 'app-worker-theme' : ''}>
-      {isAdminOrWorker ? null : <Navbar />}
-      <main style={{ paddingBottom: isAdminOrWorker ? '0' : '72px', paddingTop: isAdminOrWorker ? '0' : '112px' }}>
+    <>
+      <Navbar />
+      <main style={{ paddingBottom: '72px', paddingTop: '112px' }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/browse" element={<Browse />} />
-
-          <Route path="/customer/signin" element={<Login role="customer" />} />
-          <Route path="/customer/signup" element={<Register role="customer" />} />
-
-          <Route path="/worker/signin" element={<Login role="worker" />} />
-          <Route path="/worker/signup" element={<Register role="worker" />} />
-
-          <Route path="/admin/signin" element={<Login role="admin" />} />
-
-          <Route path="/customer" element={<ProtectedRoute roles={['customer']}><CustomerProfile /></ProtectedRoute>} />
-          <Route path="/customer/profile" element={<ProtectedRoute roles={['customer']}><CustomerProfile /></ProtectedRoute>} />
-          <Route path="/customer/orders" element={<ProtectedRoute roles={['customer']}><Orders /></ProtectedRoute>} />
-          <Route path="/customer/cart" element={<ProtectedRoute roles={['customer']}><Cart /></ProtectedRoute>} />
-          <Route path="/customer/book/:id" element={<ProtectedRoute roles={['customer']}><BookingFlow /></ProtectedRoute>} />
-          <Route path="/customer/track/:id" element={<ProtectedRoute roles={['customer']}><OrderTracking /></ProtectedRoute>} />
-
-          {/* Legacy customer URLs redirect into the explicit customer namespace. */}
           <Route path="/book/:id" element={<LegacyCustomerBookRedirect />} />
           <Route path="/track/:id" element={<LegacyCustomerTrackRedirect />} />
           <Route path="/orders" element={<Navigate to="/customer/orders" replace />} />
           <Route path="/cart" element={<Navigate to="/customer/cart" replace />} />
+        </Routes>
+      </main>
+      <BottomNav />
+    </>
+  );
+}
 
-          <Route path="/admin" element={<ProtectedRoute roles={['admin']}><AdminLayout /></ProtectedRoute>}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="orders" element={<AdminOrders />} />
-            <Route path="customers" element={<AdminCustomers />} />
-            <Route path="workers" element={<AdminWorkers />} />
-            <Route path="more" element={<AdminMore />} />
-            <Route path="products" element={<AdminProducts />} />
-            <Route path="reports" element={<AdminReports />} />
-            <Route path="payments" element={<AdminPayments />} />
-          </Route>
+function CustomerRoutes() {
+  return (
+    <ProtectedRoute roles={['customer']}>
+      <Routes>
+        <Route path="/customer" element={<CustomerProfile />} />
+        <Route path="/customer/profile" element={<CustomerProfile />} />
+        <Route path="/customer/orders" element={<Orders />} />
+        <Route path="/customer/cart" element={<Cart />} />
+        <Route path="/customer/book/:id" element={<BookingFlow />} />
+        <Route path="/customer/track/:id" element={<OrderTracking />} />
+      </Routes>
+    </ProtectedRoute>
+  );
+}
 
-          <Route path="/worker" element={<ProtectedRoute roles={['worker']}><WorkerLayout /></ProtectedRoute>}>
+function WorkerRoutes() {
+  return (
+    <ProtectedRoute roles={['worker']}>
+      <div className="app-worker-theme">
+        <Routes>
+          <Route path="/worker" element={<WorkerLayout />}>
             <Route index element={<WorkerHome />} />
             <Route path="orders" element={<WorkerOrders />} />
             <Route path="history" element={<WorkerHistory />} />
             <Route path="wallet" element={<WorkerWallet />} />
             <Route path="profile" element={<WorkerProfile />} />
           </Route>
-
-          {/* No universal authentication pages. */}
-          <Route path="/signin" element={<Navigate to="/customer/signin" replace />} />
-          <Route path="/signup" element={<Navigate to="/customer/signup" replace />} />
-          <Route path="/login" element={<Navigate to="/customer/signin" replace />} />
-          <Route path="/register" element={<Navigate to="/customer/signup" replace />} />
         </Routes>
-      </main>
-      {!isAdminOrWorker && <BottomNav />}
-    </div>
+      </div>
+    </ProtectedRoute>
   );
+}
+
+function AdminRoutes() {
+  return (
+    <ProtectedRoute roles={['admin']}>
+      <Routes>
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="customers" element={<AdminCustomers />} />
+          <Route path="workers" element={<AdminWorkers />} />
+          <Route path="more" element={<AdminMore />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="reports" element={<AdminReports />} />
+          <Route path="payments" element={<AdminPayments />} />
+        </Route>
+      </Routes>
+    </ProtectedRoute>
+  );
+}
+
+function AuthRoutes() {
+  return (
+    <Routes>
+      <Route path="/customer/signin" element={<Login role="customer" />} />
+      <Route path="/customer/signup" element={<Register role="customer" />} />
+      <Route path="/worker/signin" element={<Login role="worker" />} />
+      <Route path="/worker/signup" element={<Register role="worker" />} />
+      <Route path="/admin/signin" element={<Login role="admin" />} />
+
+      {/* Keep all authentication explicitly scoped by role. */}
+      <Route path="/signin" element={<Navigate to="/customer/signin" replace />} />
+      <Route path="/signup" element={<Navigate to="/customer/signup" replace />} />
+      <Route path="/login" element={<Navigate to="/customer/signin" replace />} />
+      <Route path="/register" element={<Navigate to="/customer/signup" replace />} />
+    </Routes>
+  );
+}
+
+function Layout() {
+  const { pathname } = useLocation();
+  const isAdmin = pathname === '/admin' || pathname.startsWith('/admin/');
+  const isWorker = pathname === '/worker' || pathname.startsWith('/worker/');
+  const isCustomer = pathname === '/customer' || pathname.startsWith('/customer/');
+  const isAuth = pathname.includes('/signin') || pathname.includes('/signup');
+
+  if (isAdmin) return <AdminRoutes />;
+  if (isWorker) return <WorkerRoutes />;
+  if (isCustomer) return <CustomerRoutes />;
+  if (isAuth) return <AuthRoutes />;
+  return <PublicLayout />;
 }
 
 export default function App() {
