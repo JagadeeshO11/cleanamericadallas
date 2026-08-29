@@ -1,0 +1,13 @@
+/* Landing page overflow and spacing safeguards */
+.home,.home-main-container,.section,.section-inner,.category-card-container,.services-section{width:100%;max-width:100%;box-sizing:border-box;min-width:0}
+.home{overflow-x:hidden}
+.home-main-container{padding-left:24px;padding-right:24px}
+.hero-banner{width:100%;max-width:100%;box-sizing:border-box;min-width:0}
+.hb-content{min-width:0}
+.hb-content h1,.hb-content p{overflow-wrap:anywhere}
+.hb-visual{max-width:42%;min-width:0}
+.hb-img{max-width:100%;height:auto}
+.circle-categories-grid,.steps-row,.why-grid{min-width:0}
+.h-scroll{min-width:0;max-width:100%;box-sizing:border-box}
+@media(max-width:768px){.home-main-container{padding:14px 14px 0}.category-card-container{padding:18px;margin:12px 0 18px}.circle-categories-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.hero-banner{padding:28px 22px;min-height:0;gap:18px;align-items:center}.hb-content{max-width:58%}.hb-content h1{font-size:30px;letter-spacing:-.5px}.hb-content p{font-size:13px}.hb-actions{flex-wrap:wrap}.hb-visual{max-width:40%}.hb-img{width:100%;height:auto}.stats-inner{padding:0 10px;flex-wrap:wrap;gap:10px}.section{padding:28px 0}.section-inner{width:100%;max-width:100%}.section-header{gap:12px;min-width:0}.section-header>div{min-width:0}.section-header h2,.cat-section-title h2{overflow-wrap:anywhere}.services-section{padding:24px 14px}.section-gray,.section-dark{padding-left:14px;padding-right:14px}.steps-row{grid-template-columns:1fr;gap:12px}}
+@media(max-width:480px){.home-main-container{padding-left:10px;padding-right:10px}.category-card-container{padding:14px;border-radius:18px}.circle-categories-grid{gap:7px}.circle-img-wrap{width:58px;height:58px}.circle-label{font-size:10px}.hero-banner{display:block;padding:24px 18px}.hb-content{max-width:100%}.hb-content h1{font-size:26px}.hb-content p{font-size:12px;margin-bottom:16px}.hb-actions{gap:8px}.hb-cta,.hb-browse{padding:10px 13px;font-size:11px}.hb-visual{display:none}.stats-bar{overflow:hidden}.stats-inner{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:4px 8px}.stat-divider{display:none}.section-header{align-items:flex-start}.cat-section-title{min-width:0}.cat-section-icon-wrap{width:38px;height:38px}.see-all-btn{flex-shrink:0;padding:6px 4px}.services-section{padding:22px 10px}.section-gray,.section-dark{padding-left:10px;padding-right:10px}}
