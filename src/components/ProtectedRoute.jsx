@@ -7,12 +7,25 @@ const HOME_BY_ROLE = {
   admin: '/admin',
 };
 
+const SIGNIN_BY_ROLE = {
+  customer: '/customer/signin',
+  worker: '/worker/signin',
+  admin: '/admin/signin',
+};
+
 export default function ProtectedRoute({ children, roles }) {
   const user = useAuthStore(s => s.user);
   const location = useLocation();
+  const requiredRole = roles?.length === 1 ? roles[0] : null;
 
   if (!user) {
-    return <Navigate to="/signin" replace state={{ from: location.pathname }} />;
+    return (
+      <Navigate
+        to={SIGNIN_BY_ROLE[requiredRole] || '/'}
+        replace
+        state={{ from: location.pathname }}
+      />
+    );
   }
 
   if (roles && !roles.includes(user.role)) {
