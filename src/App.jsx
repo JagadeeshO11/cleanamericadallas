@@ -57,6 +57,7 @@ function PublicLayout() {
           <Route path="/track/:id" element={<LegacyCustomerTrackRedirect />} />
           <Route path="/orders" element={<Navigate to="/customer/orders" replace />} />
           <Route path="/cart" element={<Navigate to="/customer/cart" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
       <BottomNav />
@@ -74,6 +75,7 @@ function CustomerRoutes() {
         <Route path="/customer/cart" element={<Cart />} />
         <Route path="/customer/book/:id" element={<BookingFlow />} />
         <Route path="/customer/track/:id" element={<OrderTracking />} />
+        <Route path="*" element={<Navigate to="/customer" replace />} />
       </Routes>
     </ProtectedRoute>
   );
@@ -91,6 +93,7 @@ function WorkerRoutes() {
             <Route path="wallet" element={<WorkerWallet />} />
             <Route path="profile" element={<WorkerProfile />} />
           </Route>
+          <Route path="*" element={<Navigate to="/worker" replace />} />
         </Routes>
       </div>
     </ProtectedRoute>
@@ -111,6 +114,7 @@ function AdminRoutes() {
           <Route path="reports" element={<AdminReports />} />
           <Route path="payments" element={<AdminPayments />} />
         </Route>
+        <Route path="*" element={<Navigate to="/admin" replace />} />
       </Routes>
     </ProtectedRoute>
   );
@@ -124,12 +128,11 @@ function AuthRoutes() {
       <Route path="/worker/signin" element={<Login role="worker" />} />
       <Route path="/worker/signup" element={<Register role="worker" />} />
       <Route path="/admin/signin" element={<Login role="admin" />} />
-
-      {/* Keep all authentication explicitly scoped by role. */}
       <Route path="/signin" element={<Navigate to="/customer/signin" replace />} />
       <Route path="/signup" element={<Navigate to="/customer/signup" replace />} />
       <Route path="/login" element={<Navigate to="/customer/signin" replace />} />
       <Route path="/register" element={<Navigate to="/customer/signup" replace />} />
+      <Route path="*" element={<Navigate to="/customer/signin" replace />} />
     </Routes>
   );
 }
@@ -139,7 +142,7 @@ function Layout() {
   const isAdmin = pathname === '/admin' || pathname.startsWith('/admin/');
   const isWorker = pathname === '/worker' || pathname.startsWith('/worker/');
   const isCustomer = pathname === '/customer' || pathname.startsWith('/customer/');
-  const isAuth = pathname.includes('/signin') || pathname.includes('/signup');
+  const isAuth = pathname.includes('/signin') || pathname.includes('/signup') || pathname === '/login' || pathname === '/register';
 
   if (isAdmin) return <AdminRoutes />;
   if (isWorker) return <WorkerRoutes />;
