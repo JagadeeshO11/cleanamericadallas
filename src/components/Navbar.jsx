@@ -11,11 +11,21 @@ import './Navbar.css';
 
 const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png';
 const CAT_NAV = [
-  { id: 'excavation', label: 'Excavation', Icon: GiPickelhaube }, { id: 'transport', label: 'Transport', Icon: TbTruckDelivery },
-  { id: 'road', label: 'Road', Icon: FaRoad }, { id: 'lifting', label: 'Lifting', Icon: GiCrane },
-  { id: 'agricultural', label: 'Agricultural', Icon: FaTractor }, { id: 'native', label: 'Native', Icon: FaLeaf },
-  { id: 'beauty', label: 'Beauty', Icon: FaSpa }, { id: 'other', label: 'Other', Icon: MdEngineering },
+  { id: 'excavation', label: 'Excavation', Icon: GiPickelhaube },
+  { id: 'transport', label: 'Transport', Icon: TbTruckDelivery },
+  { id: 'road', label: 'Road', Icon: FaRoad },
+  { id: 'lifting', label: 'Lifting', Icon: GiCrane },
+  { id: 'agricultural', label: 'Agricultural', Icon: FaTractor },
+  { id: 'native', label: 'Native', Icon: FaLeaf },
+  { id: 'beauty', label: 'Beauty', Icon: FaSpa },
+  { id: 'other', label: 'Other', Icon: MdEngineering },
 ];
+
+const SIGNIN_BY_ROLE = {
+  customer: '/customer/signin',
+  worker: '/worker/signin',
+  admin: '/admin/signin',
+};
 
 export default function Navbar() {
   const { user, logout } = useAuthStore();
@@ -31,7 +41,12 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const handleLogout = () => { logout(); navigate('/signin', { replace: true }); setDropOpen(false); };
+  const handleLogout = () => {
+    const role = user?.role || 'customer';
+    logout();
+    navigate(SIGNIN_BY_ROLE[role], { replace: true });
+    setDropOpen(false);
+  };
 
   useEffect(() => {
     if (!navigator.geolocation) return;
