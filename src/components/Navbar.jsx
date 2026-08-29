@@ -70,10 +70,32 @@ export default function Navbar() {
 
   const customer = user?.role === 'customer';
 
+  const renderSearchForm = () => (
+    <form className="nav-search-bar" onSubmit={handleSearchSubmit}>
+      <HiSearch className="nav-search-icon" />
+      <input
+        type="text"
+        className="nav-search-input"
+        placeholder="Search house cleaning, plumber, HVAC..."
+        value={searchQuery}
+        onChange={e => setSearchQuery(e.target.value)}
+      />
+      {searchQuery && (
+        <button type="button" className="nav-search-clear" onClick={() => setSearchQuery('')} aria-label="Clear search">
+          <HiX style={{ width: 13, height: 13 }} />
+        </button>
+      )}
+      <button type="submit" className="nav-search-submit-btn" aria-label="Submit search">
+        <HiSearch style={{ width: 14, height: 14 }} />
+        <span className="btn-text">Search</span>
+      </button>
+    </form>
+  );
+
   return (
     <nav className="navbar">
+      {/* ROW 1: Logo & Location on Left | Desktop Search in Center | Notifications, Cart, User on Right */}
       <div className="nav-inner">
-        {/* Left: Brand logo & location selector */}
         <div className="nav-left">
           <Link to="/" className="brand" aria-label="Clean America Dallas home">
             <img src={LOGO_URL} alt="Clean America Dallas" className="brand-logo-image" />
@@ -105,32 +127,13 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Center: Sleek Search Box Pill with integrated input, icons & action button */}
-        <div className="nav-center">
-          <form className="nav-search-bar" onSubmit={handleSearchSubmit}>
-            <HiSearch className="nav-search-icon" />
-            <input
-              type="text"
-              className="nav-search-input"
-              placeholder="Search house cleaning, plumber, HVAC..."
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-            />
-            {searchQuery && (
-              <button type="button" className="nav-search-clear" onClick={() => setSearchQuery('')} aria-label="Clear search">
-                <HiX style={{ width: 13, height: 13 }} />
-              </button>
-            )}
-            <button type="submit" className="nav-search-submit-btn" aria-label="Submit search">
-              <HiSearch style={{ width: 14, height: 14 }} />
-              <span className="btn-text">Search</span>
-            </button>
-          </form>
+        {/* Desktop Search Bar (Hidden on Mobile) */}
+        <div className="nav-center desktop-only">
+          {renderSearchForm()}
         </div>
 
-        {/* Right: Notifications, Cart, User / Auth */}
+        {/* Right Actions */}
         <div className="nav-right">
-          {/* Notification Bell */}
           <div className="notif-wrap" ref={notifRef}>
             <button className="icon-circle-btn" onClick={() => setNotifOpen(o => !o)} aria-label="Notifications">
               <HiBell className="nav-top-icon" />
@@ -163,14 +166,12 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Cart Button */}
           <button className="cart-btn" onClick={() => navigate('/customer/cart')} aria-label="Cart">
             <HiShoppingCart className="cart-icon" />
             <span className="cart-label">Cart</span>
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </button>
 
-          {/* Auth / Profile menu */}
           {user ? (
             <div className="user-menu" ref={dropRef}>
               <button className="avatar-btn" onClick={() => setDropOpen(o => !o)}>
@@ -219,6 +220,11 @@ export default function Navbar() {
             </div>
           )}
         </div>
+      </div>
+
+      {/* ROW 2: Mobile Dedicated Search Row (Only visible on screens <= 768px) */}
+      <div className="nav-mobile-search-row">
+        {renderSearchForm()}
       </div>
     </nav>
   );
