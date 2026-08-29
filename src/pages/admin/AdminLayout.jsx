@@ -23,7 +23,7 @@ export default function AdminLayout() {
   const [dropOpen, setDropOpen] = useState(false);
   const dropRef = useRef();
 
-  const handleLogout = () => { logout(); navigate('/'); };
+  const handleLogout = () => { logout(); navigate('/admin/signin', { replace: true }); };
 
   useEffect(() => {
     const handler = (e) => { if (!dropRef.current?.contains(e.target)) setDropOpen(false); };
@@ -65,18 +65,11 @@ export default function AdminLayout() {
         </div>
       </header>
 
-      <div className="admin-content">
-        <Outlet />
-      </div>
+      <div className="admin-content"><Outlet /></div>
 
       <nav className="admin-bottom-nav">
         {NAV.map(({ to, icon: Icon, label, end }) => (
-          <NavLink
-            key={to}
-            to={to}
-            end={end}
-            className={({ isActive }) => `abn-item ${isActive ? 'active' : ''}`}
-          >
+          <NavLink key={to} to={to} end={end} className={({ isActive }) => `abn-item ${isActive ? 'active' : ''}`}>
             <Icon className="abn-icon" />
             <span>{label}</span>
           </NavLink>
