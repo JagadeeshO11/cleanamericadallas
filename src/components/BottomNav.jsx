@@ -9,22 +9,24 @@ import {
 import './BottomNav.css';
 
 const customerTabs = [
-  { to: '/',       Icon: HiHome,          label: 'Home' },
-  { to: '/browse', Icon: HiTruck,         label: 'Book' },
-  { to: '/orders', Icon: HiClipboardList, label: 'Orders' },
-  { to: '/login',  Icon: HiUser,          label: 'Account' },
+  { to: '/',                  Icon: HiHome,          label: 'Home' },
+  { to: '/browse',            Icon: HiTruck,         label: 'Book' },
+  { to: '/customer/orders',   Icon: HiClipboardList, label: 'Orders' },
+  { to: '/customer/profile',  Icon: HiUser,         label: 'Account' },
 ];
 
 const adminTabs = [
-  { to: '/admin',         Icon: HiChartBar,      label: 'Dashboard' },
-  { to: '/admin/orders',  Icon: HiCollection,    label: 'Orders' },
-  { to: '/admin/workers', Icon: HiUsers,         label: 'Workers' },
-  { to: '/browse',        Icon: HiSearch,        label: 'Browse' },
+  { to: '/admin',         Icon: HiChartBar,   label: 'Dashboard' },
+  { to: '/admin/orders',  Icon: HiCollection, label: 'Orders' },
+  { to: '/admin/workers', Icon: HiUsers,      label: 'Workers' },
+  { to: '/admin/customers', Icon: HiUsers,    label: 'Customers' },
 ];
 
 const workerTabs = [
-  { to: '/worker', Icon: HiCog, label: 'My Jobs' },
-  { to: '/browse', Icon: HiSearch, label: 'Browse' },
+  { to: '/worker',         Icon: HiCog,          label: 'My Jobs' },
+  { to: '/worker/orders',  Icon: HiClipboardList, label: 'Orders' },
+  { to: '/worker/history', Icon: HiCollection,   label: 'History' },
+  { to: '/worker/profile', Icon: HiUser,         label: 'Profile' },
 ];
 
 export default function BottomNav() {
@@ -32,7 +34,7 @@ export default function BottomNav() {
   const user = useAuthStore(s => s.user);
   const activeOrder = useStore(s => s.activeOrder);
 
-  const isActive = (path) =>
+  const isActive = path =>
     path === '/'
       ? location.pathname === '/'
       : location.pathname === path || location.pathname.startsWith(path + '/');
@@ -41,16 +43,10 @@ export default function BottomNav() {
   if (user?.role === 'admin') tabs = adminTabs;
   else if (user?.role === 'worker') tabs = workerTabs;
 
-  const resolvedTabs = tabs.map(t => {
-    if (t.label === 'Account' && user)
-      return { ...t, to: '/orders', Icon: HiUser, label: user.name.split(' ')[0] };
-    return t;
-  });
-
   return (
     <nav className="bottom-nav">
-      {resolvedTabs.map(({ to, Icon, label }) => (
-        <Link key={to + label} to={to} className={`bn-tab ${isActive(to) ? 'active' : ''}`}>
+      {tabs.map(({ to, Icon, label }) => (
+        <Link key={to} to={to} className={`bn-tab ${isActive(to) ? 'active' : ''}`}>
           <Icon className="bn-icon" />
           <span className="bn-label">{label}</span>
           {isActive(to) && <span className="bn-dot" />}
@@ -59,8 +55,8 @@ export default function BottomNav() {
 
       {activeOrder && user?.role === 'customer' && (
         <Link
-          to={`/track/${activeOrder.id}`}
-          className={`bn-tab live ${isActive(`/track/${activeOrder.id}`) ? 'active' : ''}`}
+          to={`/customer/track/${activeOrder.id}`}
+          className={`bn-tab live ${isActive(`/customer/track/${activeOrder.id}`) ? 'active' : ''}`}
         >
           <HiLocationMarker className="bn-icon" />
           <span className="bn-label">Live</span>
