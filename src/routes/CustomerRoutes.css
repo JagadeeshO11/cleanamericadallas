@@ -1,0 +1,23 @@
+/* Fixed navbar offset for customer pages */
+.customer-route-main {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding-top: 76px;
+  padding-bottom: 72px;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .customer-route-main {
+    padding-top: 122px;
+    padding-bottom: 78px;
+  }
+}
+
+@media (max-width: 480px) {
+  .customer-route-main {
+    padding-top: 122px;
+    padding-bottom: 82px;
+  }
+}
