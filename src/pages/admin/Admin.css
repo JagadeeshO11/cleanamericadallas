@@ -1,9 +1,171 @@
-/* Clean America Dallas - Admin Panel Aesthetics */
+/* Clean America Dallas - Admin Panel & Sidebar Aesthetics */
+
+.admin-layout-container {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text-primary);
+}
+
+.admin-sidebar {
+  width: 250px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 300;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.25);
+}
+
+.asb-brand {
+  padding: 20px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.asb-logo-img {
+  width: 120px;
+  height: 40px;
+  object-fit: contain;
+  display: block;
+}
+
+.asb-badge {
+  font-size: 10.5px;
+  font-weight: 800;
+  background: rgba(255, 193, 7, 0.14);
+  color: var(--accent-gold);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  padding: 2px 8px;
+  border-radius: 10px;
+  width: fit-content;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.asb-menu {
+  flex: 1;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+}
+
+.asb-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: all 0.18s ease;
+}
+
+.asb-link:hover {
+  background: var(--input);
+  color: var(--text-primary);
+}
+
+.asb-link.active {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(76, 175, 22, 0.3);
+}
+
+.asb-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.asb-footer {
+  padding: 16px 14px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.asb-user-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.asb-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.asb-user-info strong {
+  display: block;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.asb-user-info span {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.asb-logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px;
+  background: rgba(211, 47, 47, 0.12);
+  border: 1px solid rgba(211, 47, 47, 0.3);
+  border-radius: 10px;
+  color: #ff6b6b;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+}
+
+.asb-logout-btn:hover {
+  background: rgba(211, 47, 47, 0.22);
+}
+
+.admin-main-wrapper {
+  flex: 1;
+  margin-left: 250px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-only-header, .mobile-only-nav {
+  display: none;
+}
 
 .admin-page {
   padding: 24px 32px 60px;
   max-width: 1280px;
-  margin: 0 auto;
+  margin: 0;
   min-height: calc(100vh - 76px);
   color: var(--text-primary);
   background: var(--bg);

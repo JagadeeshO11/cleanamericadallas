@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
-import { HiHome, HiClipboardList, HiClock, HiCurrencyRupee, HiUser } from 'react-icons/hi';
+import { HiHome, HiClipboardList, HiClock, HiCurrencyDollar, HiUser } from 'react-icons/hi';
 import './Worker.css';
 import './WorkerTheme.css';
 
@@ -10,7 +10,7 @@ const NAV = [
   { to: '/worker', icon: HiHome, label: 'Home' },
   { to: '/worker/orders', icon: HiClipboardList, label: 'Orders' },
   { to: '/worker/history', icon: HiClock, label: 'History' },
-  { to: '/worker/wallet', icon: HiCurrencyRupee, label: 'Wallet' },
+  { to: '/worker/wallet', icon: HiCurrencyDollar, label: 'Wallet' },
   { to: '/worker/profile', icon: HiUser, label: 'Profile' },
 ];
 
@@ -22,8 +22,8 @@ export default function WorkerLayout() {
     <div className="worker-layout">
       <header className="worker-top-header">
         <div className="wth-brand">
-          <img src={LOGO_URL} alt="Clean America" className="wth-logo-image" style={{ width: 118, height: 48, objectFit: 'contain', objectPosition: 'left center', display: 'block' }} />
-          <span className="wth-badge">Worker</span>
+          <img src={LOGO_URL} alt="Clean America Dallas" className="wth-logo-img" />
+          <span className="wth-badge">Dallas Pro</span>
         </div>
         <div className="wth-user">
           <div className="wth-avatar">{user?.name?.charAt(0)?.toUpperCase() || 'W'}</div>

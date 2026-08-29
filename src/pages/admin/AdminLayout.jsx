@@ -1,19 +1,24 @@
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useState, useRef, useEffect } from 'react';
-import { HiHome, HiClipboardList, HiUsers, HiDotsHorizontal, HiLogout, HiChevronDown } from 'react-icons/hi';
+import {
+  HiHome, HiClipboardList, HiUsers, HiLogout, HiChevronDown,
+  HiTag, HiChartBar, HiCreditCard
+} from 'react-icons/hi';
 import { MdEngineering } from 'react-icons/md';
 import './Admin.css';
 import './AdminTheme.css';
 
 const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png';
 
-const NAV = [
-  { to: '/admin',           icon: HiHome,           label: 'Dashboard', end: true },
-  { to: '/admin/orders',    icon: HiClipboardList,  label: 'Orders'              },
-  { to: '/admin/customers', icon: HiUsers,          label: 'Customers'           },
-  { to: '/admin/workers',   icon: MdEngineering,    label: 'Workers'             },
-  { to: '/admin/more',      icon: HiDotsHorizontal, label: 'More'                },
+const NAV_ITEMS = [
+  { to: '/admin', icon: HiHome, label: 'Dashboard', end: true },
+  { to: '/admin/orders', icon: HiClipboardList, label: 'Bookings' },
+  { to: '/admin/customers', icon: HiUsers, label: 'Customers' },
+  { to: '/admin/workers', icon: MdEngineering, label: 'Dallas Pros' },
+  { to: '/admin/products', icon: HiTag, label: 'Services & Rates' },
+  { to: '/admin/reports', icon: HiChartBar, label: 'Analytics Reports' },
+  { to: '/admin/payments', icon: HiCreditCard, label: 'Payouts & Revenue' },
 ];
 
 export default function AdminLayout() {
@@ -23,7 +28,10 @@ export default function AdminLayout() {
   const [dropOpen, setDropOpen] = useState(false);
   const dropRef = useRef();
 
-  const handleLogout = () => { logout(); navigate('/admin/signin', { replace: true }); };
+  const handleLogout = () => {
+    logout();
+    navigate('/admin/signin', { replace: true });
+  };
 
   useEffect(() => {
     const handler = (e) => { if (!dropRef.current?.contains(e.target)) setDropOpen(false); };
@@ -32,49 +40,90 @@ export default function AdminLayout() {
   }, []);
 
   return (
-    <div className="admin-layout">
-      <header className="admin-top-header">
-        <div className="ath-brand">
-          <img src={LOGO_URL} alt="Clean America" className="ath-logo-image" style={{ width: 118, height: 48, objectFit: 'contain', objectPosition: 'left center', display: 'block' }} />
-          <span className="ath-badge">Admin</span>
+    <div className="admin-layout-container">
+      {/* DESKTOP LEFT SIDEBAR NAVIGATION */}
+      <aside className="admin-sidebar">
+        <div className="asb-brand">
+          <Link to="/">
+            <img src={LOGO_URL} alt="Clean America Dallas" className="asb-logo-img" />
+          </Link>
+          <span className="asb-badge">Admin Operations</span>
         </div>
-        <div className="ath-user" ref={dropRef}>
-          <button className="ath-user-btn" onClick={() => setDropOpen(o => !o)}>
-            <div className="ath-avatar">{user?.name?.charAt(0)}</div>
-            <div className="ath-info">
-              <strong>{user?.name?.split(' ')[0]}</strong>
-              <span>Administrator</span>
+
+        <nav className="asb-menu">
+          {NAV_ITEMS.map(({ to, icon: Icon, label, end }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={end}
+              className={({ isActive }) => `asb-link ${isActive ? 'active' : ''}`}
+            >
+              <Icon className="asb-icon" />
+              <span>{label}</span>
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="asb-footer">
+          <div className="asb-user-card">
+            <div className="asb-avatar">{user?.name?.charAt(0)?.toUpperCase() || 'A'}</div>
+            <div className="asb-user-info">
+              <strong>{user?.name || 'Admin'}</strong>
+              <span>{user?.email}</span>
             </div>
-            <HiChevronDown className={`ath-chevron ${dropOpen ? 'open' : ''}`} />
+          </div>
+          <button className="asb-logout-btn" onClick={handleLogout}>
+            <HiLogout style={{ width: 16, height: 16 }} /> Logout
           </button>
-          {dropOpen && (
-            <div className="ath-dropdown">
-              <div className="ath-drop-header">
-                <div className="ath-drop-avatar">{user?.name?.charAt(0)}</div>
-                <div>
-                  <strong>{user?.name}</strong>
-                  <span>{user?.email}</span>
-                </div>
-              </div>
-              <hr className="ath-drop-divider" />
-              <button className="ath-drop-item logout" onClick={handleLogout}>
-                <HiLogout className="ath-drop-icon" /> Logout
-              </button>
-            </div>
-          )}
         </div>
-      </header>
+      </aside>
 
-      <div className="admin-content"><Outlet /></div>
+      {/* MAIN CONTENT WRAPPER */}
+      <div className="admin-main-wrapper">
+        {/* MOBILE ONLY TOP HEADER */}
+        <header className="admin-top-header mobile-only-header">
+          <div className="ath-brand">
+            <img src={LOGO_URL} alt="Clean America" className="ath-logo-image" style={{ width: 95, height: 32, objectFit: 'contain' }} />
+            <span className="ath-badge">Admin</span>
+          </div>
 
-      <nav className="admin-bottom-nav">
-        {NAV.map(({ to, icon: Icon, label, end }) => (
-          <NavLink key={to} to={to} end={end} className={({ isActive }) => `abn-item ${isActive ? 'active' : ''}`}>
-            <Icon className="abn-icon" />
-            <span>{label}</span>
-          </NavLink>
-        ))}
-      </nav>
+          <div className="ath-user" ref={dropRef}>
+            <button className="ath-user-btn" onClick={() => setDropOpen(o => !o)}>
+              <div className="ath-avatar">{user?.name?.charAt(0)}</div>
+              <HiChevronDown className={`ath-chevron ${dropOpen ? 'open' : ''}`} />
+            </button>
+            {dropOpen && (
+              <div className="ath-dropdown">
+                <div className="ath-drop-header">
+                  <div className="ath-drop-avatar">{user?.name?.charAt(0)}</div>
+                  <div>
+                    <strong>{user?.name}</strong>
+                    <span>{user?.email}</span>
+                  </div>
+                </div>
+                <hr className="ath-drop-divider" />
+                <button className="ath-drop-item logout" onClick={handleLogout}>
+                  <HiLogout className="ath-drop-icon" /> Logout
+                </button>
+              </div>
+            )}
+          </div>
+        </header>
+
+        <main className="admin-content">
+          <Outlet />
+        </main>
+
+        {/* MOBILE ONLY BOTTOM NAV */}
+        <nav className="admin-bottom-nav mobile-only-nav">
+          {NAV_ITEMS.slice(0, 5).map(({ to, icon: Icon, label, end }) => (
+            <NavLink key={to} to={to} end={end} className={({ isActive }) => `abn-item ${isActive ? 'active' : ''}`}>
+              <Icon className="abn-icon" />
+              <span>{label}</span>
+            </NavLink>
+          ))}
+        </nav>
+      </div>
     </div>
   );
 }
