@@ -27,8 +27,8 @@
 }
 
 .wth-logo-img {
-  width: 105px;
-  height: 36px;
+  width: 110px;
+  height: 38px;
   object-fit: contain;
 }
 
@@ -63,10 +63,29 @@
   font-weight: 800;
 }
 
-.wth-name {
+.wth-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.wth-info strong {
   font-size: 13.5px;
   font-weight: 700;
   color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.wth-status {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.wth-status.online {
+  color: #4CAF16;
+}
+
+.wth-status.offline {
+  color: var(--accent-gold);
 }
 
 .worker-content {
@@ -78,7 +97,29 @@
 .worker-page {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 24px 24px 80px;
+  padding: 28px 24px 80px;
+}
+
+/* Page Title Banner */
+.wp-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.wp-title-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--primary);
+}
+
+.wp-title h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.4px;
 }
 
 /* Header & Welcome Banner */
@@ -94,51 +135,98 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
-.wh-title h1 {
-  font-size: 24px;
+.wh-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.wh-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wh-left h1 {
+  font-size: 22px;
   font-weight: 800;
   color: var(--text-primary);
   margin: 0 0 4px;
   letter-spacing: -0.4px;
 }
 
-.wh-title p {
-  font-size: 14px;
+.wh-vehicle {
+  font-size: 13.5px;
   color: var(--text-muted);
   margin: 0;
-}
-
-/* Availability Toggle */
-.avail-toggle-btn {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: 1.5px solid;
+}
+
+/* Online / Offline Toggle Button CSS */
+.avail-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avail-toggle span {
   font-size: 13px;
   font-weight: 700;
+  color: var(--text-muted);
+}
+
+.toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 800;
   cursor: pointer;
   font-family: inherit;
-  transition: all 0.2s ease;
+  transition: all 0.22s ease;
+  border: 1.5px solid;
+  outline: none;
 }
 
-.avail-toggle-btn.available {
-  background: rgba(76, 175, 22, 0.15);
+.toggle-btn.on {
+  background: rgba(76, 175, 22, 0.18);
   border-color: var(--primary);
   color: #4CAF16;
+  box-shadow: 0 0 14px rgba(76, 175, 22, 0.35);
 }
 
-.avail-toggle-btn.busy {
-  background: rgba(255, 193, 7, 0.15);
+.toggle-btn.on:hover {
+  background: rgba(76, 175, 22, 0.28);
+  transform: translateY(-1px);
+}
+
+.toggle-btn.off {
+  background: rgba(255, 193, 7, 0.16);
   border-color: var(--accent-gold);
   color: var(--accent-gold);
+  box-shadow: 0 0 12px rgba(255, 193, 7, 0.25);
+}
+
+.toggle-btn.off:hover {
+  background: rgba(255, 193, 7, 0.26);
+  transform: translateY(-1px);
 }
 
 /* Stats Row */
 .worker-stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-bottom: 28px;
 }
@@ -152,7 +240,7 @@
   align-items: center;
   gap: 16px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .ws-card:hover {
@@ -161,8 +249,8 @@
 }
 
 .ws-icon-wrap {
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   border-radius: 14px;
   background: rgba(76, 175, 22, 0.14);
   color: var(--primary);
@@ -172,22 +260,28 @@
   flex-shrink: 0;
 }
 
-.ws-info span {
+.ws-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.ws-card span {
   display: block;
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.4px;
   margin-bottom: 2px;
 }
 
-.ws-info strong {
+.ws-card strong {
   font-size: 22px;
   font-weight: 800;
   color: var(--text-primary);
 }
 
-/* Active Job Card Banner */
+/* Active Job Banner */
 .active-job-card {
   background: linear-gradient(135deg, #182516 0%, #121815 100%);
   border: 2px solid var(--primary);
@@ -197,52 +291,71 @@
   box-shadow: 0 10px 30px rgba(76, 175, 22, 0.2);
 }
 
-.aj-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid rgba(76, 175, 22, 0.25);
-}
-
-.aj-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--primary);
-}
-
 .aj-badge {
+  display: inline-block;
   background: var(--primary);
   color: #fff;
   font-size: 11px;
   font-weight: 800;
-  padding: 3px 10px;
+  padding: 4px 12px;
   border-radius: 12px;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
 }
 
-.aj-body {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+.active-job-card h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 16px;
+}
+
+.aj-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   margin-bottom: 20px;
 }
 
-.aj-field span {
-  font-size: 12px;
-  color: var(--text-muted);
-  display: block;
-  margin-bottom: 2px;
+.aj-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
 }
 
-.aj-field strong {
-  font-size: 15px;
-  color: var(--text-primary);
-  font-weight: 700;
+.aj-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.aj-phone {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--input);
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-left: 8px;
+}
+
+.aj-stage {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  background: rgba(76, 175, 22, 0.08);
+  border: 1px solid rgba(76, 175, 22, 0.25);
+  padding: 10px 14px;
+  border-radius: 12px;
+}
+
+.aj-stage strong {
+  color: var(--primary);
+  font-size: 14px;
+  margin-left: 4px;
 }
 
 .aj-advance {
@@ -269,49 +382,142 @@
   transform: translateY(-1px);
 }
 
-/* Orders & Job History Items */
-.job-item, .order-card {
+.no-active-job {
+  background: rgba(76, 175, 22, 0.08);
+  border: 1.5px dashed rgba(76, 175, 22, 0.35);
+  border-radius: 18px;
+  padding: 24px;
+  text-align: center;
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.no-active-job p {
+  margin: 0;
+}
+
+/* Worker Sections & Lists */
+.worker-section {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 20px;
-  margin-bottom: 16px;
+  border-radius: 20px;
+  padding: 24px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  transition: border-color 0.18s ease;
 }
 
-.job-item:hover, .order-card:hover {
-  border-color: var(--primary);
+.worker-section h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 20px;
 }
 
-.ji-top {
+.job-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.job-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  padding: 16px 18px;
+  background: var(--input);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: border-color 0.18s ease;
 }
 
-.ji-service {
-  font-size: 16px;
-  font-weight: 800;
+.job-item:hover {
+  border-color: var(--primary);
+}
+
+.ji-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ji-thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ji-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ji-left strong {
+  font-size: 15px;
+  font-weight: 700;
   color: var(--text-primary);
+  display: block;
+  margin-bottom: 3px;
+}
+
+.ji-left p {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.ji-right {
+  text-align: right;
+  flex-shrink: 0;
 }
 
 .ji-amount {
   font-size: 16px;
   font-weight: 800;
   color: var(--accent-gold);
+  margin-bottom: 4px;
 }
 
-.ji-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 13px;
+/* History Summary Cards */
+.history-summary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.hs-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hs-item strong {
+  display: block;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.hs-item span {
+  font-size: 12px;
+  font-weight: 700;
   color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-/* Wallet Cards */
+/* Wallet Cards & Payout History */
 .wallet-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -322,18 +528,117 @@
 }
 
 .wallet-card.primary {
-  background: linear-gradient(135deg, #1f4211 0%, #121815 100%);
-  border: 1.5px solid var(--primary);
+  background: linear-gradient(135deg, #192d15 0%, #121815 100%);
+  border: 2px solid var(--primary);
+  box-shadow: 0 8px 24px rgba(76, 175, 22, 0.25);
 }
 
-.wc-val {
-  font-size: 32px;
+.wc-balance-label {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.wc-balance-amount {
+  font-size: 36px;
   font-weight: 800;
   color: var(--text-primary);
-  margin-top: 6px;
+  margin: 6px 0;
+  letter-spacing: -0.5px;
 }
 
-/* Worker Mobile Bottom Nav */
+.wc-sub {
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+.wallet-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.wallet-stats .ws-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+
+.wallet-stats .ws-card strong {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.wallet-stats .ws-card span {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Payout Transaction List */
+.txn-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.txn-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: var(--input);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transition: border-color 0.18s ease;
+}
+
+.txn-item:hover {
+  border-color: var(--primary);
+}
+
+.txn-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.txn-left strong {
+  display: block;
+  font-size: 14.5px;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.txn-left span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.txn-right {
+  text-align: right;
+}
+
+.txn-amount {
+  font-size: 16px;
+  font-weight: 800;
+  color: #6ee7b7;
+  margin-bottom: 4px;
+}
+
+/* Mobile Navigation Bar */
 .worker-bottom-nav {
   position: fixed;
   bottom: 0;
@@ -372,7 +677,9 @@
 
 @media (max-width: 768px) {
   .worker-page { padding: 16px 14px 80px; }
-  .worker-header { flex-direction: column; align-items: flex-start; gap: 14px; }
-  .worker-stats { grid-template-columns: 1fr; gap: 12px; }
-  .aj-body { grid-template-columns: 1fr; gap: 10px; }
+  .worker-header { flex-direction: column; align-items: flex-start; gap: 16px; padding: 18px; }
+  .wh-left { width: 100%; justify-content: space-between; }
+  .avail-toggle { width: 100%; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 12px; margin-top: 4px; }
+  .worker-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .wallet-stats, .history-summary { grid-template-columns: 1fr; gap: 10px; }
 }
