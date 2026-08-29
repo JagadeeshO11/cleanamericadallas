@@ -1,0 +1,211 @@
+/* Worker dashboard content-fit fixes */
+.worker-page,
+.worker-page * {
+  box-sizing: border-box;
+}
+
+.worker-page {
+  width: 100%;
+  max-width: 1000px;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.worker-header,
+.worker-stats,
+.active-job-card,
+.worker-section,
+.job-item {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.wh-left,
+.avail-toggle,
+.ji-left,
+.ji-right,
+.aj-row {
+  min-width: 0;
+}
+
+.wh-left > div:last-child,
+.ji-left > div:last-child {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.wh-left h1,
+.wh-vehicle,
+.ji-left strong,
+.ji-left p,
+.aj-row strong,
+.aj-phone {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.active-job-card,
+.worker-section {
+  overflow: hidden;
+}
+
+.ji-left p {
+  line-height: 1.4;
+}
+
+@media (max-width: 700px) {
+  .worker-page {
+    width: 100%;
+    padding: 18px 14px 72px;
+  }
+
+  .worker-header {
+    padding: 18px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .wh-left {
+    width: 100%;
+  }
+
+  .wh-left h1 {
+    font-size: 19px;
+  }
+
+  .avail-toggle {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .avail-toggle span {
+    min-width: 0;
+  }
+
+  .toggle-btn {
+    flex-shrink: 0;
+    padding: 8px 14px;
+  }
+
+  .worker-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .ws-card {
+    min-width: 0;
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .ws-card strong {
+    font-size: 19px;
+  }
+
+  .ws-card span {
+    font-size: 10px;
+    overflow-wrap: anywhere;
+  }
+
+  .active-job-card,
+  .worker-section {
+    padding: 18px;
+  }
+
+  .aj-row {
+    align-items: flex-start;
+  }
+
+  .aj-row strong {
+    flex: 1 1 auto;
+  }
+
+  .aj-phone {
+    flex: 0 1 auto;
+    margin-left: 0;
+  }
+
+  .job-item {
+    align-items: flex-start;
+    gap: 12px;
+    padding: 13px;
+  }
+
+  .ji-left {
+    flex: 1 1 auto;
+    width: 0;
+  }
+
+  .ji-right {
+    flex: 0 0 auto;
+  }
+
+  .ji-left p {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 420px) {
+  .worker-page {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .worker-stats {
+    gap: 8px;
+  }
+
+  .ws-card {
+    padding: 11px;
+    gap: 8px;
+  }
+
+  .ws-icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+  }
+
+  .ws-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .ws-card strong {
+    font-size: 17px;
+  }
+
+  .ws-card span {
+    font-size: 9px;
+  }
+
+  .active-job-card,
+  .worker-section {
+    padding: 15px;
+  }
+
+  .ji-thumb {
+    width: 44px;
+    height: 44px;
+  }
+
+  .ji-left {
+    gap: 9px;
+  }
+
+  .ji-left strong {
+    font-size: 13px;
+  }
+
+  .ji-left p {
+    font-size: 11px;
+  }
+
+  .ji-amount {
+    font-size: 14px;
+  }
+}
