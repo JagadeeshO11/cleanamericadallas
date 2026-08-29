@@ -42,11 +42,14 @@ export default function Browse() {
   const customerPath = path => `/customer${path}`;
 
   useEffect(() => {
-    const cat = params.get('cat');
-    if (cat) setActiveCat(cat);
-    const q = params.get('search');
-    if (q) setSearch(q);
+    setActiveCat(params.get('cat') || 'all');
+    setSearch(params.get('search') || '');
   }, [params]);
+
+  const selectCategory = cat => {
+    setActiveCat(cat);
+    navigate(cat === 'all' ? customerPath('/browse') : customerPath(`/browse?cat=${cat}`));
+  };
 
   const openCartModal = (e, vehicle) => {
     e.stopPropagation();
@@ -85,13 +88,13 @@ export default function Browse() {
       </div>
 
       <div className="cat-tabs">
-        <button className={activeCat === 'all' ? 'active' : ''} onClick={() => setActiveCat('all')}>
+        <button className={activeCat === 'all' ? 'active' : ''} onClick={() => selectCategory('all')}>
           <MdOutlineCleaningServices className="tab-icon" /> All Services
         </button>
         {categories.map(c => {
           const Icon = CAT_ICONS[c.id] || MdOutlineCleaningServices;
           return (
-            <button key={c.id} className={activeCat === c.id ? 'active' : ''} onClick={() => setActiveCat(c.id)}>
+            <button key={c.id} className={activeCat === c.id ? 'active' : ''} onClick={() => selectCategory(c.id)}>
               <Icon className="tab-icon" /> {c.label}
             </button>
           );
@@ -102,39 +105,21 @@ export default function Browse() {
         {filtered.map(v => (
           <div key={v.id} className="vehicle-card" onClick={() => navigate(customerPath(`/book/${v.id}`))}>
             <div className="vc-img-wrap">
-              <img
-                src={v.image || FALLBACK}
-                alt={v.name}
-                className="vc-img"
-                onError={e => { e.target.src = FALLBACK; }}
-              />
-              <span className="vc-avail">
-                <HiCheckCircle style={{ width: 11, height: 11 }} /> Available in Dallas
-              </span>
+              <img src={v.image || FALLBACK} alt={v.name} className="vc-img" onError={e => { e.target.src = FALLBACK; }} />
+              <span className="vc-avail"><HiCheckCircle style={{ width: 11, height: 11 }} /> Available in Dallas</span>
             </div>
             <div className="vc-body">
               <h3>{v.name}</h3>
               <p>{v.desc}</p>
               <div className="vc-meta">
-                <span className="vc-meta-item">
-                  <HiStar style={{ width: 13, height: 13, color: '#f59e0b' }} /> 4.9
-                </span>
-                <span className="vc-meta-item">
-                  <HiClock style={{ width: 13, height: 13, color: '#888' }} /> 60 min arrival
-                </span>
+                <span className="vc-meta-item"><HiStar style={{ width: 13, height: 13, color: '#f59e0b' }} /> 4.9</span>
+                <span className="vc-meta-item"><HiClock style={{ width: 13, height: 13, color: '#888' }} /> 60 min arrival</span>
               </div>
               <div className="vc-footer">
-                <div className="vc-rate">
-                  <strong>${v.rate}</strong>
-                  <span>/{v.unit}</span>
-                </div>
+                <div className="vc-rate"><strong>${v.rate}</strong><span>/{v.unit}</span></div>
                 <div className="vc-actions">
-                  <button className="vc-cart-btn" onClick={e => openCartModal(e, v)}>
-                    <HiShoppingCart style={{ width: 15, height: 15 }} />
-                  </button>
-                  <button className="vc-book-btn" onClick={e => { e.stopPropagation(); navigate(customerPath(`/book/${v.id}`)); }}>
-                    Book Now
-                  </button>
+                  <button className="vc-cart-btn" onClick={e => openCartModal(e, v)}><HiShoppingCart style={{ width: 15, height: 15 }} /></button>
+                  <button className="vc-book-btn" onClick={e => { e.stopPropagation(); navigate(customerPath(`/book/${v.id}`)); }}>Book Now</button>
                 </div>
               </div>
             </div>
@@ -151,58 +136,18 @@ export default function Browse() {
       {cartModal && (
         <div className="modal-overlay" onClick={() => setCartModal(null)}>
           <div className="cart-modal" onClick={e => e.stopPropagation()}>
-            <div className="cm-header">
-              <h3>Add Service to Cart</h3>
-              <button className="cm-close" onClick={() => setCartModal(null)}><HiX /></button>
-            </div>
-            <div className="cm-vehicle">
-              <img src={cartModal.image} alt={cartModal.name} className="cm-img" />
-              <div>
-                <strong>{cartModal.name}</strong>
-                <span>${cartModal.rate}/{cartModal.unit}</span>
-              </div>
-            </div>
-            <label>
-              <span><HiLocationMarker className="cm-lbl-icon" /> Service Location</span>
-              <input
-                placeholder="Dallas, TX address"
-                value={form.location}
-                onChange={e => setForm(f => ({ ...f, location: e.target.value }))}
-              />
-            </label>
-            <label>
-              <span><HiCalendar className="cm-lbl-icon" /> Preferred Date</span>
-              <input
-                type="date"
-                value={form.date}
-                min={new Date().toISOString().split('T')[0]}
-                onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
-              />
-            </label>
-            <label>
-              <span>Duration / Quantity ({cartModal.unit})</span>
-              <div className="duration-ctrl">
-                <button onClick={() => setForm(f => ({ ...f, duration: Math.max(1, f.duration - 1) }))}>−</button>
-                <span>{form.duration}</span>
-                <button onClick={() => setForm(f => ({ ...f, duration: f.duration + 1 }))}>+</button>
-              </div>
-            </label>
-            <div className="cm-total">
-              Total: <strong>${(cartModal.rate * form.duration).toLocaleString()}</strong>
-            </div>
-            <button className="cm-add-btn" disabled={!form.location || !form.date} onClick={handleAddToCart}>
-              <HiShoppingCart style={{ width: 16, height: 16 }} /> Add to Cart
-            </button>
+            <div className="cm-header"><h3>Add Service to Cart</h3><button className="cm-close" onClick={() => setCartModal(null)}><HiX /></button></div>
+            <div className="cm-vehicle"><img src={cartModal.image} alt={cartModal.name} className="cm-img" /><div><strong>{cartModal.name}</strong><span>${cartModal.rate}/{cartModal.unit}</span></div></div>
+            <label><span><HiLocationMarker className="cm-lbl-icon" /> Service Location</span><input placeholder="Dallas, TX address" value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))} /></label>
+            <label><span><HiCalendar className="cm-lbl-icon" /> Preferred Date</span><input type="date" value={form.date} min={new Date().toISOString().split('T')[0]} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} /></label>
+            <label><span>Duration / Quantity ({cartModal.unit})</span><div className="duration-ctrl"><button onClick={() => setForm(f => ({ ...f, duration: Math.max(1, f.duration - 1) }))}>−</button><span>{form.duration}</span><button onClick={() => setForm(f => ({ ...f, duration: f.duration + 1 }))}>+</button></div></label>
+            <div className="cm-total">Total: <strong>${(cartModal.rate * form.duration).toLocaleString()}</strong></div>
+            <button className="cm-add-btn" disabled={!form.location || !form.date} onClick={handleAddToCart}><HiShoppingCart style={{ width: 16, height: 16 }} /> Add to Cart</button>
           </div>
         </div>
       )}
 
-      {added && (
-        <div className="cart-toast">
-          <HiCheckCircle style={{ width: 18, height: 18, color: 'var(--primary)' }} /> Service added to cart!
-          <button onClick={() => navigate(customerPath('/cart'))}>View Cart →</button>
-        </div>
-      )}
+      {added && <div className="cart-toast"><HiCheckCircle style={{ width: 18, height: 18, color: 'var(--primary)' }} /> Service added to cart!<button onClick={() => navigate(customerPath('/cart'))}>View Cart →</button></div>}
     </div>
   );
 }
