@@ -6,6 +6,7 @@ import {
 } from 'react-icons/hi';
 import { MdHomeRepairService } from 'react-icons/md';
 import './Worker.css';
+import './WorkerMobileFix.css';
 
 export default function WorkerDashboard() {
   const user = useAuthStore(s => s.user);
@@ -27,7 +28,6 @@ export default function WorkerDashboard() {
 
   return (
     <div className="worker-page">
-      {/* Header */}
       <div className="worker-header">
         <div className="wh-left">
           <div className="wh-avatar">{user?.name?.charAt(0)?.toUpperCase() || 'W'}</div>
@@ -50,7 +50,6 @@ export default function WorkerDashboard() {
         </div>
       </div>
 
-      {/* Stats */}
       <div className="worker-stats">
         {STATS.map(({ Icon, val, label, color }) => (
           <div key={label} className="ws-card">
@@ -63,29 +62,16 @@ export default function WorkerDashboard() {
         ))}
       </div>
 
-      {/* Active Job */}
       {activeJob && (
         <div className="active-job-card">
           <div className="aj-badge">🔴 Active Dallas Appointment</div>
           <h2>{activeJob.vehicle?.name}</h2>
           <div className="aj-details">
-            <div className="aj-row">
-              <HiLocationMarker className="aj-icon" />
-              <strong>{activeJob.booking?.location}</strong>
-            </div>
-            <div className="aj-row">
-              <HiCalendar className="aj-icon" />
-              <strong>{activeJob.booking?.date}</strong>
-            </div>
-            <div className="aj-row">
-              <HiUser className="aj-icon" />
-              <strong>{activeJob.customer?.name}</strong>
-              <span className="aj-phone">{activeJob.customer?.phone}</span>
-            </div>
+            <div className="aj-row"><HiLocationMarker className="aj-icon" /><strong>{activeJob.booking?.location}</strong></div>
+            <div className="aj-row"><HiCalendar className="aj-icon" /><strong>{activeJob.booking?.date}</strong></div>
+            <div className="aj-row"><HiUser className="aj-icon" /><strong>{activeJob.customer?.name}</strong><span className="aj-phone">{activeJob.customer?.phone}</span></div>
           </div>
-          <div className="aj-stage">
-            Current Stage: <strong>{activeJob.stages[activeJob.stage]}</strong>
-          </div>
+          <div className="aj-stage">Current Stage: <strong>{activeJob.stages[activeJob.stage]}</strong></div>
           {activeJob.stage < activeJob.stages.length - 1 && (
             <button className="aj-advance" onClick={() => advanceStage(activeJob.id)}>
               Mark as: {activeJob.stages[activeJob.stage + 1]}
@@ -95,7 +81,6 @@ export default function WorkerDashboard() {
         </div>
       )}
 
-      {/* Job History */}
       <div className="worker-section">
         <h2>Job History</h2>
         {myOrders.length === 0 ? (
@@ -114,9 +99,7 @@ export default function WorkerDashboard() {
                   </div>
                   <div>
                     <strong>{o.vehicle?.name}</strong>
-                    <p>
-                      <HiLocationMarker style={{ width: 11, height: 11, verticalAlign: 'middle' }} /> {o.booking?.location} · {o.booking?.date}
-                    </p>
+                    <p><HiLocationMarker style={{ width: 11, height: 11, verticalAlign: 'middle' }} /> {o.booking?.location} · {o.booking?.date}</p>
                   </div>
                 </div>
                 <div className="ji-right">
