@@ -25,6 +25,14 @@ export default function WorkerLayout() {
           <img src={LOGO_URL} alt="Clean America Dallas" className="wth-logo-img" />
           <span className="wth-badge">Dallas Pro</span>
         </div>
+        <nav className="worker-top-nav">
+          {NAV.map(({ to, icon: Icon, label }) => (
+            <NavLink key={to} to={to} end={to === '/worker'} className={({ isActive }) => `wtn-item ${isActive ? 'active' : ''}`}>
+              <Icon className="wtn-icon" />
+              <span>{label}</span>
+            </NavLink>
+          ))}
+        </nav>
         <div className="wth-user">
           <div className="wth-avatar">{user?.name?.charAt(0)?.toUpperCase() || 'W'}</div>
           <div className="wth-info">

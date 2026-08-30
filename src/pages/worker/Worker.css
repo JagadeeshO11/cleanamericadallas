@@ -117,7 +117,7 @@
 .wp-title h1 {
   font-size: 24px;
   font-weight: 800;
-  color: var(--text-primary);
+  color: #111827;
   margin: 0;
   letter-spacing: -0.4px;
 }
@@ -675,7 +675,54 @@
   height: 22px;
 }
 
+/* Desktop Top Header Navigation Bar */
+.worker-top-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wtn-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.18s ease;
+}
+
+.wtn-item:hover {
+  background: rgba(76, 175, 22, 0.12);
+  color: var(--primary);
+}
+
+.wtn-item.active {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.wtn-icon {
+  width: 17px;
+  height: 17px;
+}
+
+@media (min-width: 769px) {
+  .worker-bottom-nav {
+    display: none !important;
+  }
+  .worker-content {
+    padding-bottom: 32px;
+  }
+}
+
 @media (max-width: 768px) {
+  .worker-top-nav {
+    display: none !important;
+  }
   .worker-page { padding: 16px 14px 80px; }
   .worker-header { flex-direction: column; align-items: flex-start; gap: 16px; padding: 18px; }
   .wh-left { width: 100%; justify-content: space-between; }

@@ -4,8 +4,11 @@
 
 .admin-page { color: var(--text-primary); }
 .admin-header h1,
+.as-header h2 { color: #111827 !important; }
+
+.admin-header p { color: #6b7280 !important; }
+
 .sc-val,
-.as-header h2,
 .wr-info strong,
 .worker-card h3,
 .wc-stats strong,
@@ -24,8 +27,6 @@
 .ath-brand,
 .ath-info strong,
 .ath-drop-header strong { color: var(--text-primary) !important; }
-
-.admin-header p,
 .sc-label,
 .mono,
 .wr-info span,
