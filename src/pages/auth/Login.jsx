@@ -4,7 +4,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { HiMail, HiLockClosed, HiArrowRight, HiSparkles } from 'react-icons/hi';
 import './Auth.css';
 
-const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png';
+const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1788114865/0e7be675-4f29-45fc-9ef5-a9809350eaa9.png';
 
 const DEMOS = {
   admin: { email: 'admin@cleanamericadallas.com', password: 'admin123' },

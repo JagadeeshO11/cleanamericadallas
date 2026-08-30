@@ -69,7 +69,7 @@
 .ps-card.yellow { border-left-color: var(--accent-gold) !important; }
 .stat-card.blue,
 .stat-card.teal,
-.ps-card.blue { border-left-color: var(--dark-green, #1B5E20) !important; }
+.ps-card.blue { border-left-color: var(--primary-dark) !important; }
 .stat-card.purple { border-left-color: var(--accent-gold) !important; }
 
 .sc-icon-wrap.orange,
@@ -81,7 +81,7 @@
 .qa-btn.orange,
 .qa-btn.blue,
 .qa-btn.green,
-.qa-btn.purple { background: rgba(76,175,22,.12) !important; color: var(--primary) !important; }
+.qa-btn.purple { background: rgba(0,56,152,.12) !important; color: var(--primary) !important; }
 
 .sc-icon-wrap.yellow,
 .qa-btn.yellow { background: rgba(255,193,7,.12) !important; color: var(--accent-gold) !important; }
@@ -104,13 +104,13 @@
 .toggle-avail.set-busy,
 .unassigned { background: rgba(255,193,7,.14) !important; color: var(--accent-gold) !important; }
 .status-chip.assigned,
-.act-btn.assign { background: rgba(76,175,22,.12) !important; color: var(--primary) !important; }
+.act-btn.assign { background: rgba(0,56,152,.12) !important; color: var(--primary) !important; }
 .status-chip.active,
 .status-chip.completed,
 .act-btn.advance,
 .avail-badge.on,
 .toggle-avail.set-avail,
-.role-tag.customer { background: rgba(76,175,22,.14) !important; color: var(--primary) !important; }
+.role-tag.customer { background: rgba(76,175,80,.14) !important; color: var(--secondary-dark) !important; }
 .status-chip.cancelled,
 .act-btn.cancel { background: rgba(211,47,47,.14) !important; color: var(--error) !important; }
 
@@ -120,11 +120,11 @@
 .ath-avatar,
 .ath-drop-avatar { background: var(--primary) !important; color: #fff !important; }
 .avail-dot.on,
-.top-bar { background: var(--primary) !important; }
+.top-bar { background: var(--secondary) !important; }
 .avail-dot.off { background: var(--accent-gold) !important; }
 .active-job-badge { background: rgba(211,47,47,.12) !important; color: var(--error) !important; }
 
-.more-item:hover { border-color: var(--primary) !important; box-shadow: 0 4px 14px rgba(76,175,22,.12) !important; }
+.more-item:hover { border-color: var(--primary) !important; box-shadow: 0 4px 14px rgba(0,56,152,.12) !important; }
 .top-bar-wrap { background: var(--border) !important; }
 
 .admin-top-header,

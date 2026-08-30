@@ -6,7 +6,7 @@ import { HiHome, HiClipboardList, HiClock, HiCurrencyDollar, HiUser, HiBell } fr
 import './Worker.css';
 import './WorkerTheme.css';
 
-const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png';
+const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1788114865/0e7be675-4f29-45fc-9ef5-a9809350eaa9.png';
 
 const NAV = [
   { to: '/worker', icon: HiHome, label: 'Home' },

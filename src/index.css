@@ -1,25 +1,25 @@
 :root {
-  /* Clean America Dallas - Green Design System Tokens */
-  --primary: #2E7D32;          /* Eco Brand Green */
-  --primary-dark: #1B5E20;     /* Deep Eco Green Dark */
-  --primary-light: #E8F5E9;    /* Soft Green Light Accent */
+  /* Clean America Dallas - Blue + Pale Green Design System Tokens */
+  --primary: #003898;          /* Primary Brand Deep Blue */
+  --primary-dark: #002366;     /* Dark Blue */
+  --primary-light: #EBF3FF;    /* Soft Light Blue Accent */
 
-  --secondary: #388E3C;        /* Bright Green */
-  --secondary-dark: #1B5E20;   /* Deep Green */
-  --secondary-light: #C8E6C9;  /* Light Green Pill */
+  --secondary: #4CAF50;        /* Pale / Eco Green Accent from Logo */
+  --secondary-dark: #2E7D32;   /* Deep Green */
+  --secondary-light: #EAF8E6;  /* Soft Light Pale Green Pill */
 
   --accent-gold: #F59E0B;
-  --gold-gradient: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+  --gold-gradient: linear-gradient(135deg, #003898 0%, #002366 100%);
 
   --bg: #F8FAFC;               /* Clean Light Page Background */
   --surface: #FFFFFF;          /* Pure White Card Surface */
   --input: #FFFFFF;            /* Pure White Inputs */
   --border: #E2E8F0;           /* Soft Border */
 
-  --text-primary: #1B5E20;     /* Deep Green Headings & Titles */
+  --text-primary: #0F172A;     /* Dark Slate / Navy Headings & Titles */
   --text-secondary: #334155;   /* Dark Slate Body Text */
   --text-muted: #64748B;       /* Muted Text */
-  --success: #2E7D32;
+  --success: #4CAF50;          /* Eco Green Success */
   --warning: #F59E0B;
   --error: #D32F2F;
 
