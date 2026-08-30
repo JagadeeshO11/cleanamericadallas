@@ -32,20 +32,24 @@ export default function WorkerOrders() {
                 <span className={`status-chip ${o.status}`}>{o.status}</span>
               </div>
               <div className="oc-details">
-                <div className="oc-row"><HiLocationMarker className="oc-icon" />{o.booking?.location}</div>
-                <div className="oc-row"><HiCalendar className="oc-icon" />{o.booking?.date} · {o.booking?.duration} {o.vehicle?.unit}</div>
-                <div className="oc-row"><HiUser className="oc-icon" />{o.customer?.name} {o.customer?.phone && <span className="oc-phone">{o.customer.phone}</span>}</div>
+                <div className="oc-row"><HiLocationMarker className="oc-icon" /><span>{o.booking?.location}</span></div>
+                <div className="oc-row"><HiCalendar className="oc-icon" /><span>{o.booking?.date} · {o.booking?.duration || 1} {o.vehicle?.unit || 'visit'}</span></div>
+                <div className="oc-row"><HiUser className="oc-icon" /><span>{o.customer?.name} {o.customer?.phone && <span className="oc-phone">{o.customer.phone}</span>}</span></div>
+              </div>
+              <div className="oc-stage-bar">
+                <span>Stage:</span> <strong>{o.stages[o.stage]}</strong>
               </div>
               <div className="oc-footer">
-                <div className="oc-amount">${o.booking?.total?.toLocaleString()}</div>
+                <div className="oc-amount-wrap">
+                  <span className="oc-amount-sub">Total</span>
+                  <div className="oc-amount">${o.booking?.total?.toLocaleString()}</div>
+                </div>
                 {o.stage < o.stages.length - 1 && (
-                  <button className="aj-advance" onClick={() => advanceStage(o.id)}>
-                    {o.stages[o.stage + 1]} <HiArrowRight style={{ width: 14, height: 14 }} />
+                  <button className="oc-advance-btn" onClick={() => advanceStage(o.id)}>
+                    <span>{o.stages[o.stage + 1]}</span>
+                    <HiArrowRight style={{ width: 14, height: 14 }} />
                   </button>
                 )}
-              </div>
-              <div className="oc-stage">
-                Stage: <strong>{o.stages[o.stage]}</strong>
               </div>
             </div>
           ))}

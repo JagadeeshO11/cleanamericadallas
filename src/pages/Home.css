@@ -481,7 +481,7 @@
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-  min-height: 295px;
+  min-height: 260px;
   box-shadow: 0 4px 14px rgba(15, 44, 89, 0.04);
 }
 
@@ -770,7 +770,7 @@
   .why-grid { grid-template-columns: 1fr; }
   .services-section,
   .category-section-card { padding: 20px 14px 24px !important; border-radius: 18px !important; margin: 24px 0 !important; }
-  .service-card { flex: 0 0 210px; min-height: 270px; }
+  .service-card { flex: 0 0 210px; min-height: 215px; }
   .sc-img-wrap { height: 130px; }
 }
 

@@ -116,20 +116,31 @@ export default function WorkerDashboard() {
       {/* Active Job Spotlight Card */}
       {activeJob ? (
         <div className="active-job-card">
-          <div className="aj-badge">🔴 Active Dallas Appointment</div>
+          <div className="aj-header">
+            <span className="aj-badge">🔴 Active Dallas Appointment</span>
+            <span className="status-chip active">Active</span>
+          </div>
           <h2>{activeJob.vehicle?.name}</h2>
           <div className="aj-details">
-            <div className="aj-row"><HiLocationMarker className="aj-icon" /><strong>{activeJob.booking?.location}</strong></div>
-            <div className="aj-row"><HiCalendar className="aj-icon" /><strong>{activeJob.booking?.date}</strong></div>
-            <div className="aj-row"><HiUser className="aj-icon" /><strong>{activeJob.customer?.name}</strong><span className="aj-phone">{activeJob.customer?.phone}</span></div>
+            <div className="aj-row"><HiLocationMarker className="aj-icon" /><span>{activeJob.booking?.location}</span></div>
+            <div className="aj-row"><HiCalendar className="aj-icon" /><span>{activeJob.booking?.date}</span></div>
+            <div className="aj-row"><HiUser className="aj-icon" /><span>{activeJob.customer?.name} {activeJob.customer?.phone && <span className="aj-phone">{activeJob.customer.phone}</span>}</span></div>
           </div>
-          <div className="aj-stage">Current Stage: <strong>{activeJob.stages[activeJob.stage]}</strong></div>
-          {activeJob.stage < activeJob.stages.length - 1 && (
-            <button className="aj-advance" onClick={() => advanceStage(activeJob.id)}>
-              Mark as: {activeJob.stages[activeJob.stage + 1]}
-              <HiArrowRight style={{ width: 16, height: 16 }} />
-            </button>
-          )}
+          <div className="aj-stage-bar">
+            <span>Stage:</span> <strong>{activeJob.stages[activeJob.stage]}</strong>
+          </div>
+          <div className="aj-footer">
+            <div className="aj-amount-wrap">
+              <span className="aj-amount-sub">Est. Total</span>
+              <strong className="aj-amount">${(activeJob.booking?.total || activeJob.vehicle?.rate || 149).toLocaleString()}</strong>
+            </div>
+            {activeJob.stage < activeJob.stages.length - 1 && (
+              <button className="aj-advance-btn" onClick={() => advanceStage(activeJob.id)}>
+                <span>Mark: {activeJob.stages[activeJob.stage + 1]}</span>
+                <HiArrowRight style={{ width: 15, height: 15 }} />
+              </button>
+            )}
+          </div>
         </div>
       ) : (
         <div className="no-active-job-card">

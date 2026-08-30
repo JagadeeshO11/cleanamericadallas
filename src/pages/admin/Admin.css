@@ -1218,14 +1218,14 @@
     right: 0 !important;
     height: 60px !important;
     z-index: 300 !important;
-    background: rgba(18, 24, 21, 0.96) !important;
+    background: rgba(255, 255, 255, 0.98) !important;
     backdrop-filter: blur(14px) !important;
     border-bottom: 1px solid var(--border) !important;
     padding: 0 16px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: 0 2px 12px rgba(15, 44, 89, 0.06) !important;
   }
 
   .ath-brand {
@@ -1370,14 +1370,14 @@
     right: 0 !important;
     height: 64px !important;
     z-index: 300 !important;
-    background: rgba(18, 24, 21, 0.96) !important;
+    background: rgba(255, 255, 255, 0.98) !important;
     backdrop-filter: blur(14px) !important;
     border-top: 1px solid var(--border) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-around !important;
     padding: 0 4px !important;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: 0 -4px 16px rgba(15, 44, 89, 0.06) !important;
   }
 
   .abn-item {
