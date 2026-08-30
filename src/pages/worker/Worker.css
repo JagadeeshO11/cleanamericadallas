@@ -675,34 +675,42 @@
   height: 22px;
 }
 
-/* Desktop Top Header Navigation Bar */
+/* Desktop & Tablet Top Header Navigation Bar */
 .worker-top-nav {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px 6px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .wtn-item {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 14px;
-  border-radius: 12px;
+  padding: 7px 16px;
+  border-radius: 18px;
   text-decoration: none;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   font-size: 13px;
   font-weight: 600;
-  transition: all 0.18s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
 }
 
 .wtn-item:hover {
   background: rgba(76, 175, 22, 0.12);
   color: var(--primary);
+  transform: translateY(-1px);
 }
 
 .wtn-item.active {
   background: var(--primary);
   color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(76, 175, 22, 0.35);
 }
 
 .wtn-icon {
@@ -710,7 +718,7 @@
   height: 17px;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   .worker-bottom-nav {
     display: none !important;
   }
@@ -719,7 +727,21 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) and (min-width: 768px) {
+  .worker-top-header {
+    padding: 0 16px;
+  }
+  .wtn-item {
+    padding: 6px 10px;
+    font-size: 12px;
+    gap: 4px;
+  }
+  .wth-badge {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
   .worker-top-nav {
     display: none !important;
   }

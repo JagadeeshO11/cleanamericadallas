@@ -4,21 +4,21 @@
   min-width: 0;
   box-sizing: border-box;
   padding-top: 76px;
-  padding-bottom: 72px;
+  padding-bottom: 32px;
   overflow-x: hidden;
   background: #ffffff;
 }
 
 @media (max-width: 768px) {
   .customer-route-main {
-    padding-top: 122px;
+    padding-top: 136px !important;
     padding-bottom: 78px;
   }
 }
 
 @media (max-width: 480px) {
   .customer-route-main {
-    padding-top: 122px;
+    padding-top: 136px !important;
     padding-bottom: 82px;
   }
 }

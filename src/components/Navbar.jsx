@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 import { useStore } from '../store/useStore';
 import {
   HiChevronDown, HiChevronUp, HiClipboardList, HiCog,
   HiLogout, HiShoppingCart, HiLocationMarker, HiUser, HiBell, HiCheckCircle, HiSearch, HiX,
+  HiHome, HiTruck, HiChartBar, HiUsers, HiClock, HiCurrencyDollar,
 } from 'react-icons/hi';
 import './Navbar.css';
 
@@ -31,12 +32,42 @@ export default function Navbar() {
   const cartCount = useStore(s => s.cart.length);
   const activeOrder = useStore(s => s.activeOrder);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [dropOpen, setDropOpen] = useState(false);
   const [locOpen, setLocOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [selectedLoc, setSelectedLoc] = useState('Dallas, TX');
   const [searchQuery, setSearchQuery] = useState('');
+
+  const isActive = path =>
+    path === '/'
+      ? location.pathname === '/'
+      : location.pathname === path || location.pathname.startsWith(path + '/');
+
+  const getDesktopNavTabs = () => {
+    if (user?.role === 'admin') {
+      return [
+        { to: '/admin', Icon: HiChartBar, label: 'Dashboard' },
+        { to: '/admin/orders', Icon: HiClipboardList, label: 'Orders' },
+        { to: '/admin/workers', Icon: HiUsers, label: 'Workers' },
+        { to: '/admin/customers', Icon: HiUsers, label: 'Customers' },
+      ];
+    }
+    if (user?.role === 'worker') {
+      return [
+        { to: '/worker', Icon: HiCog, label: 'My Jobs' },
+        { to: '/worker/orders', Icon: HiClipboardList, label: 'Orders' },
+        { to: '/worker/history', Icon: HiClock, label: 'History' },
+        { to: '/worker/wallet', Icon: HiCurrencyDollar, label: 'Wallet' },
+      ];
+    }
+    return [
+      { to: '/', Icon: HiHome, label: 'Home' },
+      { to: '/browse', Icon: HiTruck, label: 'Book Services' },
+      { to: user ? '/customer/orders' : '/customer/signin', Icon: HiClipboardList, label: 'My Bookings' },
+    ];
+  };
 
   const dropRef = useRef();
   const locRef = useRef();
@@ -125,6 +156,26 @@ export default function Navbar() {
               </div>
             )}
           </div>
+        </div>
+
+        {/* Desktop Top Nav Links (Visible on Desktop & Tablet) */}
+        <div className="nav-desktop-links desktop-only">
+          {getDesktopNavTabs().map(({ to, Icon, label }) => (
+            <Link key={to} to={to} className={`nav-desktop-link ${isActive(to) ? 'active' : ''}`}>
+              <Icon className="ndl-icon" />
+              <span>{label}</span>
+            </Link>
+          ))}
+          {activeOrder && user?.role === 'customer' && (
+            <Link
+              to={`/customer/track/${activeOrder.id}`}
+              className={`nav-desktop-link live ${isActive(`/customer/track/${activeOrder.id}`) ? 'active' : ''}`}
+            >
+              <HiLocationMarker className="ndl-icon" />
+              <span>Live Track</span>
+              <span className="nav-live-pulse" />
+            </Link>
+          )}
         </div>
 
         {/* Desktop Search Bar (Hidden on Mobile) */}

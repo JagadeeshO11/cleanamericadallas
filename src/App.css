@@ -1,12 +1,12 @@
 /* App-level styles */
-.app-main{width:100%;max-width:100vw;min-width:0;box-sizing:border-box;padding-top:76px;padding-bottom:72px;overflow-x:hidden;background:#fff}
+.app-main{width:100%;max-width:100vw;min-width:0;box-sizing:border-box;padding-top:76px;padding-bottom:32px;overflow-x:hidden;background:#fff}
 .app-main>*{min-width:0;max-width:100%}
 
 @media (max-width:768px){
-  .app-main{padding-top:124px;padding-bottom:78px;overflow-x:hidden;background:#fff}
+  .app-main{padding-top:136px !important;padding-bottom:78px;overflow-x:hidden;background:#fff}
 }
 @media (max-width:480px){
-  .app-main{padding-top:122px;padding-bottom:78px;background:#fff}
+  .app-main{padding-top:136px !important;padding-bottom:78px;background:#fff}
 }
 
 .footer{max-width:100%;overflow:hidden}
