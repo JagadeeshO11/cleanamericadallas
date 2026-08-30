@@ -17,7 +17,7 @@ const CONFIG = {
     title: 'Customer Sign In',
     sub: 'Sign in to book home services in Dallas, TX',
     signup: '/customer/signup',
-    home: '/customer/orders',
+    home: '/',
     icon: '🏠',
   },
   worker: {

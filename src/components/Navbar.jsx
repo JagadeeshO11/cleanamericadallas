@@ -227,60 +227,19 @@ export default function Navbar() {
           </button>
 
           {user ? (
-            <div className="user-menu" ref={dropRef}>
-              <button className="avatar-btn" onClick={() => setDropOpen(o => !o)}>
-                <span className="avatar-circle">{user?.name?.charAt(0)?.toUpperCase() || 'U'}</span>
-                <span className="avatar-name">{user?.name?.split(' ')[0] || user?.email || 'User'}</span>
-                {dropOpen ? <HiChevronUp className="chevron-icon" /> : <HiChevronDown className="chevron-icon" />}
-              </button>
-              {dropOpen && (
-                <div className="dropdown">
-                  <div className="drop-header">
-                    <strong>{user?.name || 'User'}</strong>
-                    <span className={`role-tag ${user?.role}`}>{user?.role}</span>
-                  </div>
-                  <div className="drop-email">{user?.email}</div>
-                  <hr />
-                  {customer && (
-                    <>
-                      <Link to="/customer/profile" className="drop-item" onClick={() => setDropOpen(false)}>
-                        <HiUser className="drop-icon" /> My Profile
-                      </Link>
-                      <Link to="/customer/orders" className="drop-item" onClick={() => setDropOpen(false)}>
-                        <HiClipboardList className="drop-icon" /> My Bookings
-                      </Link>
-                    </>
-                  )}
-                  {user?.role === 'admin' && (
-                    <>
-                      <Link to="/admin" className="drop-item" onClick={() => setDropOpen(false)}>
-                        <HiChartBar className="drop-icon" /> Admin Dashboard
-                      </Link>
-                      <Link to="/admin/orders" className="drop-item" onClick={() => setDropOpen(false)}>
-                        <HiClipboardList className="drop-icon" /> All Bookings
-                      </Link>
-                      <Link to="/admin/workers" className="drop-item" onClick={() => setDropOpen(false)}>
-                        <MdEngineering className="drop-icon" /> Dallas Pros
-                      </Link>
-                      <Link to="/admin/customers" className="drop-item" onClick={() => setDropOpen(false)}>
-                        <HiUsers className="drop-icon" /> Customers List
-                      </Link>
-                      <Link to="/admin/products" className="drop-item" onClick={() => setDropOpen(false)}>
-                        <HiTag className="drop-icon" /> Services & Rates
-                      </Link>
-                    </>
-                  )}
-                  {user?.role === 'worker' && (
-                    <Link to="/worker" className="drop-item" onClick={() => setDropOpen(false)}>
-                      <HiCog className="drop-icon" /> Pro Jobs
-                    </Link>
-                  )}
-                  <button className="drop-item logout" onClick={handleLogout}>
-                    <HiLogout className="drop-icon" /> Logout
-                  </button>
-                </div>
-              )}
-            </div>
+            <button
+              type="button"
+              className="avatar-btn desktop-only"
+              onClick={() => {
+                if (user?.role === 'admin') navigate('/admin');
+                else if (user?.role === 'worker') navigate('/worker');
+                else navigate('/customer/profile');
+              }}
+              title={`Logged in as ${user.name || user.email} - View Profile`}
+              aria-label="View Profile"
+            >
+              <span className="avatar-circle">{user?.name?.charAt(0)?.toUpperCase() || 'U'}</span>
+            </button>
           ) : (
             <div className="auth-btns">
               <Link to="/customer/signin" className="btn-ghost">Sign In</Link>
