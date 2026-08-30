@@ -31,6 +31,12 @@ export default function Navbar() {
   const removeFromCart = useStore(s => s.removeFromCart);
   const cartCount = cart.length;
   const activeOrder = useStore(s => s.activeOrder);
+
+  const notifications = useStore(s => s.notifications) || [];
+  const markAllNotificationsRead = useStore(s => s.markAllNotificationsRead);
+  const clearNotifications = useStore(s => s.clearNotifications);
+  const unreadCount = notifications.filter(n => !n.read).length;
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -228,42 +234,67 @@ export default function Navbar() {
               <span>Live Track</span>
               <span className="nav-live-pulse" />
             </Link>
-          )}
         </div>
 
         {/* Right Actions */}
         <div className="nav-right">
           <div className="notif-wrap" ref={notifRef}>
-            <button className="icon-circle-btn" onClick={() => setNotifOpen(o => !o)} aria-label="Notifications">
-              <HiBell className="nav-top-icon" />
-              <span className="notif-badge" />
-            </button>
+          <button
+            className="icon-circle-btn"
+            onClick={() => {
+              setNotifOpen(o => !o);
+              if (!notifOpen && unreadCount > 0) markAllNotificationsRead();
+            }}
+            aria-label="Notifications"
+          >
+            <HiBell className="nav-top-icon" />
+            {unreadCount > 0 && <span className="notif-badge">{unreadCount}</span>}
+          </button>
 
-            {notifOpen && (
-              <div className="notif-dropdown">
-                <div className="notif-header">
-                  <strong>Notifications</strong>
-                  <span className="notif-count">2 new</span>
+          {notifOpen && (
+            <div className="notif-dropdown">
+              <div className="notif-header">
+                <div className="notif-header-title">
+                  <strong>Notification Events</strong>
+                  {unreadCount > 0 && <span className="notif-count">{unreadCount} new</span>}
                 </div>
-                <div className="notif-item">
-                  <span className="notif-dot" />
-                  <div>
-                    <p><strong>Spring Promo: 15% OFF HVAC Tune-Up</strong></p>
-                    <span>Book certified Dallas HVAC techs today</span>
-                  </div>
+                <div className="notif-hdr-actions">
+                  {unreadCount > 0 && (
+                    <button className="notif-hdr-btn" onClick={markAllNotificationsRead}>
+                      Mark Read
+                    </button>
+                  )}
+                  {notifications.length > 0 && (
+                    <button className="notif-hdr-btn clear" onClick={clearNotifications}>
+                      Clear
+                    </button>
+                  )}
                 </div>
-                {activeOrder && (
-                  <div className="notif-item">
-                    <span className="notif-dot active" />
-                    <div>
-                      <p><strong>Live Order #{activeOrder.id}</strong></p>
-                      <span>Stage: {activeOrder.stages[activeOrder.stage]}</span>
-                    </div>
-                  </div>
-                )}
               </div>
-            )}
-          </div>
+
+              {notifications.length === 0 ? (
+                <div className="notif-empty">
+                  <HiBell style={{ width: 28, height: 28, color: 'var(--text-muted)', marginBottom: 6 }} />
+                  <p>No notification events yet</p>
+                  <span>Real-time updates on bookings, pro assignments & promos will appear here</span>
+                </div>
+              ) : (
+                <div className="notif-list">
+                  {notifications.map(n => (
+                    <div key={n.id} className={`notif-item ${!n.read ? 'unread' : ''}`}>
+                      <span className={`notif-dot ${!n.read ? 'active' : ''}`} />
+                      <div className="notif-content">
+                        <p><strong>{n.title}</strong></p>
+                        <span>{n.body}</span>
+                        <div className="notif-time">{n.time || 'Just now'}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
 
           {/* Interactive Cart Button with Hover / Click Preview Drawer */}
           <div className="cart-menu-wrap" ref={cartRef}>

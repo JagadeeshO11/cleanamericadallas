@@ -47,6 +47,12 @@
   letter-spacing: 0.5px;
 }
 
+.wth-user-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
 .wth-user {
   display: flex;
   align-items: center;
