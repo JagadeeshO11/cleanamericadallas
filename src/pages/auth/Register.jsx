@@ -5,7 +5,7 @@ import { HiMail, HiLockClosed, HiUser, HiPhone, HiArrowRight, HiIdentification, 
 import { MdEngineering } from 'react-icons/md';
 import './Auth.css';
 
-const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1788114865/0e7be675-4f29-45fc-9ef5-a9809350eaa9.png';
+const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1788115820/67d7f845-394b-4216-80b8-2a2548de8cab.png';
 const VEHICLE_TYPES = ['JCB / Backhoe', 'Excavator', 'Bulldozer', 'Crane', 'Dump Truck / Tipper', 'Road Roller', 'Concrete Mixer', 'Forklift', 'Tractor', 'Water Tanker', 'Plumber', 'Electrician', 'Carpenter', 'Painter', 'AC Technician', 'Other'];
 const EXPERIENCE_OPTIONS = ['Less than 1 year', '1–3 years', '3–5 years', '5–10 years', '10+ years'];
 

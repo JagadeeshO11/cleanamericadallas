@@ -9,7 +9,7 @@ import { MdEngineering } from 'react-icons/md';
 import './Admin.css';
 import './AdminTheme.css';
 
-const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1788114865/0e7be675-4f29-45fc-9ef5-a9809350eaa9.png';
+const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1788115820/67d7f845-394b-4216-80b8-2a2548de8cab.png';
 
 const NAV_ITEMS = [
   { to: '/admin', icon: HiHome, label: 'Dashboard', end: true },

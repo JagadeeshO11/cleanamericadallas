@@ -35,7 +35,7 @@
 
 .nav-left { display:flex; align-items:center; gap:14px; flex-shrink:0; min-width:0; position:relative; z-index:920; }
 .brand { display:flex; align-items:center; gap:10px; text-decoration:none; flex-shrink:0; }
-.brand-logo-image { width:124px; height:42px; display:block; object-fit:contain; object-position:left center; }
+.brand-logo-image { max-height:42px; width:auto; display:block; object-fit:contain; object-position:left center; padding:2px 0; }
 
 .location-menu { position:relative; margin-left:4px; z-index:950; }
 .location-btn {
@@ -725,7 +725,7 @@
   .nav-inner { height:62px; padding:0 16px; gap:12px; }
   .nav-left { gap:10px; }
   .nav-right { gap:10px; }
-  .brand-logo-image { width:108px; height:38px; }
+  .brand-logo-image { max-height:36px; width:auto; }
   .desktop-only { display:none !important; }
   .user-menu, .avatar-btn { display:none !important; } /* Avatar is strictly hidden on mobile header */
   .location-text { display:inline-block !important; font-size:11.5px; max-width:110px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -751,7 +751,7 @@
   .nav-inner { padding:0 14px; gap:10px; }
   .nav-left { gap:8px; }
   .nav-right { gap:8px; }
-  .brand-logo-image { width:96px; height:36px; }
+  .brand-logo-image { max-height:32px; width:auto; }
   .location-text { max-width:95px; font-size:11px; }
   .location-btn { padding:4px 8px; gap:4px; }
   .nav-mobile-search-row { padding:4px 14px 10px; }

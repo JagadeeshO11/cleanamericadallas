@@ -34,11 +34,12 @@
 }
 
 .auth-brand-logo {
-  width: 156px;
-  height: 60px;
+  max-height: 56px;
+  width: auto;
   display: block;
   object-fit: contain;
   object-position: left center;
+  padding: 2px 0;
 }
 
 .auth-card h1 {

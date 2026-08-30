@@ -30,10 +30,11 @@
 }
 
 .asb-logo-img {
-  width: 120px;
-  height: 40px;
+  max-height: 42px;
+  width: auto;
   object-fit: contain;
   display: block;
+  padding: 2px 0;
 }
 
 .asb-badge {
