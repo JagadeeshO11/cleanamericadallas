@@ -95,13 +95,13 @@
   background: var(--bg);
   min-height: calc(100vh - 64px);
   padding-top: 64px !important;
-  padding-bottom: 76px;
+  padding-bottom: 0px;
 }
 
 .worker-page {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 28px 24px 80px;
+  padding: 24px 24px 24px;
 }
 
 /* Page Title Banner */

@@ -1,5 +1,4 @@
-/* App-level styles */
-.app-main{width:100%;max-width:100vw;min-width:0;box-sizing:border-box;padding-top:76px;padding-bottom:32px;overflow-x:hidden;background:#fff}
+.app-main{width:100%;max-width:100vw;min-width:0;box-sizing:border-box;padding-top:76px;padding-bottom:0px;overflow-x:hidden;background:#fff}
 .app-main>*{min-width:0;max-width:100%}
 
 @media (max-width:768px){

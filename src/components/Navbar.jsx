@@ -5,8 +5,9 @@ import { useStore } from '../store/useStore';
 import {
   HiChevronDown, HiChevronUp, HiClipboardList, HiCog,
   HiLogout, HiShoppingCart, HiLocationMarker, HiUser, HiBell, HiCheckCircle, HiSearch, HiX,
-  HiHome, HiTruck, HiChartBar, HiUsers, HiClock, HiCurrencyDollar,
+  HiHome, HiTruck, HiChartBar, HiUsers, HiClock, HiCurrencyDollar, HiTag,
 } from 'react-icons/hi';
+import { MdEngineering } from 'react-icons/md';
 import './Navbar.css';
 
 const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png';
@@ -48,16 +49,19 @@ export default function Navbar() {
   const getDesktopNavTabs = () => {
     if (user?.role === 'admin') {
       return [
+        { to: '/', Icon: HiHome, label: 'Customer Site' },
         { to: '/admin', Icon: HiChartBar, label: 'Dashboard' },
-        { to: '/admin/orders', Icon: HiClipboardList, label: 'Orders' },
-        { to: '/admin/workers', Icon: HiUsers, label: 'Workers' },
+        { to: '/admin/orders', Icon: HiClipboardList, label: 'Bookings' },
+        { to: '/admin/workers', Icon: MdEngineering, label: 'Dallas Pros' },
         { to: '/admin/customers', Icon: HiUsers, label: 'Customers' },
+        { to: '/admin/products', Icon: HiTag, label: 'Services & Rates' },
       ];
     }
     if (user?.role === 'worker') {
       return [
-        { to: '/worker', Icon: HiCog, label: 'My Jobs' },
-        { to: '/worker/orders', Icon: HiClipboardList, label: 'Orders' },
+        { to: '/', Icon: HiHome, label: 'Customer Site' },
+        { to: '/worker', Icon: HiCog, label: 'Pro Dashboard' },
+        { to: '/worker/orders', Icon: HiClipboardList, label: 'Jobs & Orders' },
         { to: '/worker/history', Icon: HiClock, label: 'History' },
         { to: '/worker/wallet', Icon: HiCurrencyDollar, label: 'Wallet' },
       ];
@@ -117,8 +121,7 @@ export default function Navbar() {
         </button>
       )}
       <button type="submit" className="nav-search-submit-btn" aria-label="Submit search">
-        <HiSearch style={{ width: 14, height: 14 }} />
-        <span className="btn-text">Search</span>
+        <HiSearch style={{ width: 15, height: 15 }} />
       </button>
     </form>
   );
@@ -158,6 +161,11 @@ export default function Navbar() {
           </div>
         </div>
 
+        {/* Desktop Search Bar (Integrated in Main Row) */}
+        <div className="nav-center desktop-only">
+          {renderSearchForm()}
+        </div>
+
         {/* Desktop Top Nav Links (Visible on Desktop & Tablet) */}
         <div className="nav-desktop-links desktop-only">
           {getDesktopNavTabs().map(({ to, Icon, label }) => (
@@ -176,11 +184,6 @@ export default function Navbar() {
               <span className="nav-live-pulse" />
             </Link>
           )}
-        </div>
-
-        {/* Desktop Search Bar (Hidden on Mobile) */}
-        <div className="nav-center desktop-only">
-          {renderSearchForm()}
         </div>
 
         {/* Right Actions */}
@@ -249,9 +252,23 @@ export default function Navbar() {
                     </>
                   )}
                   {user?.role === 'admin' && (
-                    <Link to="/admin" className="drop-item" onClick={() => setDropOpen(false)}>
-                      <HiCog className="drop-icon" /> Admin Dashboard
-                    </Link>
+                    <>
+                      <Link to="/admin" className="drop-item" onClick={() => setDropOpen(false)}>
+                        <HiChartBar className="drop-icon" /> Admin Dashboard
+                      </Link>
+                      <Link to="/admin/orders" className="drop-item" onClick={() => setDropOpen(false)}>
+                        <HiClipboardList className="drop-icon" /> All Bookings
+                      </Link>
+                      <Link to="/admin/workers" className="drop-item" onClick={() => setDropOpen(false)}>
+                        <MdEngineering className="drop-icon" /> Dallas Pros
+                      </Link>
+                      <Link to="/admin/customers" className="drop-item" onClick={() => setDropOpen(false)}>
+                        <HiUsers className="drop-icon" /> Customers List
+                      </Link>
+                      <Link to="/admin/products" className="drop-item" onClick={() => setDropOpen(false)}>
+                        <HiTag className="drop-icon" /> Services & Rates
+                      </Link>
+                    </>
                   )}
                   {user?.role === 'worker' && (
                     <Link to="/worker" className="drop-item" onClick={() => setDropOpen(false)}>
@@ -273,7 +290,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ROW 2: Mobile Dedicated Search Row (Only visible on screens <= 768px) */}
+      {/* Mobile Dedicated Search Row (Only visible on screens <= 768px) */}
       <div className="nav-mobile-search-row">
         {renderSearchForm()}
       </div>
