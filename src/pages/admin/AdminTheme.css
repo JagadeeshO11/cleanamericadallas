@@ -1,6 +1,6 @@
 /* Clean America admin theme: keep admin controls on the same brand palette. */
 .admin-layout,
-.admin-content { background: var(--bg); color: var(--text-primary); }
+.admin-content { background: var(--bg); color: var(--text-primary); padding-top: 0 !important; margin-top: 0 !important; }
 
 .admin-page { color: var(--text-primary); }
 .admin-header h1,

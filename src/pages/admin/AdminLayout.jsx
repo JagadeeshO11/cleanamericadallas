@@ -3,7 +3,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { useState, useRef, useEffect } from 'react';
 import {
   HiHome, HiClipboardList, HiUsers, HiLogout, HiChevronDown,
-  HiTag, HiChartBar, HiCreditCard
+  HiTag, HiChartBar, HiCreditCard, HiDeviceMobile
 } from 'react-icons/hi';
 import { MdEngineering } from 'react-icons/md';
 import './Admin.css';
@@ -26,7 +26,26 @@ export default function AdminLayout() {
   const logout = useAuthStore(s => s.logout);
   const navigate = useNavigate();
   const [dropOpen, setDropOpen] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 900);
+  const [manualOverride, setManualOverride] = useState(null);
   const dropRef = useRef();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 900);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const activeMobileView = manualOverride !== null ? manualOverride === 'mobile' : isSmallScreen;
+
+  const toggleMobileView = () => {
+    setManualOverride(prev => {
+      const current = prev !== null ? prev === 'mobile' : isSmallScreen;
+      return current ? 'desktop' : 'mobile';
+    });
+  };
 
   const handleLogout = () => {
     logout();
@@ -40,7 +59,7 @@ export default function AdminLayout() {
   }, []);
 
   return (
-    <div className="admin-layout-container">
+    <div className={`admin-layout-container ${activeMobileView ? 'mobile-mode-active' : ''}`}>
       {/* DESKTOP LEFT SIDEBAR NAVIGATION */}
       <aside className="admin-sidebar">
         <div className="asb-brand">
@@ -72,6 +91,18 @@ export default function AdminLayout() {
               <span>{user?.email}</span>
             </div>
           </div>
+
+          {/* MOBILE VIEW BUTTON ABOVE LOGOUT */}
+          <button
+            type="button"
+            className={`asb-mobile-btn ${activeMobileView ? 'active' : ''}`}
+            onClick={toggleMobileView}
+            title="Auto-detects screen size or toggle manually"
+          >
+            <HiDeviceMobile style={{ width: 16, height: 16 }} />
+            <span>{activeMobileView ? 'Exit Mobile View' : 'View Mobile View'}</span>
+          </button>
+
           <button className="asb-logout-btn" onClick={handleLogout}>
             <HiLogout style={{ width: 16, height: 16 }} /> Logout
           </button>
@@ -102,6 +133,13 @@ export default function AdminLayout() {
                   </div>
                 </div>
                 <hr className="ath-drop-divider" />
+                <button
+                  className={`ath-drop-item mobile-view ${activeMobileView ? 'active' : ''}`}
+                  onClick={() => { toggleMobileView(); setDropOpen(false); }}
+                >
+                  <HiDeviceMobile className="ath-drop-icon" />
+                  <span>{activeMobileView ? 'Exit Mobile View' : 'View Mobile View'}</span>
+                </button>
                 <button className="ath-drop-item logout" onClick={handleLogout}>
                   <HiLogout className="ath-drop-icon" /> Logout
                 </button>
