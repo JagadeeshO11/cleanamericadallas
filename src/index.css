@@ -1,21 +1,26 @@
 :root {
-  /* Clean America design system */
-  --primary: #4CAF16;
-  --primary-dark: #1B5E20;
-  --primary-light: #EAF6DF;
-  --accent-gold: #FFC107;
-  --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #FBC02D 50%, #D4AF37 100%);
+  /* Clean America Dallas - Green Design System Tokens */
+  --primary: #2E7D32;          /* Eco Brand Green */
+  --primary-dark: #1B5E20;     /* Deep Eco Green Dark */
+  --primary-light: #E8F5E9;    /* Soft Green Light Accent */
 
-  --bg: #ffffff;
-  --surface: #121815;
-  --input: #1A1F1C;
-  --border: #2A2F2C;
+  --secondary: #388E3C;        /* Bright Green */
+  --secondary-dark: #1B5E20;   /* Deep Green */
+  --secondary-light: #C8E6C9;  /* Light Green Pill */
 
-  --text-primary: #FFFFFF;
-  --text-secondary: #E5E7E6;
-  --text-muted: #9CA3A0;
-  --success: #4CAF16;
-  --warning: #FFC107;
+  --accent-gold: #F59E0B;
+  --gold-gradient: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+
+  --bg: #F8FAFC;               /* Clean Light Page Background */
+  --surface: #FFFFFF;          /* Pure White Card Surface */
+  --input: #FFFFFF;            /* Pure White Inputs */
+  --border: #E2E8F0;           /* Soft Border */
+
+  --text-primary: #1B5E20;     /* Deep Green Headings & Titles */
+  --text-secondary: #334155;   /* Dark Slate Body Text */
+  --text-muted: #64748B;       /* Muted Text */
+  --success: #2E7D32;
+  --warning: #F59E0B;
   --error: #D32F2F;
 
   --sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -38,8 +43,13 @@ html, body {
   touch-action: pan-y;
 }
 
-#root, main, .home, .navbar {
+#root, main, .home {
   overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+.navbar {
+  overflow: visible !important;
   max-width: 100vw !important;
 }
 

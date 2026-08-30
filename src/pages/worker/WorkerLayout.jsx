@@ -34,11 +34,14 @@ export default function WorkerLayout() {
           ))}
         </nav>
         <div className="wth-user">
-          <div className="wth-avatar">{user?.name?.charAt(0)?.toUpperCase() || 'W'}</div>
+          <div className="wth-avatar-wrap">
+            <div className="wth-avatar">{user?.name?.charAt(0)?.toUpperCase() || 'W'}</div>
+            <span className={`wth-dot ${user?.available ? 'online' : 'offline'}`} title={user?.available ? 'Online' : 'Offline'} />
+          </div>
           <div className="wth-info">
             <strong>{user?.name?.split(' ')[0] || 'Worker'}</strong>
             <span className={`wth-status ${user?.available ? 'online' : 'offline'}`}>
-              {user?.available ? '● Online' : '○ Offline'}
+              {user?.available ? 'Online' : 'Offline'}
             </span>
           </div>
         </div>

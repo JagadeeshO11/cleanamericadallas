@@ -1,8 +1,9 @@
 /* Clean America Dallas - Worker Theme Variables & Overrides */
-html.clean-america-theme .worker-layout {
-  --primary: #4CAF16;
+.worker-layout {
+  --primary: #2E7D32;
   --primary-dark: #1B5E20;
-  --accent-gold: #FFC107;
+  --secondary: #388E3C;
+  --accent-gold: #F59E0B;
   min-height: 100vh;
   background: var(--bg);
   color: var(--text-primary);

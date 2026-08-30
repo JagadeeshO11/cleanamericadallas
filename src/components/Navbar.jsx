@@ -5,21 +5,18 @@ import { useStore } from '../store/useStore';
 import {
   HiChevronDown, HiChevronUp, HiClipboardList, HiCog,
   HiLogout, HiShoppingCart, HiLocationMarker, HiUser, HiBell, HiCheckCircle, HiSearch, HiX,
-  HiHome, HiTruck, HiChartBar, HiUsers, HiClock, HiCurrencyDollar, HiTag,
+  HiHome, HiTruck, HiChartBar, HiUsers, HiClock, HiCurrencyDollar, HiTag, HiOutlineLocationMarker, HiTrash, HiArrowRight,
 } from 'react-icons/hi';
 import { MdEngineering } from 'react-icons/md';
 import './Navbar.css';
 
 const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787423047/WhatsApp_Image_2026-08-21_at_19.39.36-removebg-preview_qelqnz.png';
 
-const DALLAS_LOCATIONS = [
+// ONLY 3 Dallas area suggestions as requested
+const DALLAS_SUGGESTIONS = [
   'Dallas, TX',
   'Plano, TX',
   'Frisco, TX',
-  'Fort Worth, TX',
-  'Arlington, TX',
-  'Irving, TX',
-  'McKinney, TX',
 ];
 
 const SIGNIN_BY_ROLE = {
@@ -30,7 +27,9 @@ const SIGNIN_BY_ROLE = {
 
 export default function Navbar() {
   const { user, logout } = useAuthStore();
-  const cartCount = useStore(s => s.cart.length);
+  const cart = useStore(s => s.cart);
+  const removeFromCart = useStore(s => s.removeFromCart);
+  const cartCount = cart.length;
   const activeOrder = useStore(s => s.activeOrder);
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,8 +37,57 @@ export default function Navbar() {
   const [dropOpen, setDropOpen] = useState(false);
   const [locOpen, setLocOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [cartPreviewOpen, setCartPreviewOpen] = useState(false);
   const [selectedLoc, setSelectedLoc] = useState('Dallas, TX');
+  const [isDetecting, setIsDetecting] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+  const dropRef = useRef();
+  const locRef = useRef();
+  const notifRef = useRef();
+  const cartRef = useRef();
+
+  useEffect(() => {
+    const handler = e => {
+      if (!dropRef.current?.contains(e.target)) setDropOpen(false);
+      if (!locRef.current?.contains(e.target)) setLocOpen(false);
+      if (!notifRef.current?.contains(e.target)) setNotifOpen(false);
+      if (!cartRef.current?.contains(e.target)) setCartPreviewOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  const handleAutoDetect = () => {
+    setIsDetecting(true);
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        () => {
+          setTimeout(() => {
+            setSelectedLoc('Dallas, TX (Auto-Detected)');
+            setIsDetecting(false);
+            setLocOpen(false);
+          }, 500);
+        },
+        () => {
+          setTimeout(() => {
+            setSelectedLoc('Dallas, TX (Detected)');
+            setIsDetecting(false);
+            setLocOpen(false);
+          }, 500);
+        },
+        { timeout: 3000 }
+      );
+    } else {
+      setTimeout(() => {
+        setSelectedLoc('Dallas, TX (Auto-Detected)');
+        setIsDetecting(false);
+        setLocOpen(false);
+      }, 500);
+    }
+  };
+
+  const cartTotal = cart.reduce((sum, item) => sum + (Number(item.vehicle?.rate) || 0), 0);
 
   const isActive = path =>
     path === '/'
@@ -73,20 +121,6 @@ export default function Navbar() {
     ];
   };
 
-  const dropRef = useRef();
-  const locRef = useRef();
-  const notifRef = useRef();
-
-  useEffect(() => {
-    const handler = e => {
-      if (!dropRef.current?.contains(e.target)) setDropOpen(false);
-      if (!locRef.current?.contains(e.target)) setLocOpen(false);
-      if (!notifRef.current?.contains(e.target)) setNotifOpen(false);
-    };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, []);
-
   const handleLogout = () => {
     const role = user?.role || 'customer';
     logout();
@@ -102,8 +136,6 @@ export default function Navbar() {
       navigate('/browse');
     }
   };
-
-  const customer = user?.role === 'customer';
 
   const renderSearchForm = () => (
     <form className="nav-search-bar" onSubmit={handleSearchSubmit}>
@@ -144,8 +176,21 @@ export default function Navbar() {
 
             {locOpen && (
               <div className="location-dropdown">
-                <div className="loc-drop-header">Select Dallas Metro Service Area</div>
-                {DALLAS_LOCATIONS.map(loc => (
+                {/* Auto Detect Action */}
+                <button
+                  className="loc-auto-detect-btn"
+                  onClick={handleAutoDetect}
+                  disabled={isDetecting}
+                >
+                  <span className="loc-autodetect-icon">{isDetecting ? '⏳' : '🎯'}</span>
+                  <div className="loc-autodetect-text">
+                    <strong>{isDetecting ? 'Detecting Location...' : 'Auto-Detect My Location'}</strong>
+                    <span>GPS / Dallas Metro Area</span>
+                  </div>
+                </button>
+
+                <div className="loc-drop-header">Dallas Metro Area (Top 3)</div>
+                {DALLAS_SUGGESTIONS.map(loc => (
                   <button
                     key={loc}
                     className={`loc-drop-item ${loc === selectedLoc ? 'active' : ''}`}
@@ -220,11 +265,91 @@ export default function Navbar() {
             )}
           </div>
 
-          <button className="cart-btn" onClick={() => navigate('/customer/cart')} aria-label="Cart">
-            <HiShoppingCart className="cart-icon" />
-            <span className="cart-label">Cart</span>
-            {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
-          </button>
+          {/* Interactive Cart Button with Hover / Click Preview Drawer */}
+          <div className="cart-menu-wrap" ref={cartRef}>
+            <button
+              className={`cart-btn ${cartCount > 0 ? 'has-items' : ''}`}
+              onClick={() => setCartPreviewOpen(o => !o)}
+              onMouseEnter={() => setCartPreviewOpen(true)}
+              aria-label="Cart Preview"
+            >
+              <HiShoppingCart className="cart-icon" />
+              <span className="cart-label">Cart</span>
+              {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+            </button>
+
+            {cartPreviewOpen && (
+              <div className="cart-preview-dropdown" onMouseLeave={() => setCartPreviewOpen(false)}>
+                <div className="cpd-header">
+                  <div>
+                    <strong>Your Service Cart</strong>
+                    <span className="cpd-count-tag">{cartCount} item{cartCount !== 1 ? 's' : ''}</span>
+                  </div>
+                  <button className="cpd-close" onClick={() => setCartPreviewOpen(false)}>
+                    <HiX style={{ width: 14, height: 14 }} />
+                  </button>
+                </div>
+
+                {cartCount === 0 ? (
+                  <div className="cpd-empty">
+                    <HiShoppingCart style={{ width: 32, height: 32, color: 'var(--text-muted)', marginBottom: 8 }} />
+                    <p>Your cart is empty</p>
+                    <span>Add trusted Dallas home services to get started</span>
+                    <button className="cpd-browse-btn" onClick={() => { setCartPreviewOpen(false); navigate('/browse'); }}>
+                      Browse Services
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <div className="cpd-items-list">
+                      {cart.map((item) => (
+                        <div key={item.cartId} className="cpd-item">
+                          <img
+                            src={item.vehicle?.image || 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=100&q=80'}
+                            alt={item.vehicle?.name}
+                            className="cpd-item-img"
+                          />
+                          <div className="cpd-item-info">
+                            <strong>{item.vehicle?.name || 'Dallas Service'}</strong>
+                            <span>{item.booking?.date || 'Scheduled Service'}</span>
+                            <div className="cpd-item-price">${item.vehicle?.rate || 0}</div>
+                          </div>
+                          <button
+                            className="cpd-item-remove"
+                            onClick={(e) => { e.stopPropagation(); removeFromCart(item.cartId); }}
+                            title="Remove item"
+                          >
+                            <HiTrash style={{ width: 14, height: 14 }} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="cpd-footer">
+                      <div className="cpd-total-row">
+                        <span>Total Estimate:</span>
+                        <strong>${cartTotal.toFixed(2)}</strong>
+                      </div>
+                      <div className="cpd-actions">
+                        <button
+                          className="cpd-view-cart-btn"
+                          onClick={() => { setCartPreviewOpen(false); navigate('/customer/cart'); }}
+                        >
+                          View Cart
+                        </button>
+                        <button
+                          className="cpd-checkout-btn"
+                          onClick={() => { setCartPreviewOpen(false); navigate('/customer/cart'); }}
+                        >
+                          Checkout <HiArrowRight style={{ width: 14, height: 14 }} />
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
 
           {user ? (
             <button
