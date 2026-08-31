@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 import './Footer.css';
 
-const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1788115820/67d7f845-394b-4216-80b8-2a2548de8cab.png';
+const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1788164449/2de7b896-dddc-427f-ab62-cad4a7498b52.png';
 
 export default function Footer() {
   return (

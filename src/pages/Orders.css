@@ -1,11 +1,11 @@
 /* Clean America Dallas - Enhanced Customer Bookings Aesthetics */
 
 .orders-page {
-  padding: 32px 24px 96px;
+  padding: 24px 24px 96px;
   max-width: 1080px;
   margin: 0 auto;
   color: var(--text-primary);
-  min-height: calc(100vh - 76px);
+  min-height: calc(100vh - 120px) !important;
   background: var(--bg);
   box-sizing: border-box;
 }

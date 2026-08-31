@@ -6,11 +6,12 @@ import {
   HiChevronDown, HiChevronUp, HiClipboardList, HiCog,
   HiLogout, HiShoppingCart, HiLocationMarker, HiUser, HiBell, HiCheckCircle, HiSearch, HiX,
   HiHome, HiTruck, HiChartBar, HiUsers, HiClock, HiCurrencyDollar, HiTag, HiOutlineLocationMarker, HiTrash, HiArrowRight,
+  HiMenuAlt2
 } from 'react-icons/hi';
 import { MdEngineering } from 'react-icons/md';
 import './Navbar.css';
 
-const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1788115820/67d7f845-394b-4216-80b8-2a2548de8cab.png';
+const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1788164449/2de7b896-dddc-427f-ab62-cad4a7498b52.png';
 
 // ONLY 3 Dallas area suggestions as requested
 const DALLAS_SUGGESTIONS = [
@@ -44,7 +45,7 @@ export default function Navbar() {
   const [locOpen, setLocOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [cartPreviewOpen, setCartPreviewOpen] = useState(false);
-  const [selectedLoc, setSelectedLoc] = useState('Dallas, TX');
+  const [selectedLoc, setSelectedLoc] = useState('Dallas, Texas');
   const [isDetecting, setIsDetecting] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -70,14 +71,14 @@ export default function Navbar() {
       navigator.geolocation.getCurrentPosition(
         () => {
           setTimeout(() => {
-            setSelectedLoc('Dallas, TX (Auto-Detected)');
+            setSelectedLoc('Dallas, Texas (Auto-Detected)');
             setIsDetecting(false);
             setLocOpen(false);
           }, 500);
         },
         () => {
           setTimeout(() => {
-            setSelectedLoc('Dallas, TX (Detected)');
+            setSelectedLoc('Dallas, Texas');
             setIsDetecting(false);
             setLocOpen(false);
           }, 500);
@@ -86,7 +87,7 @@ export default function Navbar() {
       );
     } else {
       setTimeout(() => {
-        setSelectedLoc('Dallas, TX (Auto-Detected)');
+        setSelectedLoc('Dallas, Texas');
         setIsDetecting(false);
         setLocOpen(false);
       }, 500);
@@ -143,37 +144,16 @@ export default function Navbar() {
     }
   };
 
-  const renderSearchForm = () => (
-    <form className="nav-search-bar" onSubmit={handleSearchSubmit}>
-      <HiSearch className="nav-search-icon" />
-      <input
-        type="text"
-        className="nav-search-input"
-        placeholder="Search house cleaning, plumber, HVAC..."
-        value={searchQuery}
-        onChange={e => setSearchQuery(e.target.value)}
-      />
-      {searchQuery && (
-        <button type="button" className="nav-search-clear" onClick={() => setSearchQuery('')} aria-label="Clear search">
-          <HiX style={{ width: 13, height: 13 }} />
-        </button>
-      )}
-      <button type="submit" className="nav-search-submit-btn" aria-label="Submit search">
-        <HiSearch style={{ width: 15, height: 15 }} />
-      </button>
-    </form>
-  );
-
   return (
     <nav className="navbar">
-      {/* ROW 1: Logo & Location on Left | Desktop Search in Center | Notifications, Cart, User on Right */}
       <div className="nav-inner">
-        <div className="nav-left">
-          <Link to="/" className="brand" aria-label="Clean America Dallas home">
+        {/* LEFT: Desktop Logo + Location Pill on Left */}
+        <div className="nav-left" ref={locRef}>
+          <Link to="/" className="brand desktop-only" aria-label="Clean America Dallas home">
             <img src={LOGO_URL} alt="Clean America Dallas" className="brand-logo-image" />
           </Link>
 
-          <div className="location-menu" ref={locRef}>
+          <div className="location-menu">
             <button className="location-btn" onClick={() => setLocOpen(o => !o)}>
               <HiLocationMarker className="loc-icon" />
               <span className="location-text">{selectedLoc}</span>
@@ -182,7 +162,6 @@ export default function Navbar() {
 
             {locOpen && (
               <div className="location-dropdown">
-                {/* Auto Detect Action */}
                 <button
                   className="loc-auto-detect-btn"
                   onClick={handleAutoDetect}
@@ -212,92 +191,93 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Desktop Search Bar (Integrated in Main Row) */}
-        <div className="nav-center desktop-only">
-          {renderSearchForm()}
+        {/* CENTER: Mobile Logo Centered / Desktop Navigation Links */}
+        <div className="nav-center">
+          <Link to="/" className="brand mobile-only" aria-label="Clean America Dallas home">
+            <img src={LOGO_URL} alt="Clean America Dallas" className="brand-logo-image" />
+          </Link>
+
+          <div className="nav-desktop-links desktop-only">
+            {getDesktopNavTabs().map(({ to, Icon, label }) => (
+              <Link key={to} to={to} className={`nav-desktop-link ${isActive(to) ? 'active' : ''}`}>
+                <Icon className="ndl-icon" />
+                <span>{label}</span>
+              </Link>
+            ))}
+            {activeOrder && user?.role === 'customer' && (
+              <Link
+                to={`/customer/track/${activeOrder.id}`}
+                className={`nav-desktop-link live ${isActive(`/customer/track/${activeOrder.id}`) ? 'active' : ''}`}
+              >
+                <HiLocationMarker className="ndl-icon" />
+                <span>Live Track</span>
+                <span className="nav-live-pulse" />
+              </Link>
+            )}
+          </div>
         </div>
 
-        {/* Desktop Top Nav Links (Visible on Desktop & Tablet) */}
-        <div className="nav-desktop-links desktop-only">
-          {getDesktopNavTabs().map(({ to, Icon, label }) => (
-            <Link key={to} to={to} className={`nav-desktop-link ${isActive(to) ? 'active' : ''}`}>
-              <Icon className="ndl-icon" />
-              <span>{label}</span>
-            </Link>
-          ))}
-          {activeOrder && user?.role === 'customer' && (
-            <Link
-              to={`/customer/track/${activeOrder.id}`}
-              className={`nav-desktop-link live ${isActive(`/customer/track/${activeOrder.id}`) ? 'active' : ''}`}
-            >
-              <HiLocationMarker className="ndl-icon" />
-              <span>Live Track</span>
-              <span className="nav-live-pulse" />
-            </Link>
-          )}
-        </div>
-
-        {/* Right Actions */}
+        {/* RIGHT: Notifications & Cart Actions */}
         <div className="nav-right">
           <div className="notif-wrap" ref={notifRef}>
-          <button
-            className="icon-circle-btn"
-            onClick={() => {
-              setNotifOpen(o => !o);
-              if (!notifOpen && unreadCount > 0) markAllNotificationsRead();
-            }}
-            aria-label="Notifications"
-          >
-            <HiBell className="nav-top-icon" />
-            {unreadCount > 0 && <span className="notif-badge">{unreadCount}</span>}
-          </button>
+            <button
+              className="icon-circle-btn"
+              onClick={() => {
+                setNotifOpen(o => !o);
+                if (!notifOpen && unreadCount > 0) markAllNotificationsRead();
+              }}
+              aria-label="Notifications"
+            >
+              <HiBell className="nav-top-icon" />
+              {unreadCount > 0 && <span className="notif-badge">{unreadCount}</span>}
+            </button>
 
-          {notifOpen && (
-            <div className="notif-dropdown">
-              <div className="notif-header">
-                <div className="notif-header-title">
-                  <strong>Notification Events</strong>
-                  {unreadCount > 0 && <span className="notif-count">{unreadCount} new</span>}
+            {notifOpen && (
+              <div className="notif-dropdown">
+                <div className="notif-header">
+                  <div className="notif-header-title">
+                    <strong>Notification Events</strong>
+                    {unreadCount > 0 && <span className="notif-count">{unreadCount} new</span>}
+                  </div>
+                  <div className="notif-hdr-actions">
+                    {unreadCount > 0 && (
+                      <button className="notif-hdr-btn" onClick={markAllNotificationsRead}>
+                        Mark Read
+                      </button>
+                    )}
+                    {notifications.length > 0 && (
+                      <button className="notif-hdr-btn clear" onClick={clearNotifications}>
+                        Clear
+                      </button>
+                    )}
+                  </div>
                 </div>
-                <div className="notif-hdr-actions">
-                  {unreadCount > 0 && (
-                    <button className="notif-hdr-btn" onClick={markAllNotificationsRead}>
-                      Mark Read
-                    </button>
-                  )}
-                  {notifications.length > 0 && (
-                    <button className="notif-hdr-btn clear" onClick={clearNotifications}>
-                      Clear
-                    </button>
-                  )}
-                </div>
-              </div>
 
-              {notifications.length === 0 ? (
-                <div className="notif-empty">
-                  <HiBell style={{ width: 28, height: 28, color: 'var(--text-muted)', marginBottom: 6 }} />
-                  <p>No notification events yet</p>
-                  <span>Real-time updates on bookings, pro assignments & promos will appear here</span>
-                </div>
-              ) : (
-                <div className="notif-list">
-                  {notifications.map(n => (
-                    <div key={n.id} className={`notif-item ${!n.read ? 'unread' : ''}`}>
-                      <span className={`notif-dot ${!n.read ? 'active' : ''}`} />
-                      <div className="notif-content">
-                        <p><strong>{n.title}</strong></p>
-                        <span>{n.body}</span>
-                        <div className="notif-time">{n.time || 'Just now'}</div>
+                {notifications.length === 0 ? (
+                  <div className="notif-empty">
+                    <HiBell style={{ width: 28, height: 28, color: 'var(--text-muted)', marginBottom: 6 }} />
+                    <p>No notification events yet</p>
+                    <span>Real-time updates on bookings, pro assignments & promos will appear here</span>
+                  </div>
+                ) : (
+                  <div className="notif-list">
+                    {notifications.map(n => (
+                      <div key={n.id} className={`notif-item ${!n.read ? 'unread' : ''}`}>
+                        <span className={`notif-dot ${!n.read ? 'active' : ''}`} />
+                        <div className="notif-content">
+                          <p><strong>{n.title}</strong></p>
+                          <span>{n.body}</span>
+                          <div className="notif-time">{n.time || 'Just now'}</div>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
 
-          {/* Interactive Cart Button with Hover / Click Preview Drawer */}
+          {/* Cart Button */}
           <div className="cart-menu-wrap" ref={cartRef}>
             <button
               className={`cart-btn ${cartCount > 0 ? 'has-items' : ''}`}
@@ -306,7 +286,7 @@ export default function Navbar() {
               aria-label="Cart Preview"
             >
               <HiShoppingCart className="cart-icon" />
-              <span className="cart-label">Cart</span>
+              <span className="cart-label desktop-only">Cart</span>
               {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
             </button>
 
@@ -398,17 +378,12 @@ export default function Navbar() {
               <span className="avatar-circle">{user?.name?.charAt(0)?.toUpperCase() || 'U'}</span>
             </button>
           ) : (
-            <div className="auth-btns">
+            <div className="auth-btns desktop-only">
               <Link to="/customer/signin" className="btn-ghost">Sign In</Link>
               <Link to="/customer/signup" className="btn-nav-primary">Sign Up</Link>
             </div>
           )}
         </div>
-      </div>
-
-      {/* Mobile Dedicated Search Row (Only visible on screens <= 768px) */}
-      <div className="nav-mobile-search-row">
-        {renderSearchForm()}
       </div>
     </nav>
   );
