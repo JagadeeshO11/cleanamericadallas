@@ -45,7 +45,7 @@ const HERO_BANNERS = [
     sub: 'Professional, background-checked cleaners for your Dallas residence.',
     cta: 'Book Cleaning Pro',
     serviceId: 'house-clean',
-    img: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=700&q=80',
+    img: 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1788168933/87d195d8-12ef-4448-8621-88297bfaed56.png',
   },
   {
     id: 2,
