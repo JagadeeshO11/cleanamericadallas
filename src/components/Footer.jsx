@@ -12,7 +12,7 @@ export default function Footer() {
           <Link to="/" className="footer-logo" aria-label="Clean America home">
             <img src={LOGO_URL} alt="Clean America" className="footer-logo-image" />
           </Link>
-          <p>India's #1 on-demand construction vehicle booking platform. Book JCBs, Cranes, Tippers & more — instantly.</p>
+          <p>Dallas's #1 on-demand home cleaning & professional services platform. Book House Cleaning, Plumbing, HVAC & more — instantly.</p>
           <div className="footer-social">
             <a href="#" aria-label="Twitter"><FaTwitter /></a>
             <a href="#" aria-label="Instagram"><FaInstagram /></a>
@@ -24,20 +24,20 @@ export default function Footer() {
         <div className="footer-col">
           <h4>Company</h4>
           <Link to="#">About Us</Link>
-          <Link to="#">Investor Relations</Link>
+          <Link to="#">Dallas Service Areas</Link>
           <Link to="#">Terms & Conditions</Link>
           <Link to="#">Privacy Policy</Link>
-          <Link to="#">Anti-discrimination Policy</Link>
+          <Link to="#">Satisfaction Guarantee</Link>
           <Link to="#">Careers</Link>
         </div>
 
         <div className="footer-col">
           <h4>For Customers</h4>
-          <Link to="/browse">Browse Vehicles</Link>
-          <Link to="/customer/orders">My Orders</Link>
-          <Link to="#">Clean America Reviews</Link>
-          <Link to="#">Categories Near You</Link>
-          <Link to="#">Contact Us</Link>
+          <Link to="/browse">Browse Services</Link>
+          <Link to="/customer/upcoming">Upcoming Jobs</Link>
+          <Link to="/customer/orders">My Bookings</Link>
+          <Link to="/customer/quotes">Request Quote</Link>
+          <Link to="/customer/profile">My Account</Link>
         </div>
 
         <div className="footer-col">

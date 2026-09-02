@@ -209,3 +209,46 @@
     font-size: 14px;
   }
 }
+
+/* ENHANCED MOBILE STYLING FOR COMPLETED JOBS & CUSTOMER REVIEWS CARD */
+.completed-mobile-card {
+  background: #18181b;
+  border: 1px solid #27272a;
+  border-radius: 14px;
+  padding: 14px 16px;
+  transition: all 0.2s ease;
+}
+
+@media (max-width: 640px) {
+  .completed-mobile-card {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.04), #18181b);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+  }
+
+  .completed-mobile-card .ji-left {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .completed-mobile-card .ji-right {
+    width: 100% !important;
+    align-items: stretch !important;
+    text-align: left !important;
+    border-top: 1px solid #27272a;
+    padding-top: 10px;
+    margin-top: 4px;
+  }
+
+  .completed-mobile-card .ji-right button {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 10px 14px !important;
+    font-size: 0.84rem !important;
+    background: linear-gradient(135deg, #27272a, #18181b) !important;
+    border-color: #3f3f46 !important;
+    border-radius: 8px !important;
+  }
+}

@@ -1,0 +1,25 @@
+.complaint-modal {
+  max-width: 540px;
+}
+
+.btn-modal-submit.purple {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+  color: #ffffff;
+}
+
+.btn-modal-submit.purple:hover {
+  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+}
+
+.complaint-guarantee-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  color: #ddd6fe;
+  line-height: 1.4;
+}

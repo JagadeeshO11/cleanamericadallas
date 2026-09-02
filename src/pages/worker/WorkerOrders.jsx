@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useStore } from '../../store/useStore';
-import { HiLocationMarker, HiCalendar, HiUser, HiArrowRight, HiClipboardList } from 'react-icons/hi';
+import WorkerJobModal from './WorkerJobModal';
+import { HiLocationMarker, HiCalendar, HiUser, HiArrowRight, HiClipboardList, HiClipboardCheck } from 'react-icons/hi';
 
 export default function WorkerOrders() {
   const user = useAuthStore(s => s.user);
   const orders = useStore(s => s.orders);
   const advanceStage = useStore(s => s.advanceStage);
+
+  const [selectedJob, setSelectedJob] = useState(null);
 
   const activeOrders = orders.filter(o =>
     (o.operator?.id === user?.id || user?.role === 'worker') && ['assigned', 'active', 'pending'].includes(o.status)
@@ -39,22 +43,54 @@ export default function WorkerOrders() {
               <div className="oc-stage-bar">
                 <span>Stage:</span> <strong>{o.stages[o.stage]}</strong>
               </div>
-              <div className="oc-footer">
-                <div className="oc-amount-wrap">
-                  <span className="oc-amount-sub">Total</span>
-                  <div className="oc-amount">${o.booking?.total?.toLocaleString()}</div>
+              <div className="oc-footer" style={{ flexDirection: 'column', gap: 10, alignItems: 'stretch' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div className="oc-amount-wrap">
+                    <span className="oc-amount-sub">Total</span>
+                    <div className="oc-amount">${o.booking?.total?.toLocaleString()}</div>
+                  </div>
+                  {o.stage < o.stages.length - 1 && (
+                    <button className="oc-advance-btn" onClick={() => advanceStage(o.id)}>
+                      <span>{o.stages[o.stage + 1]}</span>
+                      <HiArrowRight style={{ width: 14, height: 14 }} />
+                    </button>
+                  )}
                 </div>
-                {o.stage < o.stages.length - 1 && (
-                  <button className="oc-advance-btn" onClick={() => advanceStage(o.id)}>
-                    <span>{o.stages[o.stage + 1]}</span>
-                    <HiArrowRight style={{ width: 14, height: 14 }} />
-                  </button>
-                )}
+
+                <button
+                  className="btn-launch-job-drawer"
+                  style={{
+                    background: '#ff6b00',
+                    color: '#fff',
+                    border: 'none',
+                    padding: '8px 14px',
+                    borderRadius: '8px',
+                    fontWeight: '700',
+                    fontSize: '0.82rem',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px'
+                  }}
+                  onClick={() => setSelectedJob(o)}
+                >
+                  <HiClipboardCheck style={{ width: 16, height: 16 }} />
+                  Check-In & Cleaning Checklist Drawer
+                </button>
               </div>
             </div>
           ))}
         </div>
       )}
+
+      {/* JOB EXECUTION MODAL */}
+      <WorkerJobModal
+        isOpen={!!selectedJob}
+        order={selectedJob}
+        onClose={() => setSelectedJob(null)}
+      />
     </div>
   );
 }
+

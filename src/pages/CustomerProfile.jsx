@@ -6,6 +6,7 @@ import {
   HiUser, HiPhone, HiMail, HiClipboardList, HiLogout, HiArrowRight,
   HiLocationMarker, HiShieldCheck, HiStar, HiCreditCard, HiSparkles,
   HiClock, HiCheckCircle, HiChevronRight, HiShoppingBag, HiCog,
+  HiCalculator, HiDocumentReport, HiSupport, HiCalendar
 } from 'react-icons/hi';
 import './CustomerProfile.css';
 
@@ -13,6 +14,9 @@ export default function CustomerProfile() {
   const user = useAuthStore(s => s.user);
   const logout = useAuthStore(s => s.logout);
   const orders = useStore(s => s.orders);
+  const quotes = useStore(s => s.quotes) || [];
+  const invoices = useStore(s => s.invoices) || [];
+  const complaints = useStore(s => s.complaints) || [];
   const activeOrder = useStore(s => s.activeOrder);
   const navigate = useNavigate();
 
@@ -21,6 +25,8 @@ export default function CustomerProfile() {
 
   const customerOrders = orders.filter(o => o.customer?.id === user?.id || !o.customer);
   const completedCount = customerOrders.filter(o => o.status === 'completed').length;
+  const unpaidInvoices = invoices.filter(i => (i.customerId === user?.id || !user) && i.status === 'unpaid').length;
+  const pendingQuotes = quotes.filter(q => (q.customerId === user?.id || !user) && q.status === 'quoted').length;
 
   const handleLogout = () => {
     logout();
@@ -59,7 +65,7 @@ export default function CustomerProfile() {
 
       {/* STATS OVERVIEW ROW */}
       <div className="profile-stats-grid">
-        <div className="p-stat-card">
+        <div className="p-stat-card" onClick={() => navigate('/customer/orders')} style={{ cursor: 'pointer' }}>
           <div className="p-stat-icon-wrap gold">
             <HiClipboardList className="p-stat-icon" />
           </div>
@@ -69,33 +75,33 @@ export default function CustomerProfile() {
           </div>
         </div>
 
-        <div className="p-stat-card">
-          <div className="p-stat-icon-wrap green">
-            <HiCheckCircle className="p-stat-icon" />
-          </div>
-          <div className="p-stat-details">
-            <strong>{completedCount}</strong>
-            <span>Services Completed</span>
-          </div>
-        </div>
-
-        <div className="p-stat-card">
+        <div className="p-stat-card" onClick={() => navigate('/customer/quotes')} style={{ cursor: 'pointer' }}>
           <div className="p-stat-icon-wrap blue">
-            <HiStar className="p-stat-icon" />
+            <HiCalculator className="p-stat-icon" />
           </div>
           <div className="p-stat-details">
-            <strong>5.0 ★</strong>
-            <span>Customer Rating</span>
+            <strong>{quotes.length} {pendingQuotes > 0 ? `(${pendingQuotes} Ready)` : ''}</strong>
+            <span>Service Quotes</span>
           </div>
         </div>
 
-        <div className="p-stat-card">
-          <div className="p-stat-icon-wrap purple">
-            <HiLocationMarker className="p-stat-icon" />
+        <div className="p-stat-card" onClick={() => navigate('/customer/invoices')} style={{ cursor: 'pointer' }}>
+          <div className="p-stat-icon-wrap green">
+            <HiDocumentReport className="p-stat-icon" />
           </div>
           <div className="p-stat-details">
-            <strong>Dallas, TX</strong>
-            <span>Primary Zone</span>
+            <strong>{invoices.length} {unpaidInvoices > 0 ? `(${unpaidInvoices} Unpaid)` : ''}</strong>
+            <span>Invoices</span>
+          </div>
+        </div>
+
+        <div className="p-stat-card" onClick={() => navigate('/customer/support')} style={{ cursor: 'pointer' }}>
+          <div className="p-stat-icon-wrap purple">
+            <HiSupport className="p-stat-icon" />
+          </div>
+          <div className="p-stat-details">
+            <strong>{complaints.length}</strong>
+            <span>Support Tickets</span>
           </div>
         </div>
       </div>
@@ -188,12 +194,49 @@ export default function CustomerProfile() {
         {/* RIGHT COLUMN: QUICK ACTIONS */}
         <div className="profile-col-side">
           <section className="profile-card profile-actions-card">
-            <h2>Account Navigation</h2>
+            <h2>Customer Portal Services</h2>
+
+            <button className="action-btn" onClick={() => navigate('/customer/upcoming')}>
+              <HiCalendar className="ab-icon" style={{ color: '#ff6b00' }} />
+              <div className="ab-text">
+                <strong>Upcoming Jobs & Schedule</strong>
+                <span>Manage future Dallas service appointments</span>
+              </div>
+              <HiArrowRight className="ab-arrow" />
+            </button>
+
             <button className="action-btn" onClick={() => navigate('/customer/orders')}>
               <HiClipboardList className="ab-icon" />
               <div className="ab-text">
-                <strong>My Bookings</strong>
-                <span>View & manage past services</span>
+                <strong>All Bookings & History</strong>
+                <span>View completed & active Dallas jobs</span>
+              </div>
+              <HiArrowRight className="ab-arrow" />
+            </button>
+
+            <button className="action-btn" onClick={() => navigate('/customer/quotes')}>
+              <HiCalculator className="ab-icon" style={{ color: '#f59e0b' }} />
+              <div className="ab-text">
+                <strong>Quotations & Service Approvals</strong>
+                <span>Request & approve custom cleaning quotes</span>
+              </div>
+              <HiArrowRight className="ab-arrow" />
+            </button>
+
+            <button className="action-btn" onClick={() => navigate('/customer/invoices')}>
+              <HiDocumentReport className="ab-icon" style={{ color: '#10b981' }} />
+              <div className="ab-text">
+                <strong>Invoices & Payments</strong>
+                <span>View itemized receipts & pay online</span>
+              </div>
+              <HiArrowRight className="ab-arrow" />
+            </button>
+
+            <button className="action-btn" onClick={() => navigate('/customer/support')}>
+              <HiSupport className="ab-icon" style={{ color: '#8b5cf6' }} />
+              <div className="ab-text">
+                <strong>Service Requests & Complaints</strong>
+                <span>Dallas 24/7 resolution support</span>
               </div>
               <HiArrowRight className="ab-arrow" />
             </button>
@@ -201,17 +244,8 @@ export default function CustomerProfile() {
             <button className="action-btn" onClick={() => navigate('/browse')}>
               <HiShoppingBag className="ab-icon" />
               <div className="ab-text">
-                <strong>Book New Service</strong>
-                <span>20+ certified Dallas pros</span>
-              </div>
-              <HiArrowRight className="ab-arrow" />
-            </button>
-
-            <button className="action-btn" onClick={() => navigate('/customer/cart')}>
-              <HiClock className="ab-icon" />
-              <div className="ab-text">
-                <strong>View Cart & Checkout</strong>
-                <span>Complete pending bookings</span>
+                <strong>Book New Dallas Service</strong>
+                <span>Browse certified Dallas pros</span>
               </div>
               <HiArrowRight className="ab-arrow" />
             </button>
@@ -234,4 +268,5 @@ export default function CustomerProfile() {
     </div>
   );
 }
+
 

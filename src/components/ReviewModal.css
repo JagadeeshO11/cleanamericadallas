@@ -1,0 +1,137 @@
+.review-modal {
+  max-width: 520px;
+}
+
+.pro-spotlight-mini {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #09090b;
+  border: 1px solid #27272a;
+  padding: 12px 16px;
+  border-radius: 12px;
+}
+
+.psm-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b00, #f59e0b);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.psm-avatar + div {
+  display: flex;
+  flex-direction: column;
+}
+
+.psm-avatar + div strong {
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.psm-avatar + div span {
+  font-size: 0.8rem;
+  color: #a1a1aa;
+}
+
+.star-rating-picker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: rgba(245, 158, 11, 0.05);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 12px;
+}
+
+.star-rating-picker label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #d4d4d8;
+}
+
+.stars-row {
+  display: flex;
+  gap: 8px;
+}
+
+.star-btn {
+  background: transparent;
+  border: none;
+  font-size: 2.2rem;
+  color: #3f3f46;
+  cursor: pointer;
+  transition: transform 0.15s, color 0.15s;
+}
+
+.star-btn:hover {
+  transform: scale(1.15);
+}
+
+.star-btn.selected {
+  color: #f59e0b;
+}
+
+.star-rating-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #f59e0b;
+}
+
+.sub-ratings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 520px) {
+  .sub-ratings-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tip-picker-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tip-picker-section label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #d4d4d8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tip-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tip-pill {
+  background: #09090b;
+  border: 1px solid #3f3f46;
+  border-radius: 20px;
+  padding: 6px 14px;
+  color: #a1a1aa;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tip-pill.active {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #ef4444;
+  color: #f87171;
+}

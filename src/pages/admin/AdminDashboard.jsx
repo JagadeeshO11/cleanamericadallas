@@ -4,40 +4,52 @@ import { useAuthStore } from '../../store/useAuthStore';
 import {
   HiClipboardList, HiLightningBolt, HiCheckCircle,
   HiCurrencyDollar, HiUsers, HiArrowRight, HiStar,
+  HiCalculator, HiDocumentText, HiSupport, HiCamera, HiChartBar
 } from 'react-icons/hi';
 import { MdPendingActions } from 'react-icons/md';
 import './Admin.css';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
-  const orders = useStore(s => s.orders);
+  const orders = useStore(s => s.orders) || [];
+  const leads = useStore(s => s.leads) || [];
+  const contracts = useStore(s => s.contracts) || [];
+  const quotes = useStore(s => s.quotes) || [];
+  const complaints = useStore(s => s.complaints) || [];
+  const expenses = useStore(s => s.expenses) || [];
   const getWorkers = useAuthStore(s => s.getWorkers);
   const workers = getWorkers();
+
+  const totalRevenue = orders.filter(o => o.status === 'completed').reduce((s, o) => s + (o.booking?.total || 0), 0);
+  const totalExpenses = expenses.reduce((s, e) => s + (e.amount || 0), 0);
+  const netMargin = totalRevenue - totalExpenses;
+  const activeContractsValue = contracts.reduce((s, c) => s + (c.monthlyValue || 0), 0);
+  const openLeadsCount = leads.filter(l => l.status === 'new' || l.status === 'contacted').length;
+  const openTicketsCount = complaints.filter(c => c.status !== 'resolved').length;
 
   const stats = {
     total: orders.length,
     pending: orders.filter(o => o.status === 'pending').length,
     active: orders.filter(o => ['assigned', 'active'].includes(o.status)).length,
     completed: orders.filter(o => o.status === 'completed').length,
-    revenue: orders.filter(o => o.status === 'completed').reduce((s, o) => s + (o.booking?.total || 0), 0),
     availableWorkers: workers.filter(w => w.available).length,
   };
 
   const recent = orders.slice(0, 5);
 
   const STAT_CARDS = [
-    { label: 'Total Bookings', val: stats.total, Icon: HiClipboardList, cls: 'orange' },
-    { label: 'Pending Dispatch', val: stats.pending, Icon: MdPendingActions, cls: 'yellow' },
-    { label: 'Active Jobs', val: stats.active, Icon: HiLightningBolt, cls: 'blue' },
-    { label: 'Completed', val: stats.completed, Icon: HiCheckCircle, cls: 'green' },
-    { label: 'Dallas Revenue', val: `$${stats.revenue.toLocaleString()}`, Icon: HiCurrencyDollar, cls: 'purple' },
-    { label: 'Pros Online', val: `${stats.availableWorkers}/${workers.length}`, Icon: HiUsers, cls: 'teal' },
+    { label: 'Gross Revenue', val: `$${totalRevenue.toLocaleString()}`, Icon: HiCurrencyDollar, cls: 'green' },
+    { label: 'Net Profit Margin', val: `$${netMargin.toLocaleString()}`, Icon: HiChartBar, cls: 'purple' },
+    { label: 'Active Contracts / mo', val: `$${activeContractsValue.toLocaleString()}`, Icon: HiDocumentText, cls: 'blue' },
+    { label: 'Open CRM Leads', val: openLeadsCount, Icon: HiUsers, cls: 'orange' },
+    { label: 'Unassigned Dispatch', val: stats.pending, Icon: MdPendingActions, cls: 'yellow' },
+    { label: 'Open Support Tickets', val: openTicketsCount, Icon: HiSupport, cls: 'red' },
   ];
 
   return (
     <div className="admin-page">
       <div className="dash-welcome">
-        <p>Dallas Operations Overview 👋</p>
+        <p>Dallas Operations Command Center 👋</p>
       </div>
 
       {/* Stats */}
@@ -53,13 +65,16 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      {/* Quick Actions */}
-      <div className="quick-actions">
+      {/* Quick Actions Grid for all 13 Admin Requirements */}
+      <div className="quick-actions" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 12 }}>
         {[
-          { label: 'Manage Bookings', path: '/admin/orders', cls: 'orange' },
-          { label: 'View Customers', path: '/admin/customers', cls: 'blue' },
-          { label: 'Manage Service Pros', path: '/admin/workers', cls: 'green' },
-          { label: 'Dallas Payments', path: '/admin/payments', cls: 'purple' },
+          { label: 'Bookings & Dispatch', path: '/admin/orders', cls: 'orange' },
+          { label: 'Customers & Leads', path: '/admin/customers', cls: 'blue' },
+          { label: 'Dallas Pros', path: '/admin/workers', cls: 'green' },
+          { label: 'Quotes & Contracts', path: '/admin/quotes', cls: 'purple' },
+          { label: 'Invoices & Ledger', path: '/admin/payments', cls: 'yellow' },
+          { label: 'Support & QA Photos', path: '/admin/quality', cls: 'red' },
+          { label: 'P&L Reports', path: '/admin/reports', cls: 'teal' },
         ].map(({ label, path, cls }) => (
           <button key={path} className={`qa-btn ${cls}`} onClick={() => navigate(path)}>
             {label} <HiArrowRight style={{ width: 14, height: 14 }} />
@@ -126,3 +141,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+

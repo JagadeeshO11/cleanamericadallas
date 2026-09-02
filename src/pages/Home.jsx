@@ -49,6 +49,16 @@ const HERO_BANNERS = [
   },
   {
     id: 2,
+    title1: 'UPCOMING JOBS',
+    title2: '& LIVE TRACKING.',
+    title3: 'DALLAS PRO SCHEDULE.',
+    sub: 'Track active Dallas service appointments, view scheduled jobs, and monitor live pro GPS.',
+    cta: 'View Upcoming Jobs',
+    path: '/customer/upcoming',
+    img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80',
+  },
+  {
+    id: 3,
     title1: 'CLEAN SPACES.',
     title2: 'BETTER PLACES.',
     title3: 'HEALTHIER LIVES.',
@@ -58,7 +68,7 @@ const HERO_BANNERS = [
     img: 'https://images.pexels.com/photos/1483880/pexels-photo-1483880.jpeg?auto=compress&cs=tinysrgb&w=700',
   },
   {
-    id: 3,
+    id: 4,
     title1: 'FAST & RELIABLE',
     title2: 'MOVING LABOUR.',
     title3: 'SAME-DAY DISPATCH.',
@@ -193,7 +203,7 @@ export default function Home() {
               <span className="text-green-highlight">{banner.title3}</span>
             </h1>
             <p className="hmc-subtext">{banner.sub}</p>
-            <button className="hmc-cta-btn" onClick={() => book(banner.serviceId)}>
+            <button className="hmc-cta-btn" onClick={() => banner.path ? navigate(banner.path) : book(banner.serviceId)}>
               {banner.cta} <HiArrowRight className="btn-arrow" />
             </button>
           </div>

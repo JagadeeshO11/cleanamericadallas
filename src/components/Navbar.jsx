@@ -6,7 +6,7 @@ import {
   HiChevronDown, HiChevronUp, HiClipboardList, HiCog,
   HiLogout, HiShoppingCart, HiLocationMarker, HiUser, HiBell, HiCheckCircle, HiSearch, HiX,
   HiHome, HiTruck, HiChartBar, HiUsers, HiClock, HiCurrencyDollar, HiTag, HiOutlineLocationMarker, HiTrash, HiArrowRight,
-  HiMenuAlt2
+  HiMenuAlt2, HiCalculator, HiDocumentReport, HiSupport, HiCalendar
 } from 'react-icons/hi';
 import { MdEngineering } from 'react-icons/md';
 import './Navbar.css';
@@ -117,6 +117,7 @@ export default function Navbar() {
         { to: '/', Icon: HiHome, label: 'Customer Site' },
         { to: '/worker', Icon: HiCog, label: 'Pro Dashboard' },
         { to: '/worker/orders', Icon: HiClipboardList, label: 'Jobs & Orders' },
+        { to: '/worker/schedule', Icon: HiCalendar, label: 'Schedule' },
         { to: '/worker/history', Icon: HiClock, label: 'History' },
         { to: '/worker/wallet', Icon: HiCurrencyDollar, label: 'Wallet' },
       ];
@@ -124,9 +125,12 @@ export default function Navbar() {
     return [
       { to: '/', Icon: HiHome, label: 'Home' },
       { to: '/browse', Icon: HiTruck, label: 'Book Services' },
-      { to: user ? '/customer/orders' : '/customer/signin', Icon: HiClipboardList, label: 'My Bookings' },
+      { to: user ? '/customer/upcoming' : '/customer/signin', Icon: HiCalendar, label: 'Upcoming Jobs' },
+      { to: user ? '/customer/orders' : '/customer/signin', Icon: HiClipboardList, label: 'All Bookings' },
+      { to: user ? '/customer/quotes' : '/customer/signin', Icon: HiCalculator, label: 'Quotes' },
     ];
   };
+
 
   const handleLogout = () => {
     const role = user?.role || 'customer';

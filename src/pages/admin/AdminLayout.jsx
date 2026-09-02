@@ -13,12 +13,13 @@ const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1788115820/
 
 const NAV_ITEMS = [
   { to: '/admin', icon: HiHome, label: 'Dashboard', end: true },
-  { to: '/admin/orders', icon: HiClipboardList, label: 'Bookings' },
-  { to: '/admin/customers', icon: HiUsers, label: 'Customers' },
+  { to: '/admin/orders', icon: HiClipboardList, label: 'Bookings & Schedule' },
+  { to: '/admin/customers', icon: HiUsers, label: 'Customers & CRM' },
   { to: '/admin/workers', icon: MdEngineering, label: 'Dallas Pros' },
-  { to: '/admin/products', icon: HiTag, label: 'Services & Rates' },
-  { to: '/admin/reports', icon: HiChartBar, label: 'Analytics Reports' },
-  { to: '/admin/payments', icon: HiCreditCard, label: 'Payouts & Revenue' },
+  { to: '/admin/quotes', icon: HiTag, label: 'Quotes & Contracts' },
+  { to: '/admin/quality', icon: HiChartBar, label: 'Quality & Complaints' },
+  { to: '/admin/payments', icon: HiCreditCard, label: 'Invoices & Payouts' },
+  { to: '/admin/reports', icon: HiChartBar, label: 'P&L Financials' },
 ];
 
 export default function AdminLayout() {

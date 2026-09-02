@@ -4,15 +4,16 @@ import { useStore } from '../store/useStore';
 import {
   HiHome, HiTruck, HiClipboardList, HiUser,
   HiChartBar, HiCollection, HiUsers, HiSearch,
-  HiCog, HiLocationMarker,
+  HiCog, HiLocationMarker, HiCalculator, HiCalendar,
 } from 'react-icons/hi';
 import './BottomNav.css';
 
 const customerTabs = [
   { to: '/',                  Icon: HiHome,          label: 'Home' },
-  { to: '/browse',            Icon: HiTruck,         label: 'Book' },
-  { to: '/customer/orders',   Icon: HiClipboardList, label: 'Orders' },
-  { to: '/customer/profile',  Icon: HiUser,         label: 'Account' },
+  { to: '/customer/upcoming', Icon: HiCalendar,      label: 'Upcoming' },
+  { to: '/customer/orders',   Icon: HiClipboardList, label: 'Bookings' },
+  { to: '/customer/quotes',   Icon: HiCalculator,    label: 'Quotes' },
+  { to: '/customer/profile',  Icon: HiUser,          label: 'Account' },
 ];
 
 const adminTabs = [
@@ -25,6 +26,7 @@ const adminTabs = [
 const workerTabs = [
   { to: '/worker',         Icon: HiCog,          label: 'My Jobs' },
   { to: '/worker/orders',  Icon: HiClipboardList, label: 'Orders' },
+  { to: '/worker/schedule', Icon: HiLocationMarker, label: 'Schedule' },
   { to: '/worker/history', Icon: HiCollection,   label: 'History' },
   { to: '/worker/profile', Icon: HiUser,         label: 'Profile' },
 ];

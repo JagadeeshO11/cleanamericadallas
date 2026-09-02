@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useStore } from '../../store/useStore';
+import WorkerJobModal from './WorkerJobModal';
+import WorkerCompletedReportModal from './WorkerCompletedReportModal';
 import {
   HiStar, HiBriefcase, HiCheckCircle, HiCurrencyDollar,
-  HiLocationMarker, HiCalendar, HiUser, HiArrowRight, HiSparkles, HiRefresh
+  HiLocationMarker, HiCalendar, HiUser, HiArrowRight, HiSparkles, HiRefresh,
+  HiClipboardCheck, HiCamera, HiClock, HiDocumentText
 } from 'react-icons/hi';
 import { MdHomeRepairService } from 'react-icons/md';
 import './Worker.css';
@@ -17,6 +20,8 @@ export default function WorkerDashboard() {
   const advanceStage = useStore(s => s.advanceStage);
 
   const [demoNotice, setDemoNotice] = useState('');
+  const [selectedModalJob, setSelectedModalJob] = useState(null);
+  const [selectedReportJob, setSelectedReportJob] = useState(null);
 
   const myOrders = orders.filter(o => o.operator?.id === user?.id || user?.role === 'worker');
   const activeJob = myOrders.find(o => ['assigned', 'active'].includes(o.status));
@@ -129,17 +134,41 @@ export default function WorkerDashboard() {
           <div className="aj-stage-bar">
             <span>Stage:</span> <strong>{activeJob.stages[activeJob.stage]}</strong>
           </div>
-          <div className="aj-footer">
-            <div className="aj-amount-wrap">
-              <span className="aj-amount-sub">Est. Total</span>
-              <strong className="aj-amount">${(activeJob.booking?.total || activeJob.vehicle?.rate || 149).toLocaleString()}</strong>
+          <div className="aj-footer" style={{ flexDirection: 'column', gap: 12, alignItems: 'stretch' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div className="aj-amount-wrap">
+                <span className="aj-amount-sub">Est. Total</span>
+                <strong className="aj-amount">${(activeJob.booking?.total || activeJob.vehicle?.rate || 149).toLocaleString()}</strong>
+              </div>
+              {activeJob.stage < activeJob.stages.length - 1 && (
+                <button className="aj-advance-btn" onClick={() => advanceStage(activeJob.id)}>
+                  <span>Mark: {activeJob.stages[activeJob.stage + 1]}</span>
+                  <HiArrowRight style={{ width: 15, height: 15 }} />
+                </button>
+              )}
             </div>
-            {activeJob.stage < activeJob.stages.length - 1 && (
-              <button className="aj-advance-btn" onClick={() => advanceStage(activeJob.id)}>
-                <span>Mark: {activeJob.stages[activeJob.stage + 1]}</span>
-                <HiArrowRight style={{ width: 15, height: 15 }} />
-              </button>
-            )}
+
+            <button
+              className="btn-launch-job-drawer"
+              style={{
+                background: 'linear-gradient(135deg, #ff6b00, #f59e0b)',
+                color: '#fff',
+                border: 'none',
+                padding: '10px 16px',
+                borderRadius: '10px',
+                fontWeight: '700',
+                fontSize: '0.88rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
+              }}
+              onClick={() => setSelectedModalJob(activeJob)}
+            >
+              <HiClipboardCheck style={{ width: 18, height: 18 }} />
+              Open Job Execution Drawer (Check-In, Checklist, Photos)
+            </button>
           </div>
         </div>
       ) : (
@@ -154,37 +183,142 @@ export default function WorkerDashboard() {
         </div>
       )}
 
-      {/* Job History Section */}
+      {/* JOB EXECUTION MODAL */}
+      <WorkerJobModal
+        isOpen={!!selectedModalJob}
+        order={selectedModalJob}
+        onClose={() => setSelectedModalJob(null)}
+      />
+
+
+      {/* TODAY'S JOBS SECTION */}
       <div className="worker-section">
-        <h2>Job History</h2>
-        {myOrders.length === 0 ? (
-          <div className="empty-msg">No jobs assigned yet. Click "Load Demo Data" above or set status to Online to receive jobs.</div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+          <h2 style={{ margin: 0, fontSize: '1.2rem', color: '#fff' }}>🔥 Today's Scheduled Jobs</h2>
+          <span style={{ fontSize: '0.8rem', color: '#ff6b00', fontWeight: '700' }}>
+            {myOrders.filter(o => o.status !== 'completed').length} Pending / Active
+          </span>
+        </div>
+
+        {myOrders.filter(o => o.status !== 'completed').length === 0 ? (
+          <div className="empty-msg">No jobs scheduled for today yet. Click "Load Demo Data" to test.</div>
         ) : (
           <div className="job-list">
-            {myOrders.map(o => (
-              <div key={o.id} className="job-item">
-                <div className="ji-left">
-                  <div className="ji-thumb">
-                    <img
-                      src={o.vehicle?.image || 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=120&q=70'}
-                      alt={o.vehicle?.name}
-                      onError={e => { e.target.src = 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=120&q=70'; }}
-                    />
+            {myOrders.filter(o => o.status !== 'completed').map(o => (
+              <div key={o.id} className="job-item" style={{ flexDirection: 'column', alignItems: 'stretch', gap: 12 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div className="ji-left">
+                    <div className="ji-thumb">
+                      <img
+                        src={o.vehicle?.image || 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=120&q=70'}
+                        alt={o.vehicle?.name}
+                        onError={e => { e.target.src = 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=120&q=70'; }}
+                      />
+                    </div>
+                    <div>
+                      <strong style={{ color: '#fff', fontSize: '1rem' }}>{o.vehicle?.name}</strong>
+                      <p style={{ margin: '3px 0 0 0', color: '#a1a1aa', fontSize: '0.82rem' }}>
+                        <HiLocationMarker style={{ width: 12, height: 12, verticalAlign: 'middle', color: '#f59e0b' }} /> {o.booking?.location || 'Dallas, TX'}
+                      </p>
+                      <p style={{ margin: '2px 0 0 0', color: '#60a5fa', fontSize: '0.8rem' }}>
+                        Customer: <strong>{o.customer?.name || 'Dallas Customer'}</strong> ({o.customer?.phone || '(214) 555-0192'})
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <strong>{o.vehicle?.name}</strong>
-                    <p><HiLocationMarker style={{ width: 11, height: 11, verticalAlign: 'middle' }} /> {o.booking?.location} · {o.booking?.date}</p>
+                  <div className="ji-right" style={{ textAlign: 'right' }}>
+                    <div className="ji-amount" style={{ color: '#10b981', fontWeight: '800' }}>
+                      ${(o.booking?.total || o.vehicle?.rate || 149).toLocaleString()}
+                    </div>
+                    <span className={`status-chip ${o.status}`}>{o.status}</span>
                   </div>
                 </div>
-                <div className="ji-right">
-                  <div className="ji-amount">${o.booking?.total?.toLocaleString()}</div>
-                  <span className={`status-chip ${o.status}`}>{o.status}</span>
+
+                <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', borderTop: '1px solid #27272a', paddingTop: 10 }}>
+                  <button
+                    className="btn-launch-execution"
+                    style={{
+                      background: 'linear-gradient(135deg, #ff6b00, #f59e0b)',
+                      color: '#ffffff',
+                      border: 'none',
+                      padding: '8px 14px',
+                      borderRadius: '8px',
+                      fontSize: '0.82rem',
+                      fontWeight: '700',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}
+                    onClick={() => setSelectedModalJob(o)}
+                  >
+                    <HiClipboardCheck style={{ width: 16, height: 16 }} />
+                    Check-In, Checklist, Photos & Details
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      {/* COMPLETED JOB HISTORY & REVIEWS */}
+      <div className="worker-section" style={{ marginTop: 24 }}>
+        <h2>Completed Jobs & Customer Reviews</h2>
+        {completedJobs.length === 0 ? (
+          <div className="empty-msg">No completed job reports yet.</div>
+        ) : (
+          <div className="job-list">
+            {completedJobs.map(o => (
+              <div key={o.id} className="job-item completed-mobile-card">
+                <div className="ji-left">
+                  <div className="ji-thumb">
+                    <img
+                      src={o.vehicle?.image || 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=120&q=70'}
+                      alt={o.vehicle?.name}
+                    />
+                  </div>
+                  <div>
+                    <strong>{o.vehicle?.name}</strong>
+                    <p><HiLocationMarker style={{ width: 11, height: 11, verticalAlign: 'middle' }} /> {o.booking?.location} · {o.booking?.date}</p>
+                    <div style={{ color: '#f59e0b', fontSize: '0.8rem', marginTop: 2 }}>
+                      <HiStar style={{ verticalAlign: 'middle', marginRight: 2 }} /> 5.0 Rating • "Excellent clean & fast execution!"
+                    </div>
+                  </div>
+                </div>
+                <div className="ji-right" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
+                  <div className="ji-amount" style={{ color: '#10b981', fontWeight: '800' }}>+${(o.booking?.total || 149).toLocaleString()}</div>
+                  <span className="status-chip completed">Completed & Payout Claimed</span>
+                  <button
+                    style={{
+                      background: '#18181b',
+                      border: '1px solid #3f3f46',
+                      color: '#ffffff',
+                      padding: '4px 10px',
+                      borderRadius: '6px',
+                      fontSize: '0.78rem',
+                      fontWeight: '700',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px'
+                    }}
+                    onClick={() => setSelectedReportJob(o)}
+                  >
+                    <HiDocumentText /> View Full Job Report
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* COMPLETED REPORT MODAL */}
+      <WorkerCompletedReportModal
+        isOpen={!!selectedReportJob}
+        order={selectedReportJob}
+        onClose={() => setSelectedReportJob(null)}
+      />
     </div>
   );
 }

@@ -15,6 +15,7 @@ export default function AdminOrders() {
   const getWorkers = useAuthStore(s => s.getWorkers);
   const workers = getWorkers();
 
+  const [activeView, setActiveView] = useState('list'); // 'list' | 'schedule'
   const [filter, setFilter] = useState('all');
   const [assignModal, setAssignModal] = useState(null);
 
@@ -27,23 +28,76 @@ export default function AdminOrders() {
 
   return (
     <div className="admin-page">
-      <div className="admin-header">
+      <div className="admin-header" style={{ marginBottom: 20 }}>
         <div>
-          <h1>Booking Management</h1>
-          <p>Dispatch pros and manage all Dallas service requests</p>
+          <h1>Booking & Master Dispatch Scheduling</h1>
+          <p>Dispatch pros, manage calendar schedules, and monitor all Dallas service requests.</p>
         </div>
       </div>
 
-      <div className="filter-tabs">
-        {STATUS_FILTERS.map(f => (
-          <button key={f} className={filter === f ? 'active' : ''} onClick={() => setFilter(f)}>
-            {f.charAt(0).toUpperCase() + f.slice(1)}
-            <span className="tab-count">
-              {f === 'all' ? orders.length : orders.filter(o => o.status === f).length}
-            </span>
+      <div className="orders-controls" style={{ marginBottom: 20 }}>
+        <div className="orders-tabs">
+          <button
+            className={`tab-btn ${activeView === 'list' ? 'active' : ''}`}
+            onClick={() => setActiveView('list')}
+          >
+            📋 Booking List ({orders.length})
           </button>
-        ))}
+          <button
+            className={`tab-btn ${activeView === 'schedule' ? 'active' : ''}`}
+            onClick={() => setActiveView('schedule')}
+          >
+            📅 Master Schedule Calendar
+          </button>
+        </div>
       </div>
+
+      {activeView === 'schedule' && (
+        <div className="recent-orders-list" style={{ background: '#18181b', padding: 20, borderRadius: 16, marginBottom: 24 }}>
+          <h3>Dallas Dispatch Calendar (Master Worker Shift Grid)</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16, marginTop: 16 }}>
+            {workers.map(w => {
+              const workerJobs = orders.filter(o => o.operator?.id === w.id);
+              return (
+                <div key={w.id} style={{ background: '#09090b', padding: 16, borderRadius: 12, border: '1px solid #27272a' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                    <strong style={{ color: '#fff', fontSize: '0.95rem' }}>{w.name}</strong>
+                    <span className={`status-chip ${w.available ? 'active' : 'pending'}`}>{w.available ? 'Online' : 'Offline'}</span>
+                  </div>
+                  <div style={{ fontSize: '0.8rem', color: '#a1a1aa', marginBottom: 8 }}>{w.vehicle}</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {workerJobs.length === 0 ? (
+                      <span style={{ fontSize: '0.78rem', color: '#71717a' }}>No assigned jobs today</span>
+                    ) : (
+                      workerJobs.map(j => (
+                        <div key={j.id} style={{ background: '#18181b', padding: 8, borderRadius: 6, borderLeft: '3px solid #ff6b00' }}>
+                          <div style={{ color: '#fff', fontSize: '0.82rem', fontWeight: 'bold' }}>{j.vehicle?.name}</div>
+                          <div style={{ color: '#a1a1aa', fontSize: '0.75rem' }}>#{j.id.slice(-6)} • {j.booking?.date} ({j.scheduledTime || '09:00 AM'})</div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {activeView === 'list' && (
+        <>
+          <div className="filter-tabs">
+            {STATUS_FILTERS.map(f => (
+              <button key={f} className={filter === f ? 'active' : ''} onClick={() => setFilter(f)}>
+                {f.charAt(0).toUpperCase() + f.slice(1)}
+                <span className="tab-count">
+                  {f === 'all' ? orders.length : orders.filter(o => o.status === f).length}
+                </span>
+              </button>
+            ))}
+          </div>
+        </>
+      )}
 
       {filtered.length === 0 ? (
         <div className="empty-msg">No bookings in this category.</div>

@@ -6,16 +6,23 @@ import Home from './pages/Home';
 import Browse from './pages/Browse';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import UpcomingJobs from './pages/UpcomingJobs';
 import CustomerProfile from './pages/CustomerProfile';
 import Orders from './pages/Orders';
 import Cart from './pages/Cart';
 import BookingFlow from './pages/BookingFlow';
 import OrderTracking from './pages/OrderTracking';
+import Quotes from './pages/Quotes';
+import Invoices from './pages/Invoices';
+import CustomerSupport from './pages/CustomerSupport';
+import WorkerSchedule from './pages/worker/WorkerSchedule';
 import WorkerDashboard from './pages/worker/WorkerDashboard';
 import WorkerOrders from './pages/worker/WorkerOrders';
 import WorkerHistory from './pages/worker/WorkerHistory';
 import WorkerWallet from './pages/worker/WorkerWallet';
 import WorkerProfile from './pages/worker/WorkerProfile';
+import AdminQuotesContracts from './pages/admin/AdminQuotesContracts';
+import AdminQualitySupport from './pages/admin/AdminQualitySupport';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminCustomers from './pages/admin/AdminCustomers';
@@ -75,6 +82,10 @@ function AppRoutes() {
         <Route index element={<Home />} />
         <Route path="profile" element={<CustomerProfile />} />
         <Route path="orders" element={<Orders />} />
+        <Route path="upcoming" element={<UpcomingJobs />} />
+        <Route path="quotes" element={<Quotes />} />
+        <Route path="invoices" element={<Invoices />} />
+        <Route path="support" element={<CustomerSupport />} />
         <Route path="cart" element={<Cart />} />
         <Route path="book/:id" element={<BookingFlow />} />
         <Route path="track/:id" element={<OrderTracking />} />
@@ -84,6 +95,7 @@ function AppRoutes() {
       <Route path="/worker" element={<WorkerRoutes />}>
         <Route index element={<WorkerDashboard />} />
         <Route path="orders" element={<WorkerOrders />} />
+        <Route path="schedule" element={<WorkerSchedule />} />
         <Route path="history" element={<WorkerHistory />} />
         <Route path="wallet" element={<WorkerWallet />} />
         <Route path="profile" element={<WorkerProfile />} />
@@ -93,11 +105,19 @@ function AppRoutes() {
       <Route path="/admin" element={<AdminRoutes />}>
         <Route index element={<AdminDashboard />} />
         <Route path="orders" element={<AdminOrders />} />
+        <Route path="scheduling" element={<AdminOrders />} />
         <Route path="customers" element={<AdminCustomers />} />
+        <Route path="leads" element={<AdminCustomers />} />
         <Route path="workers" element={<AdminWorkers />} />
+        <Route path="quotes" element={<AdminQuotesContracts />} />
+        <Route path="contracts" element={<AdminQuotesContracts />} />
+        <Route path="quality" element={<AdminQualitySupport />} />
+        <Route path="complaints" element={<AdminQualitySupport />} />
+        <Route path="photos" element={<AdminQualitySupport />} />
+        <Route path="invoices" element={<AdminPayments />} />
+        <Route path="payments" element={<AdminPayments />} />
         <Route path="products" element={<AdminProducts />} />
         <Route path="reports" element={<AdminReports />} />
-        <Route path="payments" element={<AdminPayments />} />
         <Route path="more" element={<AdminMore />} />
         <Route path="*" element={<Navigate to="/admin" replace />} />
       </Route>
