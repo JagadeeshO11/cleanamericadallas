@@ -199,7 +199,7 @@ export default function CustomerProfile() {
             <button className="action-btn" onClick={() => navigate('/customer/upcoming')}>
               <HiCalendar className="ab-icon" style={{ color: '#ff6b00' }} />
               <div className="ab-text">
-                <strong>Upcoming Jobs & Schedule</strong>
+                <strong>Upcoming Services & Schedule</strong>
                 <span>Manage future Dallas service appointments</span>
               </div>
               <HiArrowRight className="ab-arrow" />

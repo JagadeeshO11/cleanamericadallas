@@ -125,7 +125,7 @@ export default function Navbar() {
     return [
       { to: '/', Icon: HiHome, label: 'Home' },
       { to: '/browse', Icon: HiTruck, label: 'Book Services' },
-      { to: user ? '/customer/upcoming' : '/customer/signin', Icon: HiCalendar, label: 'Upcoming Jobs' },
+      { to: user ? '/customer/upcoming' : '/customer/signin', Icon: HiCalendar, label: 'Upcoming Services' },
       { to: user ? '/customer/orders' : '/customer/signin', Icon: HiClipboardList, label: 'All Bookings' },
       { to: user ? '/customer/quotes' : '/customer/signin', Icon: HiCalculator, label: 'Quotes' },
     ];

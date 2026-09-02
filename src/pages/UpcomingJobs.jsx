@@ -67,21 +67,21 @@ export default function UpcomingJobs() {
       <div className="uj-header">
         <div>
           <div className="uj-eyebrow">
-            <HiSparkles className="uje-icon" /> Dallas Service Schedule
+            <HiSparkles className="uje-icon" /> Dallas Scheduled Services
           </div>
-          <h1>Upcoming Jobs & Scheduled Services</h1>
-          <p>Manage future appointments, track assigned Dallas pros, view invoices, and reschedule dates.</p>
+          <h1>Upcoming Services & Appointments</h1>
+          <p>Manage future cleaning & maintenance appointments, track assigned Dallas pros, view invoices, and reschedule dates.</p>
         </div>
         <button className="uj-new-btn" onClick={() => navigate('/browse')}>
           <HiPlus style={{ width: 16, height: 16 }} /> Book New Service
         </button>
       </div>
 
-      {/* JOBS GRID */}
+      {/* SERVICES GRID */}
       {upcomingJobs.length === 0 ? (
         <div className="uj-empty-card">
           <HiCalendar className="uj-empty-icon" />
-          <h2>No Upcoming Jobs Scheduled</h2>
+          <h2>No Upcoming Services Scheduled</h2>
           <p>You have no scheduled Dallas home cleaning or service appointments right now.</p>
           <button className="btn-primary-gold" onClick={() => navigate('/browse')}>
             Browse & Book Service
